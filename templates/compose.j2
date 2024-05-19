@@ -1,6 +1,8 @@
 services:
   web_server:
     image: autofunbot/tg_web_server
+    environment:
+      - PORT=80
     networks:
       services_net:
         ipv4_address: {{web_server.ip}}

@@ -1,19 +1,39 @@
 ---
 sql_client:
-  targets: 10.42.0.3 10.43.0.3
+  targets: 
 web_client:
-  targets: 10.42.0.2 10.43.0.2
+  targets: 
 ftp_client:
-  targets: 10.42.0.4 10.43.0.4
+  targets: 
 # saas_client:
 #   targets:
 sql_server:
-  ip: 10.41.0.3
+  ip: 
 web_server:
-  ip: 10.41.0.2
+  ip: 
 ftp_server:
-  ip: 10.41.0.4
-server_subnet: 10.41.0.0/24
-server_ip_range: 10.41.0.0/24
-server_gateway: 10.41.0.1
-interface: eth0
+  ip: 
+server_subnet: 
+server_ip_range: 
+server_gateway: 
+interface: 
+
+# EXAMPLE COMPLETED FILE
+# sql_client:
+#   targets: 10.42.0.3 10.43.0.3
+# web_client:
+#   targets: 10.42.0.2 10.43.0.2
+# ftp_client:
+#   targets: 10.42.0.4 10.43.0.4
+# # saas_client:
+# #   targets:
+# sql_server:
+#   ip: 10.41.0.3
+# web_server:
+#   ip: 10.41.0.2
+# ftp_server:
+#   ip: 10.41.0.4
+# server_subnet: 10.41.0.0/24
+# server_ip_range: 10.41.0.0/24
+# server_gateway: 10.41.0.1
+# interface: eth0

@@ -4,7 +4,7 @@ import time
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
-
+print(targets)
 interval = 3
 
 while True:

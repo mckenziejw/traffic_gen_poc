@@ -12,7 +12,7 @@ import os
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
-
+print(targets)
 interval = 3 #(in seconds)
 
 while True:
