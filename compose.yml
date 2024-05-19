@@ -1,6 +1,7 @@
 services:
   web_server:
     image: autofunbot/tg_web_server
+    restart: always
     networks:
       services_net:
         ipv4_address: 10.41.0.2
@@ -17,6 +18,7 @@ services:
         ipv4_address: 10.41.0.3
   ftp_server:
     image: 'delfer/alpine-ftp-server'
+    restart: always
     environment:
       - USERS=lab|Juniper123
     networks:
@@ -24,14 +26,17 @@ services:
         ipv4_address: 10.41.0.4
   web_client:
     image: autofunbot/tg_web_client
+    restart: always
     environment:
       - TARGETS=10.42.0.2 10.43.0.2
   mysql_client:
     image: autofunbot/tg_sql_client
+    restart: always
     environment:
       - TARGETS=10.42.0.3 10.43.0.3
   ftp_client:
     image: autofunbot/tg_ftp_client
+    restart: always
     environment:
       - TARGETS=10.42.0.4 10.43.0.4
 networks:
