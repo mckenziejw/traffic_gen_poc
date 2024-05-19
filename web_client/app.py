@@ -17,6 +17,9 @@ interval = 3 #(in seconds)
 
 while True:
     for t in targets:
-        resp = requests.get('http://' + t)
-        print("Issued GET to {}, received response code {}".format(api_endpoint, resp.status_code))
+        try:
+            resp = requests.get('http://' + t)
+            print("Issued GET to {}, received response code {}".format(api_endpoint, resp.status_code))
+        except:
+            print("something bad happened, let's try again")
     time.sleep(interval)

@@ -1,1 +1,1 @@
-mysqlx-connector-python
+mysqlclient

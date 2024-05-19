@@ -1,4 +1,4 @@
-import mysql.connector
+from MySQLdb import _mysql
 import os
 import time
 
@@ -9,6 +9,14 @@ interval = 3
 
 while True:
     for t in targets:
-        cnx = mysql.connector.connect(user='lab',password='lab123',host=t, database='lab_db')
-        cnx.close()
+        try:
+            cnx = _mysql.connect(
+                user='lab',
+                password='lab123',
+                host=t,
+                database="lab_db"
+                )
+            cnx.close()
+        except:
+            print("Something bad happened, let's try again")
     time.sleep(interval)

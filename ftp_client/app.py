@@ -8,7 +8,10 @@ targets = targets.split(" ")
 
 while True:
     for t in targets:
-        with FTP(host=t, user='lab', passwd='Juniper123') as ftp:
-            print(ftp.getwelcome())
+        try:
+            with FTP(host=t, user='lab', passwd='Juniper123') as ftp:
+                print(ftp.getwelcome())
+        except:
+            print("Something bad happened, let's try again")
     time.sleep(interval)
     
