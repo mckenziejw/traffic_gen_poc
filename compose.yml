@@ -1,0 +1,47 @@
+services:
+  web_server:
+    image: nginx
+    # ports:
+    #   - '80:80'
+    networks:
+      services_net:
+        ipv4_address: 10.42.0.2
+  mysql_server:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=lab123
+      - MYSQL_USER=lab
+      - MYSQL_DATABASE=lab_db
+      - MYSQL_PASSWORD=lab123
+    networks:
+      services_net:
+        ipv4_address: 10.42.0.3
+
+  ftp_server:
+    image: 'delfer/alpine-ftp-server'
+    # ports:
+    #   - "21:21"
+    #   - "21000-21010:21000-21010"
+    environment:
+      - USERS=lab|Juniper123
+      # - ADDRESS=ftp
+    networks:
+      services_net:
+        ipv4_address: 10.42.0.4
+  # mongodb_server:
+  # cloud_client:
+  # saas_client:
+  # web_client:
+  # mysql_client:
+networks:
+  services_net:
+    name: services_net
+    driver: ipvlan
+    driver_opts:
+      parent: wlan1
+    ipam:
+      config:
+        - subnet: "10.42.0.0/24"
+          ip_range: "10.42.0.0/24"
+          gateway: "10.42.0.1"
