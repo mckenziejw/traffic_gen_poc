@@ -39,7 +39,7 @@ networks:
     name: services_net
     driver: ipvlan
     driver_opts:
-      parent: wlan1
+      parent: {{interface}}
     ipam:
       config:
         - subnet: {{server_subnet}}
