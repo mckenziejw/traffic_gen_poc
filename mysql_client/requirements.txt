@@ -1,4 +1,1 @@
-mysql
-libpython3-dev
-default-libmysqlclient-dev
-build-essential
+mysqlx-connector-python
