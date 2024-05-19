@@ -3,7 +3,7 @@ services:
     image: autofunbot/tg_web_server
     networks:
       services_net:
-        ipv4_address: 10.41.0.2
+        ipv4_address: {{web_server.ip}}
   mysql_server:
     image: mysql
     restart: always
@@ -14,26 +14,26 @@ services:
       - MYSQL_PASSWORD=lab123
     networks:
       services_net:
-        ipv4_address: 10.41.0.3
+        ipv4_address: {{sql_server.ip}}
   ftp_server:
     image: 'delfer/alpine-ftp-server'
     environment:
       - USERS=lab|Juniper123
     networks:
       services_net:
-        ipv4_address: 10.41.0.4
+        ipv4_address: {{ftp_server.ip}}
   web_client:
     image: autofunbot/tg_web_client
     environment:
-      - TARGETS=10.42.0.2 10.43.0.2
+      - TARGETS={{web_client.targets}}
   mysql_client:
     image: autofunbot/tg_sql_client
     environment:
-      - TARGETS=10.42.0.3 10.43.0.3
+      - TARGETS={{sql_client.targets}}
   ftp_client:
     image: autofunbot/tg_ftp_client
     environment:
-      - TARGETS=10.42.0.4 10.43.0.4
+      - TARGETS={{ftp_client.targets}}
 networks:
   services_net:
     name: services_net
@@ -42,6 +42,6 @@ networks:
       parent: wlan1
     ipam:
       config:
-        - subnet: 10.41.0.0/24
-          ip_range: 10.41.0.0/24
-          gateway: 10.41.0.1
+        - subnet: {{server_subnet}}
+          ip_range: {{server_ip_range}}
+          gateway: {{server_gateway}}

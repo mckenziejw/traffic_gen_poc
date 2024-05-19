@@ -8,12 +8,15 @@
 
 import requests
 import time
+import os
 
-api_endpoint = 'http://172.18.0.2'
-port = 80
+targets = os.environ['TARGETS']
+targets = targets.split(" ")
+
 interval = 3 #(in seconds)
 
 while True:
-    resp = requests.get(api_endpoint)
-    print("Issued GET to {}, received response code {}".format(api_endpoint, resp.status_code))
+    for t in targets:
+        resp = requests.get('http://' + t)
+        print("Issued GET to {}, received response code {}".format(api_endpoint, resp.status_code))
     time.sleep(interval)
