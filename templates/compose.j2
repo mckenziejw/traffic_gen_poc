@@ -42,6 +42,7 @@ networks:
     driver: ipvlan
     driver_opts:
       parent: {{interface}}
+      ipvlan_mode: l2
     ipam:
       config:
         - subnet: "{{server_subnet}}"
