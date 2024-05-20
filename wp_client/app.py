@@ -18,7 +18,7 @@ interval = int(os.environ['INTERVAL'])
 while True:
     for t in targets:
         try:
-            resp = requests.get("http://" + t + "/employees")
+            resp = requests.get("http://" + t + "/wp-admin/setup-config.php")
             print("Issued GET to {}, received response code {}".format(t, resp.status_code))
         except:
             print("something bad happened, let's try again")

@@ -3,20 +3,20 @@ services:
     image: autofunbot/tg_web_server
     environment:
       - PORT=80
-      - INTERVAL=3
     networks:
       services_net:
         ipv4_address: {{web_server.ip}}
-  mongo_server:
-    image: mongo
+  mysql_server:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=lab123
+      - MYSQL_USER=lab
+      - MYSQL_DATABASE=lab_db
+      - MYSQL_PASSWORD=lab123
     networks:
       services_net:
-        ipv4_address: {{mongo_server.ip}}
-  wp_server:
-    image: wordpress
-    networks:
-      services_net:
-        ipv4_address: {{wp_server.ip}}
+        ipv4_address: {{sql_server.ip}}
   ftp_server:
     image: 'delfer/alpine-ftp-server'
     environment:
@@ -28,21 +28,14 @@ services:
     image: autofunbot/tg_web_client
     environment:
       - TARGETS={{web_client.targets}}
-      - INTERVAL=5
-  mongo_client:
-    image: autofunbot/tg_mongo_client
+  mysql_client:
+    image: autofunbot/tg_sql_client
     environment:
-      - TARGETS={{mongo_client.targets}}
-      - INTERVAL=4
+      - TARGETS={{sql_client.targets}}
   ftp_client:
     image: autofunbot/tg_ftp_client
     environment:
       - TARGETS={{ftp_client.targets}}
-      - INTERVAL=10
-  wp_client:
-    image: autofunbot/tg_wp_client
-    - TARGETS={{wp_client.targets}}
-    - INTERVAL=10
 networks:
   services_net:
     name: services_net

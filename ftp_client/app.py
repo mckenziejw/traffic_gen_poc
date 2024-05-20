@@ -2,7 +2,7 @@ from ftplib import FTP
 import os
 import time
 
-interval = 3
+interval = int(os.environ['INTERVAL'])
 targets = os.environ['TARGETS']
 print(targets)
 targets = targets.split(" ")
