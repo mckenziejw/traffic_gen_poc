@@ -19,7 +19,8 @@ while True:
     for t in targets:
         try:
             resp = requests.get("http://" + t + "/employees")
-            print("Issued GET to {}, received response code {}".format(api_endpoint, resp.status_code))
+            print("Issued GET to {}, received response code {}".format(t, resp.status_code))
         except:
             print("something bad happened, let's try again")
+            continue
     time.sleep(interval)

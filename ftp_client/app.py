@@ -4,6 +4,7 @@ import time
 
 interval = 3
 targets = os.environ['TARGETS']
+print(targets)
 targets = targets.split(" ")
 
 while True:
@@ -13,5 +14,6 @@ while True:
                 print(ftp.getwelcome())
         except:
             print("Something bad happened, let's try again")
+            continue
     time.sleep(interval)
     

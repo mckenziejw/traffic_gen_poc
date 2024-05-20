@@ -27,15 +27,15 @@ services:
   web_client:
     image: autofunbot/tg_web_client
     environment:
-      - TARGETS="{{web_client.targets}}"
+      - TARGETS={{web_client.targets}}
   mysql_client:
     image: autofunbot/tg_sql_client
     environment:
-      - TARGETS="{{sql_client.targets}}"
+      - TARGETS={{sql_client.targets}}
   ftp_client:
     image: autofunbot/tg_ftp_client
     environment:
-      - TARGETS="{{ftp_client.targets}}"
+      - TARGETS={{ftp_client.targets}}
 networks:
   services_net:
     name: services_net
@@ -45,6 +45,6 @@ networks:
       ipvlan_mode: l2
     ipam:
       config:
-        - subnet: "{{server_subnet}}"
-          ip_range: "{{server_ip_range}}"
-          gateway: "{{server_gateway}}"
+        - subnet: {{server_subnet}}
+          ip_range: "{{server_ip_range}}
+          gateway: {{server_gateway}}
