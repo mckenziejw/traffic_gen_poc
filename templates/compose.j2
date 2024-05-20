@@ -41,8 +41,9 @@ services:
       - INTERVAL=10
   wp_client:
     image: autofunbot/tg_wp_client
-    - TARGETS={{wp_client.targets}}
-    - INTERVAL=10
+    environment:
+      - TARGETS={{wp_client.targets}}
+      - INTERVAL=10
 networks:
   services_net:
     name: services_net
