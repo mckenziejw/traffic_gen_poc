@@ -1,0 +1,51 @@
+---
+sql_client:
+  targets: 10.42.0.3 10.43.0.3 
+web_client:
+  targets: 10.42.0.2 10.43.0.2
+ftp_client:
+  targets: 10.42.0.4 10.43.0.4
+mongo_client:
+  targets: 10.42.0.5 10.43.0.5
+wp_client:
+  targets: 10.42.0.6 10.43.0.6
+mqtt_client:
+  targets: 10.42.0.7 10.43.0.7
+# saas_client:
+#   targets:
+sql_server:
+  ip: 10.41.0.3
+web_server:
+  ip: 10.41.0.2
+ftp_server:
+  ip: 10.41.0.4
+mongo_server:
+  ip: 10.41.0.5
+wp_server:
+  ip: 10.41.0.6
+mqtt_server:
+  ip: 10.21.0.7
+server_subnet: 10.41.0.0/24
+server_ip_range: 10.41.0.0/24
+server_gateway: 10.41.0.1
+interface: eth0
+
+# EXAMPLE COMPLETED FILE
+# sql_client:
+#   targets: 10.42.0.3 10.43.0.3
+# web_client:
+#   targets: 10.42.0.2 10.43.0.2
+# ftp_client:
+#   targets: 10.42.0.4 10.43.0.4
+# # saas_client:
+# #   targets:
+# sql_server:
+#   ip: 10.41.0.3
+# web_server:
+#   ip: 10.41.0.2
+# ftp_server:
+#   ip: 10.41.0.4
+# server_subnet: 10.41.0.0/24
+# server_ip_range: 10.41.0.0/24
+# server_gateway: 10.41.0.1
+# interface: eth0
