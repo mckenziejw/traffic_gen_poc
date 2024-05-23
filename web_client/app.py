@@ -24,3 +24,7 @@ while True:
             print("something bad happened, let's try again")
             continue
     time.sleep(interval)
+    
+def add_employee:
+def delete_employee:
+def bobs_workflow:

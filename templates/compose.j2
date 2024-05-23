@@ -24,6 +24,13 @@ services:
     networks:
       services_net:
         ipv4_address: {{ftp_server.ip}}
+  mqtt_server:
+    image: eclipse-mosquitto
+    volumes:
+      - mqtt_server/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      services_net:
+        ipv4_address: {{mqtt_server.ip}}
   web_client:
     image: autofunbot/tg_web_client
     environment:
@@ -44,6 +51,16 @@ services:
     environment:
       - TARGETS={{wp_client.targets}}
       - INTERVAL=10
+  yt_client:
+    image: autofunbot/tg_yt_client
+    environment:
+      - TARGETS={{yt_client.targets}}
+      - INTERVAL=30
+  mqtt_client:
+    image: autofunbot/tg_mqtt_client
+    environment:
+      - TARGETS={{mqtt_client.targets}}
+      - INTERVAL=1
 networks:
   services_net:
     name: services_net
