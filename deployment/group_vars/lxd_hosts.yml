@@ -1,0 +1,8 @@
+---
+management_interfaces:
+  - ens160
+excluded_interfaces:
+  - lo
+  - lxdbr0
+  - docker0
+net_name_prefix: wifi_

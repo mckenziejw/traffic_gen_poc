@@ -1,0 +1,48 @@
+---
+- name: Install dependencies
+  hosts: lxd_hosts
+  vars:
+    - ansible_become_password: lab123
+
+  tasks:
+  - name: Install Apt packages
+    apt:
+      update_cache: true
+      pkg:
+      - snap
+      - debootstrap
+      state: latest
+    become: true
+  - name: Install LXD Snap
+    community.general.snap:
+      name: lxd
+      state: enabled
+    become: true
+    become_user: lab
+  - name: Install LXD Snap
+    community.general.snap:
+      name: distrobuilder
+      state: enabled
+    become: true
+    become_user: lab
+
+# - name: Build IoT client LXD image
+#   hosts: lxd_hosts
+
+#   tasks:
+#   - name: Download Alpine rootfs
+#     get_url:
+#       url: https://dl-cdn.alpinelinux.org/alpine/v3.20/releases/x86_64/alpine-minirootfs-3.20.0-x86_64.tar.gz
+#       dest: /home/lab/alpine-rootfs.tar.gz
+#       mode: '0440'
+#   - name: Extract rootfs
+#     unarchive:
+#       src: /home/lab/alpine-rootfs.tar.gz
+#       dest: /home/lab/alpine-rootfs
+#   - name: Deploy the chroot/container prep script
+#     copy:
+#       content: |
+#         #!/usr/bin/env /bin/ash
+#         export PATH=/bin:/usr/bin:/sbin
+#         apk update
+#         apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant
