@@ -50,7 +50,7 @@ resource "lxd_network" "wifi3" {
 
 resource "lxd_instance" "wifi_client_1" {
     name = "wifi-client-1"
-    image = "images:alpine/3.20"
+    image = "images:kali/amd64"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -70,23 +70,27 @@ resource "lxd_instance" "wifi_client_1" {
     execs = {
 
         "a" = {
-            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            trigger = "once"
         }
         "b" = {
-            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
+            trigger = "once"
         }
         "c" = {
-            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
+            trigger = "once"
         }
         "d" = {
-            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            trigger = "once"
         }
     }
 
@@ -95,7 +99,7 @@ resource "lxd_instance" "wifi_client_1" {
 
 resource "lxd_instance" "wifi_client_2" {
     name = "wifi-client-2"
-    image = "images:alpine/3.20"
+    image = "images:kali/amd64"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -114,23 +118,27 @@ resource "lxd_instance" "wifi_client_2" {
     execs = {
 
         "a" = {
-            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apt add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            trigger = "once"
         }
         "b" = {
-            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
+            trigger = "once"
         }
         "c" = {
-            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
+            trigger = "once"
         }
         "d" = {
-            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            trigger = "once"
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
@@ -139,7 +147,7 @@ resource "lxd_instance" "wifi_client_2" {
 
 resource "lxd_instance" "wifi_client_3" {
     name = "wifi-client-3"
-    image = "images:alpine/3.20"
+    image = "images:kali/amd64"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -158,23 +166,27 @@ resource "lxd_instance" "wifi_client_3" {
     execs = {
 
         "a" = {
-            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            trigger = "once"
         }
         "b" = {
-            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
+            trigger = "once"
         }
         "c" = {
-            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
+            trigger = "once"
         }
         "d" = {
-            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+            trigger = "once"
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
