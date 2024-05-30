@@ -53,7 +53,7 @@ resource "lxd_instance" "wifi_client_1" {
     image = "images:alpine/3.20"
     type = "container"
     remote = "lxd_host_1"
-    running = false
+    running = true
 
     device  {
         name = "wifi1"
@@ -106,7 +106,7 @@ resource "lxd_instance" "wifi_client_2" {
     image = "images:alpine/3.20"
     type = "container"
     remote = "lxd_host_1"
-    running = false
+    running = true
 
     device  {
         name = "wifi2"
@@ -157,7 +157,7 @@ resource "lxd_instance" "wifi_client_3" {
     image = "images:alpine/3.20"
     type = "container"
     remote = "lxd_host_1"
-    running = false
+    running = true
 
     device  {
         name = "wifi3"
