@@ -25,6 +25,5 @@ while True:
             continue
     time.sleep(interval)
     
-def add_employee:
-def delete_employee:
-def bobs_workflow:
+# Define some scenarios
+

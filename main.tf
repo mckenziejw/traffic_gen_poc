@@ -63,6 +63,14 @@ resource "lxd_instance" "wifi_client_1" {
         }
     }
 
+    device {
+        name = "lxdbr0"
+        type = "nic"
+        properties = {
+            "network" = "lxdbr0"
+        }
+    }
+
     config = {
         "boot.autostart" = true
     }
@@ -72,7 +80,7 @@ resource "lxd_instance" "wifi_client_1" {
             command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
         }
         "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant"]
+            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
         "configure_supplicant" = {
             command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
@@ -86,6 +94,9 @@ resource "lxd_instance" "wifi_client_1" {
             environment = {
                 "wlan" = "wlan0"
             }
+        }
+        "Download assets" = {
+            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
 
@@ -106,6 +117,13 @@ resource "lxd_instance" "wifi_client_2" {
             "network" = "wifi2"
         }
     }
+    device {
+        name = "lxdbr0"
+        type = "nic"
+        properties = {
+            "network" = "lxdbr0"
+        }
+    }
 
     config = {
         "boot.autostart" = true
@@ -115,7 +133,7 @@ resource "lxd_instance" "wifi_client_2" {
             command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
         }
         "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant"]
+            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
         "configure_supplicant" = {
             command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
@@ -129,6 +147,9 @@ resource "lxd_instance" "wifi_client_2" {
             environment = {
                 "wlan" = "wlan0"
             }
+        }
+        "Download assets" = {
+            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
@@ -149,6 +170,13 @@ resource "lxd_instance" "wifi_client_3" {
             "network" = "wifi3"
         }
     }
+    device {
+        name = "lxdbr0"
+        type = "nic"
+        properties = {
+            "network" = "lxdbr0"
+        }
+    }
 
     config = {
         "boot.autostart" = true
@@ -158,7 +186,7 @@ resource "lxd_instance" "wifi_client_3" {
             command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
         }
         "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant"]
+            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
         "configure_supplicant" = {
             command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
@@ -172,6 +200,9 @@ resource "lxd_instance" "wifi_client_3" {
             environment = {
                 "wlan" = "wlan0"
             }
+        }
+        "Download assets" = {
+            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
