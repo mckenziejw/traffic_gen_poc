@@ -76,27 +76,25 @@ resource "lxd_instance" "wifi_client_1" {
     }
 
     execs = {
-        "set_path" = {
-            command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
+
+        "a" = {
+            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
-        "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
-        }
-        "configure_supplicant" = {
-            command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "b" = {
+            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
         }
-        "Enable WPA supplicant" = {
-            command = ["/bin/ash", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "c" = {
+            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
         }
-        "Download assets" = {
-            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+        "d" = {
+            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
 
@@ -129,27 +127,25 @@ resource "lxd_instance" "wifi_client_2" {
         "boot.autostart" = true
     }
     execs = {
-        "set_path" = {
-            command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
+
+        "a" = {
+            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
-        "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
-        }
-        "configure_supplicant" = {
-            command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "b" = {
+            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
         }
-        "Enable WPA supplicant" = {
-            command = ["/bin/ash", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "c" = {
+            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
         }
-        "Download assets" = {
-            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+        "d" = {
+            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
@@ -182,27 +178,25 @@ resource "lxd_instance" "wifi_client_3" {
         "boot.autostart" = true
     }
     execs = {
-        "set_path" = {
-            command = ["/bin/ash", "export PATH=/bin:/usr/bin:/sbin"]
+
+        "a" = {
+            command = ["/bin/ash", "-c", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
         }
-        "add_depends" = {
-            command = ["/bin/ash", "apk add --no-cache python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
-        }
-        "configure_supplicant" = {
-            command = ["/bin/ash", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "b" = {
+            command = ["/bin/ash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wifi_psk" = "psk_goes_here"
                 "wifi_ssid" = "ssid_goes_here"
             }
         }
-        "Enable WPA supplicant" = {
-            command = ["/bin/ash", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
+        "c" = {
+            command = ["/bin/ash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
             environment = {
                 "wlan" = "wlan0"
             }
         }
-        "Download assets" = {
-            command = ["/bin/ash", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
+        "d" = {
+            command = ["/bin/ash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
         }
     }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
