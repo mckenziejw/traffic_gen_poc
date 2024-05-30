@@ -63,14 +63,6 @@ resource "lxd_instance" "wifi_client_1" {
         }
     }
 
-    device {
-        name = "lxdbr0"
-        type = "nic"
-        properties = {
-            "network" = "lxdbr0"
-        }
-    }
-
     config = {
         "boot.autostart" = true
     }
@@ -115,13 +107,6 @@ resource "lxd_instance" "wifi_client_2" {
             "network" = "wifi2"
         }
     }
-    device {
-        name = "lxdbr0"
-        type = "nic"
-        properties = {
-            "network" = "lxdbr0"
-        }
-    }
 
     config = {
         "boot.autostart" = true
@@ -164,13 +149,6 @@ resource "lxd_instance" "wifi_client_3" {
         type = "nic"
         properties = {
             "network" = "wifi3"
-        }
-    }
-    device {
-        name = "lxdbr0"
-        type = "nic"
-        properties = {
-            "network" = "lxdbr0"
         }
     }
 
