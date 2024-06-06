@@ -18,19 +18,18 @@
       name: lxd
       state: present
     become: true
-    become_user: lab
   - name: Install LXD Snap
     community.general.snap:
       name: distrobuilder
       state: present
       classic: true
     become: true
-    become_user: lab
   - name: Add lab to lxc group
     user:
       name: lab
       groups: lxc
       append: yes
+    become: true
   - name: Copy preseed file
     copy:
       src: lxd_preseed.yml
@@ -38,7 +37,8 @@
       owner: lab
       mode: u=rw,g=ro=r
   - name: Bootstrap LXD
-    command: cat lxd_preseed.yml | lxd init --preseed
+    raw: cat lxd_preseed.yml | lxd init --preseed
+    become: true
 
 
 # - name: Build IoT client LXD image
