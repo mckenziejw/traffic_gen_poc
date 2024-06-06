@@ -33,3 +33,8 @@ Add lab to lxd group
             trigger = "once"
         }
     }
+
+wpa_passphrase
+wpa_supplicant
+dhclient
+change route to use wifi as default

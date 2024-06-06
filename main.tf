@@ -47,6 +47,15 @@ resource "lxd_network" "wifi3" {
     }
 }
 
+resource "lxd_network" "wifi4" {
+    name = "wifi4"
+    remote = "lxd_host_1"
+    type = "physical"
+    config = {
+        "parent" = "wlp0s20f3"
+    }
+}
+
 
 resource "lxd_instance" "wifi_client_1" {
     name = "wifi-client-1"
@@ -79,7 +88,7 @@ resource "lxd_instance" "wifi_client_1" {
         "security.privileged" = true
     }
 
-    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
+    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3, lxd_network.wifi4]
 }
 
 resource "lxd_instance" "wifi_client_2" {
@@ -112,7 +121,7 @@ resource "lxd_instance" "wifi_client_2" {
         "security.privileged" = true
     }
 
-    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
+    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3, lxd_network.wifi4]
 
 }
 
@@ -147,6 +156,41 @@ resource "lxd_instance" "wifi_client_3" {
         "security.privileged" = true
     }
 
-    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
+    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3, lxd_network.wifi4]
+
+}
+
+resource "lxd_instance" "wifi_client_4" {
+    name = "wifi-client-4"
+    image = "kali-wifi"
+    type = "container"
+    remote = "lxd_host_1"
+    running = true
+
+    device  {
+        name = "wifi4"
+        type = "nic"
+        properties = {
+            "network" = "wifi4"
+        }
+    }
+    device {
+        name = "rfkill"
+        type = "unix-char"
+        properties = {
+            "major" = 10
+            "minor" = 242
+            "path" = "/dev/rfkill"
+            "source" = "/dev/rfkill"
+        }
+    }
+
+
+    config = {
+        "boot.autostart" = true
+        "security.privileged" = true
+    }
+
+    depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3, lxd_network.wifi4]
 
 }
