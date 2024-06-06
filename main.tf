@@ -50,7 +50,7 @@ resource "lxd_network" "wifi3" {
 
 resource "lxd_instance" "wifi_client_1" {
     name = "wifi-client-1"
-    image = "images:kali/amd64"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -84,7 +84,7 @@ resource "lxd_instance" "wifi_client_1" {
 
 resource "lxd_instance" "wifi_client_2" {
     name = "wifi-client-2"
-    image = "images:kali/amd64"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -118,7 +118,7 @@ resource "lxd_instance" "wifi_client_2" {
 
 resource "lxd_instance" "wifi_client_3" {
     name = "wifi-client-3"
-    image = "images:kali/amd64"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
