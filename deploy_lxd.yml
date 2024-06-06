@@ -27,7 +27,7 @@
   - name: Add lab to lxc group
     user:
       name: lab
-      groups: lxc
+      groups: lxd
       append: yes
     become: true
   - name: Copy preseed file
