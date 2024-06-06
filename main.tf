@@ -65,6 +65,7 @@ resource "lxd_instance" "wifi_client_1" {
 
     config = {
         "boot.autostart" = true
+        "security.privileged" = true
     }
 
     execs = {
@@ -118,6 +119,7 @@ resource "lxd_instance" "wifi_client_2" {
 
     config = {
         "boot.autostart" = true
+        "security.privileged" = true
     }
     execs = {
 
@@ -170,6 +172,7 @@ resource "lxd_instance" "wifi_client_3" {
 
     config = {
         "boot.autostart" = true
+        "security.privileged" = true
     }
     execs = {
 
