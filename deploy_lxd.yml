@@ -12,19 +12,25 @@
       - snap
       - debootstrap
       state: latest
-    become: true
+    become: true 
   - name: Install LXD Snap
     community.general.snap:
       name: lxd
-      state: enabled
+      state: present
     become: true
     become_user: lab
   - name: Install LXD Snap
     community.general.snap:
       name: distrobuilder
-      state: enabled
+      state: present
+      classic: true
     become: true
     become_user: lab
+  - name: Add lab to lxc group
+    user:
+      name: lab
+      groups: lxc
+      append: yes
   - name: Copy preseed file
     copy:
       src: lxd_preseed.yml

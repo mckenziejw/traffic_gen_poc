@@ -13,7 +13,7 @@ provider "lxd" {
     remote {
         name = "lxd_host_1"
         scheme = "https"
-        address = "10.210.40.164"
+        address = "10.210.14.1"
         port = "8443"
         password = "lab123"
         default = true
@@ -25,7 +25,7 @@ resource "lxd_network" "wifi1" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "ens192",
+        "parent" = "wlx9cefd5f714c6",
     }
 }
 
@@ -34,7 +34,7 @@ resource "lxd_network" "wifi2" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "ens224"
+        "parent" = "wlx9cefd5f714b8"
     }
 }
 
@@ -43,7 +43,7 @@ resource "lxd_network" "wifi3" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "ens256"
+        "parent" = "wlx9cefd5f714b5"
     }
 }
 
