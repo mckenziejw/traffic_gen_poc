@@ -74,7 +74,7 @@ resource "lxd_instance" "wifi_client_1" {
             trigger = "once"
         }
         "b" = {
-            command = ["/bin/bash", "-c", "apt install -y python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl libcap wireless-tools git kali-linux-top10 kali-linux-wireless"]
             trigger = "once"
         }
         "c" = {
@@ -126,7 +126,7 @@ resource "lxd_instance" "wifi_client_2" {
             trigger = "once"
         }
         "b" = {
-            command = ["/bin/bash", "-c", "apt install -y python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl libcap wireless-tools git kali-linux-top10 kali-linux-wireless"]
             trigger = "once"
         }
         "c" = {
@@ -178,7 +178,7 @@ resource "lxd_instance" "wifi_client_3" {
             trigger = "once"
         }
         "b" = {
-            command = ["/bin/bash", "-c", "apt install -y python3 findmnt curl libcap bind-tools wireless-tools wpa_supplicant git"]
+            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl libcap wireless-tools git kali-linux-top10 kali-linux-wireless"]
             trigger = "once"
         }
         "c" = {

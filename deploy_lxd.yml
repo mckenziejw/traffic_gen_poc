@@ -25,6 +25,15 @@
       state: enabled
     become: true
     become_user: lab
+  - name: Copy preseed file
+    copy:
+      src: lxd_preseed.yml
+      dest: lxd_preseed.yml
+      owner: lab
+      mode: u=rw,g=ro=r
+  - name: Bootstrap LXD
+    command: cat lxd_preseed.yml | lxd init --preseed
+
 
 # - name: Build IoT client LXD image
 #   hosts: lxd_hosts
