@@ -63,40 +63,20 @@ resource "lxd_instance" "wifi_client_1" {
         }
     }
 
+    device {
+        name = "rfkill"
+        type = "unix-char"
+        properties = {
+            "major" = 10
+            "minor" = 242
+            "path" = "/dev/rfkill"
+            "source" = "/dev/rfkill"
+        }
+    }
+
     config = {
         "boot.autostart" = true
         "security.privileged" = true
-    }
-
-    execs = {
-
-        "a" = {
-            command = ["/bin/bash", "-c", "apt update"]
-            trigger = "once"
-        }
-        "b" = {
-            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl wireless-tools git kali-tools-wireless"]
-            trigger = "once"
-        }
-        "c" = {
-            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wifi_psk" = "psk_goes_here"
-                "wifi_ssid" = "ssid_goes_here"
-            }
-            trigger = "once"
-        }
-        "d" = {
-            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wlan" = "wlan0"
-            }
-            trigger = "once"
-        }
-        "e" = {
-            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
-            trigger = "once"
-        }
     }
 
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
@@ -116,41 +96,22 @@ resource "lxd_instance" "wifi_client_2" {
             "network" = "wifi2"
         }
     }
+    device {
+        name = "rfkill"
+        type = "unix-char"
+        properties = {
+            "major" = 10
+            "minor" = 242
+            "path" = "/dev/rfkill"
+            "source" = "/dev/rfkill"
+        }
+    }
 
     config = {
         "boot.autostart" = true
         "security.privileged" = true
     }
-    execs = {
 
-        "a" = {
-            command = ["/bin/bash", "-c", "apt update"]
-            trigger = "once"
-        }
-        "b" = {
-            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl wireless-tools git kali-tools-wireless"]
-            trigger = "once"
-        }
-        "c" = {
-            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wifi_psk" = "psk_goes_here"
-                "wifi_ssid" = "ssid_goes_here"
-            }
-            trigger = "once"
-        }
-        "d" = {
-            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wlan" = "wlan0"
-            }
-            trigger = "once"
-        }
-        "e" = {
-            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
-            trigger = "once"
-        }
-    }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
 
 }
@@ -169,41 +130,23 @@ resource "lxd_instance" "wifi_client_3" {
             "network" = "wifi3"
         }
     }
+    device {
+        name = "rfkill"
+        type = "unix-char"
+        properties = {
+            "major" = 10
+            "minor" = 242
+            "path" = "/dev/rfkill"
+            "source" = "/dev/rfkill"
+        }
+    }
+
 
     config = {
         "boot.autostart" = true
         "security.privileged" = true
     }
-    execs = {
 
-        "a" = {
-            command = ["/bin/bash", "-c", "apt update"]
-            trigger = "once"
-        }
-        "b" = {
-            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl wireless-tools git kali-tools-wireless"]
-            trigger = "once"
-        }
-        "c" = {
-            command = ["/bin/bash", "-c", "wpa_passphrase '$wifi_ssid' '$wifi_psk' > /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wifi_psk" = "psk_goes_here"
-                "wifi_ssid" = "ssid_goes_here"
-            }
-            trigger = "once"
-        }
-        "d" = {
-            command = ["/bin/bash", "-c", "wpa_supplicant -B -i $wlan -c /etc/wpa_supplicant/wpa_supplicant.conf"]
-            environment = {
-                "wlan" = "wlan0"
-            }
-            trigger = "once"
-        }
-        "e" = {
-            command = ["/bin/bash", "-c", "git clone https://github.com/mckenziejw/traffic_gen_poc"]
-            trigger = "once"
-        }
-    }
     depends_on = [lxd_network.wifi1, lxd_network.wifi2, lxd_network.wifi3]
 
 }
