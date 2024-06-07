@@ -1,13 +1,15 @@
 network:
   version: 2
   wifis:
-{% for w in wifis -%}
+{% for w in wifis %}
     {{w.name}}:
       renderer: NetworkManager
       match:
         name: "{{w.dev_name}}"
       dhcp4: true
       dhcp6: true
+      set-name: {{w.name}}
+{%- endfor -%}
 {#    access-points:
         "JMA":
           auth:
@@ -19,6 +21,4 @@ network:
               wifi-security.auth-alg: "open"
               ipv6.addr-gen-mode: "default"
               ipv6.ip6-privacy: "-1"
-              proxy._: "" #}
-      set-name: {{w.name}}
-{%- endfor -%}
+              proxy._: "" -#}
