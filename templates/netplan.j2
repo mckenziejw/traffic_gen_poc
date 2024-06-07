@@ -1,7 +1,7 @@
 network:
   version: 2
   wifis:
-{% for w in wifis %-}
+{% for w in wifis -%}
     {{w.name}}:
       renderer: NetworkManager
       match:
@@ -21,3 +21,4 @@ network:
               ipv6.ip6-privacy: "-1"
               proxy._: "" #}
       set-name: {{w.name}}
+{%- endfor -%}
