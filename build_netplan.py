@@ -7,20 +7,20 @@ import re
 environment = Environment(loader=FileSystemLoader("/home/lab/traffic_gen_poc/templates/"))
 template = environment.get_template("netplan.j2")
 
-wifis = []
+wifis = {'wifis':[]}
 
 w_list = os.listdir('/sys/class/net/')
 count=1
 for intf in w_list:
     if re.match('wlp[a-zA-Z0-9]*', intf):
-        wifis.append(
+        wifis['wifis'].append(
             {
                 'name':'wlan0',
                 'dev_name': intf
             }
         )
     elif re.match('wlx[a-zA-Z0-9]*', intf):
-        wifis.append(
+        wifis['wifis'].append(
             {
                 'name':'wlan'+str(count),
                 'dev_name': intf
