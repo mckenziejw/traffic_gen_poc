@@ -4,7 +4,7 @@ import psutil
 import os
 import re
 
-environment = Environment(loader=FileSystemLoader("templates/"))
+environment = Environment(loader=FileSystemLoader("/home/lab/traffic_gen_poc/templates/"))
 template = environment.get_template("netplan.j2")
 
 wifis = []
