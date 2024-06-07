@@ -29,5 +29,5 @@ for intf in w_list:
         count += 1
 
 with open('01-networkmanager-all.yaml', 'w') as out_file:
-    output = template.render(w_list)
+    output = template.render(wifis)
     out_file.write(output)
