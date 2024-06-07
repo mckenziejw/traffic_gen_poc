@@ -39,6 +39,26 @@
   - name: Bootstrap LXD
     raw: cat lxd_preseed.yml | lxd init --preseed
     become: true
+  # - name: Change interface names
+  #   copy:
+  #     src: 01-networkmanager-all.yaml
+  #     dest: /etc/netplan/01-networkmanager-all.yaml
+  #     owner: lab
+  #     mode: u=rw,g=rw
+  - name: Create netplan
+    script: build_netplan.py
+    args:
+      executable: python3
+  - name: reboot
+    reboot:
+
+- name: Configure wired hosts
+  hosts: wired_hosts
+  vars:
+    - ansible_become_password: lab123
+
+  tasks:
+  - 
 
 
 # - name: Build IoT client LXD image

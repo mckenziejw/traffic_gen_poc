@@ -25,7 +25,7 @@ resource "lxd_network" "wifi1" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "wlx9cefd5f714c6",
+        "parent" = "wlan0",
     }
 }
 
@@ -34,7 +34,7 @@ resource "lxd_network" "wifi2" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "wlx9cefd5f714b8"
+        "parent" = "wlan1"
     }
 }
 
@@ -43,7 +43,7 @@ resource "lxd_network" "wifi3" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "wlx9cefd5f714b5"
+        "parent" = "wlan2"
     }
 }
 
@@ -52,7 +52,7 @@ resource "lxd_network" "wifi4" {
     remote = "lxd_host_1"
     type = "physical"
     config = {
-        "parent" = "wlp0s20f3"
+        "parent" = "wlan3"
     }
 }
 
