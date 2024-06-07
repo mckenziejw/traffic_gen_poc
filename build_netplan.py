@@ -22,7 +22,7 @@ for intf in w_list:
     elif re.match('wlx[a-zA-Z0-9]*', intf):
         wifis.append(
             {
-                'name':'wlan'+count,
+                'name':'wlan'+str(count),
                 'dev_name': intf
             }
         )
