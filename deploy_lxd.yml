@@ -50,9 +50,7 @@
       repo: 'https://github.com/mckenziejw/traffic_gen_poc'
       dest: '/home/lab/traffic_gen_poc'
   - name: Create netplan
-    script: /home/lab/traffic_gen_poc/build_netplan.py
-    args:
-      executable: python3
+    command: python3 /home/lab/traffic_gen_poc/build_netplan.py
   - name: reboot
     reboot:
 
