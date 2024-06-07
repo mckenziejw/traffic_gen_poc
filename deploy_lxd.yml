@@ -45,20 +45,24 @@
   #     dest: /etc/netplan/01-networkmanager-all.yaml
   #     owner: lab
   #     mode: u=rw,g=rw
+  - name: download traffic_gen_poc
+    git:
+      repo: 'https://github.com/mckenziejw/traffic_gen_poc'
+      dest: '/home/lab/traffic_gen_poc'
   - name: Create netplan
-    script: build_netplan.py
+    script: /home/lab/traffic_gen_poc/build_netplan.py
     args:
       executable: python3
   - name: reboot
     reboot:
 
-- name: Configure wired hosts
-  hosts: wired_hosts
-  vars:
-    - ansible_become_password: lab123
+# - name: Configure wired hosts
+#   hosts: wired_hosts
+#   vars:
+#     - ansible_become_password: lab123
 
-  tasks:
-  - 
+#   tasks:
+#   - 
 
 
 # - name: Build IoT client LXD image
