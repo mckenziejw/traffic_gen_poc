@@ -1,3 +1,7 @@
 ---
 targets:
   - client1
+ip: 10.210.14.1
+wlans:
+  onboard: []
+  usb: []
