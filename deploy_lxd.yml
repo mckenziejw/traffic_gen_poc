@@ -53,12 +53,12 @@
     set_fact:
       hostvars.wlans.onboard:
         - name: item
-    loop: hostvars['ansible_facts']['ansible_interfaces']
+    loop: ansible_facts['ansible_interfaces']
     when: item | regex_search("^wlp[a-zA-Z0-9]*")
   - name: Build Terraform plan 2
     set_fact:
       hostvars.wlans.usb: "{{hostvars.wlans.usb + {'name': item}}}"
-    loop: hostvars['ansible_facts']['ansible_interfaces']
+    loop: ansible_facts['ansible_interfaces']
     when: item | regex_search("^wlx[a-zA-Z0-9]*")
   - name: Build template
     template:
