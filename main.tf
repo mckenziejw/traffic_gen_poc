@@ -59,7 +59,8 @@ resource "lxd_network" "wifi4" {
 
 resource "lxd_instance" "wifi_client_1" {
     name = "wifi-client-1"
-    image = "kali-wifi"
+
+    image = "Ubuntu:20.04"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -93,7 +94,7 @@ resource "lxd_instance" "wifi_client_1" {
 
 resource "lxd_instance" "wifi_client_2" {
     name = "wifi-client-2"
-    image = "kali-wifi"
+    image = "Ubuntu:20.04"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -127,7 +128,7 @@ resource "lxd_instance" "wifi_client_2" {
 
 resource "lxd_instance" "wifi_client_3" {
     name = "wifi-client-3"
-    image = "kali-wifi"
+    image = "Ubuntu:20.04"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -162,7 +163,7 @@ resource "lxd_instance" "wifi_client_3" {
 
 resource "lxd_instance" "wifi_client_4" {
     name = "wifi-client-4"
-    image = "kali-wifi"
+    image = "Ubuntu:20.04"
     type = "container"
     remote = "lxd_host_1"
     running = true
