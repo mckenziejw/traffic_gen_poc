@@ -39,12 +39,6 @@
   - name: Bootstrap LXD
     raw: cat lxd_preseed.yml | lxd init --preseed
     become: true
-  # - name: Change interface names
-  #   copy:
-  #     src: 01-networkmanager-all.yaml
-  #     dest: /etc/netplan/01-networkmanager-all.yaml
-  #     owner: lab
-  #     mode: u=rw,g=rw
   - name: download traffic_gen_poc
     git:
       repo: 'https://github.com/mckenziejw/traffic_gen_poc'
@@ -52,13 +46,13 @@
   - name: Build Terraform plan 1
     set_fact:
         wlans:
-          onboard: "{{hostvars.wlans.onboard + {'name': item}}}"
+          onboard: "{{wlans.onboard + {'name': item}}}"
     with_items: ansible_interfaces
    # when: item | regex_search("^wlp[a-zA-Z0-9]*")
   - name: Build Terraform plan 2
     set_fact:
         wlans:
-          usb: "{{hostvars.wlans.usb + {'name': item}}}"
+          usb: "{{wlans.usb + {'name': item}}}"
     with_items: ansible_interfaces
     #when: item | regex_search("^wlx[a-zA-Z0-9]*")
   - name: debug
