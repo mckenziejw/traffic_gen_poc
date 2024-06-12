@@ -60,6 +60,9 @@
       hostvars.wlans.usb: "{{hostvars.wlans.usb + {'name': item}}}"
     with_items: ansible_interfaces
     when: item | regex_search("^wlx[a-zA-Z0-9]*")
+  - name: debug
+    debug:
+      var: host_vars
   - name: Build template
     template:
       src: templates/main.tf.j2
