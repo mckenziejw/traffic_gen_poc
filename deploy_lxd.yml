@@ -62,7 +62,7 @@
     when: item | regex_search("^wlx[a-zA-Z0-9]*")
   - name: debug
     debug:
-      var: host_vars
+      var: hostvars
   - name: Build template
     template:
       src: templates/main.tf.j2
