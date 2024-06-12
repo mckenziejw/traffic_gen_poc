@@ -5,4 +5,7 @@ all_hosts:
 lxd_hosts:
   hosts:
     lxd-testbed:
+wifi_hosts:
+  hosts:
+    wifi-host1:
     

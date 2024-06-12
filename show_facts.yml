@@ -49,21 +49,12 @@
     git:
       repo: 'https://github.com/mckenziejw/traffic_gen_poc'
       dest: '/home/lab/traffic_gen_poc'
-  - name: Build Terraform plan 1
+  - name: Build Terraform plan
     set_fact:
-      hostvars.wlans.onboard:
-        - name: item
-    loop: hostvars['ansible_facts']['ansible_interfaces']
-    when: item | regex_search("^wlp[a-zA-Z0-9]*")
-  - name: Build Terraform plan 2
-    set_fact:
-      hostvars.wlans.usb: "{{hostvars.wlans.usb + {'name': item}}}"
-    loop: hostvars['ansible_facts']['ansible_interfaces']
-    when: item | regex_search("^wlx[a-zA-Z0-9]*")
-  - name: Build template
-    template:
-      src: templates/main.tf.j2
-      dest: main.tf
+
+    loop:
+      
+    when:
   # - name: Create netplan
   #   command: python3 /home/lab/traffic_gen_poc/build_netplan.py
   #   become: true
