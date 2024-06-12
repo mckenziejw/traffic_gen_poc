@@ -3,7 +3,7 @@ config:
   core.trust_password: lab123
 networks:
 - config:
-    ipv4.address: auto
+    ipv4.address: 10.120.0.1/24
     ipv6.address: auto
   description: ""
   name: lxdbr0
