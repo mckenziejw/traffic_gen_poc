@@ -12,9 +12,9 @@ def main():
     client.connect('10.210.14.1', username='lab', password='lab123')
 
     stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
-
-    wifis = str.split(stdout, "\n")
-    print(wifis)
+    wifis=[]
+    for line in stdout:
+        wifis.append(line.strip('\n'))
 
     client.close()
 
