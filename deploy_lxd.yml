@@ -43,27 +43,28 @@
     git:
       repo: 'https://github.com/mckenziejw/traffic_gen_poc'
       dest: '/home/lab/traffic_gen_poc'
-  - name: Build Terraform plan 1
-    set_fact:
-        wlans:
-          onboard: "{{wlans.onboard + [{'name': item}]}}"
-          usb: "{{wlans.usb}}"
-    loop: "{{ansible_interfaces}}"
-    when: item | regex_search("^wlp[a-zA-Z0-9]*")
-  - name: Build Terraform plan 2
-    set_fact:
-        wlans:
-          onboard: "{{wlans.onboard}}"
-          usb: "{{wlans.usb + [{'name': item}]}}"
-    loop: "{{ansible_interfaces}}"
-    when: item | regex_search("^wlx[a-zA-Z0-9]*")
-  - name: debug
-    debug:
-      var: wlans
-  - name: Build template
-    template:
-      src: templates/main.tf.j2
-      dest: main.tf
+  # - name: Build Terraform plan 1
+  #   set_fact:
+  #       wlans:
+  #         onboard: "{{wlans.onboard + [{'name': item}]}}"
+  #         usb: "{{wlans.usb}}"
+  #   loop: "{{ansible_interfaces}}"
+  #   when: item | regex_search("^wlp[a-zA-Z0-9]*")
+  # - name: Build Terraform plan 2
+  #   set_fact:
+  #       wlans:
+  #         onboard: "{{wlans.onboard}}"
+  #         usb: "{{wlans.usb + [{'name': item}]}}"
+  #   loop: "{{ansible_interfaces}}"
+  #   when: item | regex_search("^wlx[a-zA-Z0-9]*")
+  # - name: debug
+  #   debug:
+  #     var: wlans
+  # - name: Build template
+  #   template:
+  #     src: templates/main.tf.j2
+  #     dest: main.tf
+  #   delegate_to: localhost
   # - name: Create netplan
   #   command: python3 /home/lab/traffic_gen_poc/build_netplan.py
   #   become: true
