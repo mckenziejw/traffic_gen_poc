@@ -13,8 +13,8 @@ def main():
 
     stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
 
-    for line in stdout:
-        print(line.strip('\n'))
+    wifis = str.split(stdout, "\n")
+    print(wifis)
 
     client.close()
 
