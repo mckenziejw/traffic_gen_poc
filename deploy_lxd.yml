@@ -48,14 +48,14 @@
         wlans:
           onboard: "{{wlans.onboard + [{'name': item}]}}"
           usb: "{{wlans.usb}}"
-    with_items: ansible_interfaces
+    loop: ansible_interfaces
    # when: item | regex_search("^wlp[a-zA-Z0-9]*")
   - name: Build Terraform plan 2
     set_fact:
         wlans:
           onboard: "{{wlans.onboard}}"
           usb: "{{wlans.usb + [{'name': item}]}}"
-    with_items: ansible_interfaces
+    loop: ansible_interfaces
     #when: item | regex_search("^wlx[a-zA-Z0-9]*")
   - name: debug
     debug:
