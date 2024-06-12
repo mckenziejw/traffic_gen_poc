@@ -24,7 +24,7 @@ def main():
     count=1
     
     data = {'wifis':[]}
-    for intf in data:
+    for intf in wifis_raw:
         if re.match('wlp[a-zA-Z0-9]*', intf):
             data['wifis'].append(
                 {
