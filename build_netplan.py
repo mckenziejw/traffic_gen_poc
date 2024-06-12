@@ -15,7 +15,7 @@ def main():
     wifis=[]
     for line in stdout:
         wifis.append(line.strip('\n'))
-
+    print(wifis)
     client.close()
 
 if __name__ == "__main__":
