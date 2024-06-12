@@ -28,6 +28,6 @@ for intf in w_list:
         )
         count += 1
 
-with open('/etc/netplan/01-network-manager-all.yaml', 'w') as out_file:
+with open('/home/lab/01-network-manager-all.yaml', 'w') as out_file:
     output = template.render(wifis)
     out_file.write(output)

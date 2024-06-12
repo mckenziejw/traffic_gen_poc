@@ -52,9 +52,9 @@
   - name: Create netplan
     command: python3 /home/lab/traffic_gen_poc/build_netplan.py
     become: true
-  - name: reboot
-    reboot:
-    become: true
+#  - name: reboot
+#    reboot:
+#    become: true
 
 # - name: Configure wired hosts
 #   hosts: wired_hosts
