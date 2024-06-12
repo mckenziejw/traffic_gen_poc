@@ -6,17 +6,20 @@ import re
 import paramiko
 import time
 
-client = paramiko.SSHClient()
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-client.connect('10.210.14.1', username='lab', password='lab123')
+def main():
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect('10.210.14.1', username='lab', password='lab123')
 
-stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
+    stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
 
-for line in stdout:
-    print(line.strip('\n'))
+    for line in stdout:
+        print(line.strip('\n'))
 
-client.close()
+    client.close()
 
+if __name__ == "__main__":
+    main()
 # environment = Environment(loader=FileSystemLoader("/home/lab/traffic_gen_poc/templates/"))
 # template = environment.get_template("main.tf.j2")
 
