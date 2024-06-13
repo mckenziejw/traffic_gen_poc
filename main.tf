@@ -13,7 +13,7 @@ provider "lxd" {
     remote {
         name = "lxd_host_1"
         scheme = "https"
-        address = "10.210.14.1"
+        address = "wifi-host"
         port = "8443"
         password = "lab123"
         default = true
@@ -60,7 +60,7 @@ resource "lxd_network" "wifi4" {
 resource "lxd_instance" "wifi_client_1" {
     name = "wifi-client-1"
 
-    image = "Ubuntu:20.04"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -94,7 +94,7 @@ resource "lxd_instance" "wifi_client_1" {
 
 resource "lxd_instance" "wifi_client_2" {
     name = "wifi-client-2"
-    image = "Ubuntu:20.04"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -128,7 +128,7 @@ resource "lxd_instance" "wifi_client_2" {
 
 resource "lxd_instance" "wifi_client_3" {
     name = "wifi-client-3"
-    image = "Ubuntu:20.04"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true
@@ -163,7 +163,7 @@ resource "lxd_instance" "wifi_client_3" {
 
 resource "lxd_instance" "wifi_client_4" {
     name = "wifi-client-4"
-    image = "Ubuntu:20.04"
+    image = "kali-wifi"
     type = "container"
     remote = "lxd_host_1"
     running = true

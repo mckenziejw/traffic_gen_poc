@@ -9,7 +9,7 @@ import time
 def main():
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect('10.210.14.1', username='lab', password='lab123')
+    client.connect('wifi-host', username='lab', password='lab123')
 
     stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
     wifis_raw=[]

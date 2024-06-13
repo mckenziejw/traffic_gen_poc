@@ -5,6 +5,7 @@ networks:
 - config:
     ipv4.address: 10.120.0.1/24
     ipv6.address: auto
+    ipv4.nat: true
   description: ""
   name: lxdbr0
   type: ""
