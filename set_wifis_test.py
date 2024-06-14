@@ -33,7 +33,7 @@ exit_code,s_out,s_err = ap.execute(
 print(exit_code,s_out,s_err)
 
 exit_code,s_out,s_err = ap.execute(
-    commands = ['nmcli','device','eth1','hotspot','con-name',ssid, 'ssid', ssid, 'band','ac','password', psk]
+    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'band','ac','password', psk]
 )
 print(exit_code,s_out,s_err)
 
