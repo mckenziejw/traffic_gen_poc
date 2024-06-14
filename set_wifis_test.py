@@ -30,7 +30,7 @@ ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
 psk = 'lab123lab123'
 print("Installing AP dependencies")
 exit_code,s_out,s_err = ap.execute(
-    commands = ['apt','install','-y','network-manager']
+    commands = ['apt','install','-y','network-manager', 'inetutils-ping']
 )
 print(exit_code,s_out,s_err)
 print("Configuring AP hotspot with name {}".format(ssid))
@@ -74,4 +74,9 @@ for i in range(2,5):
             print('wifi-client-{} WPA DHCP manual configuration worked'.format(i))
         else:
             print('wifi-client-{} WPA DHCP manual configuration failed'.format(i))
+    print("Running ping test for wifi-client-{}".format(i))
+    exit_code,s_out,s_err = c.execute(
+        commands = ['ping','-c', '4','10.42.0.1']
+        )
+    print(exit_code,s_out,s_err)
 
