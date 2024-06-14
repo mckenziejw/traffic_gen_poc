@@ -34,6 +34,7 @@ print(exit_code,s_out,s_err)
 
 for i in range(2,5):
     c = client.instances.get('wifi-client-{}'.format(i))
+    f = c.FilesManager(c)
     put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",data)
     exit_code,s_out,s_err = c.execute(
         commands = ['wpa_passphrase', ssid, psk], stdout_handler=put_file
