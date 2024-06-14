@@ -30,28 +30,29 @@ ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
 psk = 'lab123lab123'
 print("Installing AP dependencies")
 exit_code,s_out,s_err = ap.execute(
-    commands = ['apt','install','-y','network-manager'']
+    commands = ['apt','install','-y','network-manager']
 )
 print(exit_code,s_out,s_err)
 print("Configuring AP hotspot with name {}".format(ssid))
 exit_code,s_out,s_err = ap.execute(
-    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'password', psk, 'autoconnect','yest']
+    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'password', psk]
 )
 print(exit_code,s_out,s_err)
 if(exit_code == 0):
     print("AP Successfully enabled")
 else:
     print("AP initialization failed")
+
 time.sleep(10)
 for i in range(2,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)
-    put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",data)
+    put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant-eth1.conf",data)
     exit_code,s_out,s_err = c.execute(
         commands = ['wpa_passphrase', ssid, psk], stdout_handler=put_file
     )
     exit_code,s_out,s_err = c.execute(
-        commands = ['wpa_supplicant','-B','-i','eth1','-c','/etc/wpa_supplicant/wpa_supplicant.conf']
+        commands = ['wpa_supplicant','-B','-i','eth1','-c','/etc/wpa_supplicant/wpa_supplicant-eth1.conf']
     )
     if(exit_code == 0):
         print('wifi-client-{} WPA supplicant successfully configured'.format(i))
@@ -77,6 +78,11 @@ for i in range(2,5):
     print("Running ping test for wifi-client-{}".format(i))
     exit_code,s_out,s_err = c.execute(
         commands = ['ping','-c', '4','10.42.0.1']
+        )
+    print(exit_code,s_out,s_err)
+    # Enabling wpa_supplicant service
+    exit_code,s_out,s_err = c.execute(
+        commands = ['systemctl','enable','wpa_supplicant@eth1.service']
         )
     print(exit_code,s_out,s_err)
 
