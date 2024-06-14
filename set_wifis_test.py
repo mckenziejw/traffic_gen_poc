@@ -24,7 +24,7 @@ args = parser.parse_args()
 client.authenticate('lab123')
 ## Provision the AP
 ap = client.instances.get('wifi-client-1')
-pprint(ap.state().network['eth0'])
+pprint(ap.state().network['eth1'])
 
 # exit_code,s_out,s_err = ap.execute(
 #     commands = ['nmcli','device','eth1','hotspot','con-name','']
