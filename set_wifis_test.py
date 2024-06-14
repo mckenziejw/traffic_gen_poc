@@ -1,5 +1,6 @@
 from pylxd import Client
 from pylxd.models.instance import Instance
+from pprint import pprint
 
 import argparse
 
@@ -23,7 +24,7 @@ args = parser.parse_args()
 client.authenticate('lab123')
 ## Provision the AP
 ap = client.instances.get('wifi-client-1')
-print(ap.state().network['eth0'])
+pprint(ap.state().network['eth0'])
 
 # exit_code,s_out,s_err = ap.execute(
 #     commands = ['nmcli','device','eth1','hotspot','con-name','']
