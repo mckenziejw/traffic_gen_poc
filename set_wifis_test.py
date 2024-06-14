@@ -4,7 +4,8 @@ from pprint import pprint
 import time
 
 import argparse
-
+import warnings
+warnings.filterwarnings('ignore')
 # openssl req -x509 -newkey rsa:2048 -keyout lxd.key -nodes -out lxd.crt -subj "/CN=lxd.local"
 
 client = Client(
@@ -52,12 +53,25 @@ for i in range(2,5):
     exit_code,s_out,s_err = c.execute(
         commands = ['wpa_supplicant','-B','-i','eth1','-c','/etc/wpa_supplicant/wpa_supplicant.conf']
     )
-    print(exit_code,s_out,s_err)
-    time.sleep(20)
-    pprint(c.state().network['eth1'])
-    # if(c.state().network['eth1']['address'] == ''):
-    #     exit_code,s_out,s_err = c.execute(
-    #     commands = ['dhclient','eth1']
-    #     )
-    #     print(exit_code,s_out,s_err)
+    if(exit_code == 0):
+        print('wifi-client-{} WPA supplicant successfully configured'.format(i))
+    else:
+        print('wifi-client-{} WPA supplicant failed'.format(i))
+        print(exit_code,s_out,s_err)
+    time.sleep(10)
+    #pprint(c.state().network['eth1'])
+    ip_assigned = False
+    for a in c.state().network['eth1']['addresses']:
+        if a['family'] == 'inet' and a['address'] != '':
+            ip_assigned = True
+            print('wifi-client-{} WPA IP Assigned'.format(i))
+    if not ip_assigned:
+        print('wifi-client-{} WPA DHCP did not start, running manually...'.format(i))
+        exit_code,s_out,s_err = c.execute(
+        commands = ['dhclient','eth1']
+        )
+        if(exit_code == 0):
+            print('wifi-client-{} WPA DHCP manual configuration worked'.format(i))
+        else:
+            print('wifi-client-{} WPA DHCP manual configuration failed'.format(i))
 
