@@ -10,7 +10,7 @@ Add lab to lxd group
             trigger = "once"
         }
         "b" = {
-            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl wireless-tools git kali-tools-wireless inetutils-ping openssh-server"]
+            command = ["/bin/bash", "-c", "apt install -y wpasupplicant python3 curl wireless-tools git kali-tools-wireless inetutils-ping openssh-server cron"]
             trigger = "once"
         }
         "c" = {
