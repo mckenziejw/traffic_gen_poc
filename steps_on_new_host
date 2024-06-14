@@ -1,7 +1,7 @@
 Add lab to passwordless sudo
 Add lab to lxd group
 
-
+** add wifi-host to /etc/hosts
 
     execs = {
 
