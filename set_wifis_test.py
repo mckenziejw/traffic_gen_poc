@@ -30,12 +30,12 @@ ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
 psk = 'lab123lab123'
 print("Installing AP dependencies")
 exit_code,s_out,s_err = ap.execute(
-    commands = ['apt','install','-y','network-manager', 'inetutils-ping']
+    commands = ['apt','install','-y','network-manager'']
 )
 print(exit_code,s_out,s_err)
 print("Configuring AP hotspot with name {}".format(ssid))
 exit_code,s_out,s_err = ap.execute(
-    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'password', psk]
+    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'password', psk, 'autoconnect','yest']
 )
 print(exit_code,s_out,s_err)
 if(exit_code == 0):
