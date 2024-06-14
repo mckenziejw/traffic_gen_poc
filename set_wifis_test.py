@@ -54,7 +54,7 @@ for i in range(2,5):
     )
     print(exit_code,s_out,s_err)
     time.sleep(20)
-    if(c.state(),network['eth1']['address'] == ''):
+    if(c.state().network['eth1']['address'] == ''):
         exit_code,s_out,s_err = c.execute(
         commands = ['dhclient','eth1']
         )
