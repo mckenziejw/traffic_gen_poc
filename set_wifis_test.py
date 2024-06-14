@@ -28,6 +28,11 @@ ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
 psk = 'lab123lab123'
 
 exit_code,s_out,s_err = ap.execute(
+    commands = ['apt','install','-y','network-manager']
+)
+print(exit_code,s_out,s_err)
+
+exit_code,s_out,s_err = ap.execute(
     commands = ['nmcli','device','eth1','hotspot','con-name',ssid, 'ssid', ssid, 'band','ac','password', psk]
 )
 print(exit_code,s_out,s_err)
