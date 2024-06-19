@@ -1,3 +1,5 @@
+## For testing the reboot, run `nmcli connection modify <connection> connection.autoconnect yes` on client-1
+
 from pylxd import Client
 from pylxd.models.instance import Instance
 from pprint import pprint
@@ -81,5 +83,3 @@ for i in range(2,5):
         commands = ['ping','-c', '4','10.42.0.1']
         )
     print(exit_code,s_out,s_err)
-    
-
