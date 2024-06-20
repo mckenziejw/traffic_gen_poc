@@ -28,7 +28,7 @@ resource "docker_network" "services_net_1" {
     name = "services_net"
     driver = "ipvlan"
 
-    ipam_config = {
+    ipam_config {
         subnet = "10.41.0.0/24"
         ip_range = "10.41.0.0/24"
         gateway = "10.41.0.1"
