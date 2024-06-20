@@ -75,21 +75,16 @@ resource "docker_container" "web_client_1" {
     image = "autofunbot/tg_web_client"
     hostname = "web-client-1"
     host  {
-        host = "web-client-2"
+        host = "web-server-2"
         ip = "10.42.0.2"
     }
     host {
-        host = "web-client-3"
+        host = "web-server-3"
         ip = "10.43.0.2"
-    }
-
-    networks_advanced {
-        name = "services_net"
-        ipv4_address = "10.41.0.2"
     }
     env = [
         "INTERVAL=5",
-        "TARGETS=web-client-2 web-client-3"
+        "TARGETS=web-server-2 web-server-3"
     ]
 }
 resource "docker_container" "web_client_2" {
@@ -98,21 +93,16 @@ resource "docker_container" "web_client_2" {
     image = "autofunbot/tg_web_client"
     hostname = "web-client-2"
     host  {
-        host = "web-client-1"
+        host = "web-server-1"
         ip = "10.41.0.2"
     }
     host {
-        host = "web-client-3"
+        host = "web-server-3"
         ip = "10.43.0.2"
-    }
-
-    networks_advanced {
-        name = "services_net"
-        ipv4_address = "10.42.0.2"
     }
     env = [
         "INTERVAL=5",
-        "TARGETS=web-client-3 web-client-1"
+        "TARGETS=web-server-3 web-server-1"
     ]
 }
 resource "docker_container" "web_client_3" {
@@ -121,11 +111,76 @@ resource "docker_container" "web_client_3" {
     image = "autofunbot/tg_web_client"
     hostname = "web-client-3"
     host  {
-        host = "web-client-2"
+        host = "web-server-2"
         ip = "10.42.0.2"
     }
     host {
-        host = "web-client-1"
+        host = "web-server-1"
+        ip = "10.41.0.2"
+    }
+
+    env = [
+        "INTERVAL=5",
+        "TARGETS=web-server-2 web-server-1"
+    ]
+}
+resource "docker_container" "web_server_1" {
+    provider = docker.client1
+    name = "web-server"
+    image = "autofunbot/tg_web_server"
+    hostname = "web-server-1"
+    host  {
+        host = "web-server-2"
+        ip = "10.42.0.2"
+    }
+    host {
+        host = "web-server-3"
+        ip = "10.43.0.2"
+    }
+
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.41.0.2"
+    }
+    env = [
+        "PORT=80",
+        "TARGETS=web-client-2 web-client-3"
+    ]
+}
+resource "docker_container" "web_server_2" {
+    provider = docker.client2
+    name = "web-server"
+    image = "autofunbot/tg_web_server"
+    hostname = "web-server-2"
+    host  {
+        host = "web-server-1"
+        ip = "10.41.0.2"
+    }
+    host {
+        host = "web-server-3"
+        ip = "10.43.0.2"
+    }
+
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.42.0.2"
+    }
+    env = [
+        "PORT=80",
+        "TARGETS=web-client-1 web-client-3"
+    ]
+}
+resource "docker_container" "web_server_3" {
+    provider = docker.client3
+    name = "web-server"
+    image = "autofunbot/tg_web_server"
+    hostname = "web-server-3"
+    host  {
+        host = "web-server-2"
+        ip = "10.42.0.2"
+    }
+    host {
+        host = "web-server-1"
         ip = "10.41.0.2"
     }
 
@@ -134,7 +189,7 @@ resource "docker_container" "web_client_3" {
         ipv4_address = "10.43.0.2"
     }
     env = [
-        "INTERVAL=5",
+        "PORT=80",
         "TARGETS=web-client-2 web-client-1"
     ]
 }
