@@ -87,10 +87,10 @@ resource "docker_container" "web_client_1" {
         name = "services_net"
         ipv4_address = "10.41.0.2"
     }
-    env = {
-        INTERVAL = "5"
-        TARGETS = "web-client-2 web-client-3"
-    }
+    env = [
+        "INTERVAL=5",
+        "TARGETS=web-client-2 web-client-3"
+    ]
 }
 resource "docker_container" "web_client_2" {
     provider = docker.client2
@@ -110,10 +110,10 @@ resource "docker_container" "web_client_2" {
         name = "services_net"
         ipv4_address = "10.42.0.2"
     }
-    env = {
-        INTERVAL = "5"
-        TARGETS = "web-client-1 web-client-3"
-    }
+    env = [
+        "INTERVAL=5",
+        "TARGETS=web-client-3 web-client-1"
+    ]
 }
 resource "docker_container" "web_client_3" {
     provider = docker.client3
@@ -133,8 +133,8 @@ resource "docker_container" "web_client_3" {
         name = "services_net"
         ipv4_address = "10.43.0.2"
     }
-    env = {
-        INTERVAL = "5"
-        TARGETS = "web-client-2 web-client-1"
-    }
+    env = [
+        "INTERVAL=5",
+        "TARGETS=web-client-2 web-client-1"
+    ]
 }
