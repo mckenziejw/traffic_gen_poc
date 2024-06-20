@@ -2,6 +2,7 @@
 sql_client:
   targets: 10.42.0.3 10.43.0.3 
 web_client:
+  hostname: web-client-1
   targets: 10.42.0.2 10.43.0.2
 ftp_client:
   targets: 10.42.0.4 10.43.0.4

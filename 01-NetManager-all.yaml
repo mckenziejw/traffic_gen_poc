@@ -1,0 +1,16 @@
+network:
+  version: 2
+  ethernets:
+    eno1:
+      renderer: NetworkManager
+      match:
+        name: "eno1"
+      addresses:
+      - "{{ip_address}}/29"
+      routes:
+      - to: default
+        via: {{gateway_ip}}
+      nameservers:
+        addresses:
+        - 8.8.8.8
+      wakeonlan: true

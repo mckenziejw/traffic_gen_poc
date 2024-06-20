@@ -7,5 +7,5 @@ lxd_hosts:
     lxd-testbed:
 wifi_hosts:
   hosts:
-    wifi-host1:
+    wifi-host:
     
