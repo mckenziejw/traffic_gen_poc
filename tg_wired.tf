@@ -126,6 +126,10 @@ resource "docker_container" "web_client_1" {
         "TARGETS=web-server-2 web-server-3",
         "MQTT_SERVER=10.41.0.7"
     ]
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.41.0.100"
+    }
     depends_on = [docker_network.services_net_1, docker_container.mqtt_server_1, docker_image.web_client_1]
 }
 resource "docker_container" "web_client_2" {
@@ -146,6 +150,10 @@ resource "docker_container" "web_client_2" {
         "TARGETS=web-server-3 web-server-1",
         "MQTT_SERVER=10.42.0.7"
     ]
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.42.0.100"
+    }
     depends_on = [docker_network.services_net_2, docker_container.mqtt_server_2, docker_image.web_client_2]
 }
 resource "docker_container" "web_client_3" {
@@ -167,6 +175,10 @@ resource "docker_container" "web_client_3" {
         "TARGETS=web-server-2 web-server-1",
         "MQTT_SERVER=10.43.0.7"
     ]
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.43.0.100"
+    }
     depends_on = [docker_network.services_net_3, docker_container.mqtt_server_3, docker_image.web_client_3]
 }
 resource "docker_container" "web_server_1" {
