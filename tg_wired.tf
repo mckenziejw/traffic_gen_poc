@@ -11,6 +11,10 @@ terraform {
   }
 }
 
+provider "remote" {
+    max_sessions = 3
+}
+
 provider "docker" {
   alias    = "client1"
   host     = "ssh://lab@client1:22"
