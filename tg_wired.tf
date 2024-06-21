@@ -111,7 +111,7 @@ resource "docker_network" "services_net_3" {
 resource "docker_container" "web_client_1" {
     provider = docker.client1
     name = "web-client"
-    image = docker_image.web_client_1
+    image = docker_image.web_client_1.image_id
     hostname = "web-client-1"
     host  {
         host = "web-server-2"
@@ -131,7 +131,7 @@ resource "docker_container" "web_client_1" {
 resource "docker_container" "web_client_2" {
     provider = docker.client2
     name = "web-client"
-    image = docker_image.web_client_2
+    image = docker_image.web_client_2.image_id
     hostname = "web-client-2"
     host  {
         host = "web-server-1"
@@ -151,7 +151,7 @@ resource "docker_container" "web_client_2" {
 resource "docker_container" "web_client_3" {
     provider = docker.client3
     name = "web-client"
-    image = docker_image.web_client_3
+    image = docker_image.web_client_3.image_id
     hostname = "web-client-3"
     host  {
         host = "web-server-2"
