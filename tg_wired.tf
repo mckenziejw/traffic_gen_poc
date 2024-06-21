@@ -211,6 +211,7 @@ resource "remote_file" "mqtt_conf_1" {
         host = "10.41.0.254"
         user = "lab"
         password = "lab123"
+        agent = true
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -221,6 +222,7 @@ resource "remote_file" "mqtt_conf_2" {
         host = "10.42.0.254"
         user = "lab"
         password = "lab123"
+        agent = true
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -232,6 +234,7 @@ resource "remote_file" "mqtt_conf_3" {
         host = "10.43.0.254"
         user = "lab"
         password = "lab123"
+        agent = true
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
