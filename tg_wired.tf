@@ -249,10 +249,9 @@ resource "docker_container" "mqtt_server_1"{
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
-    volumes {
-        container_path = "/mosquitto/config"
-        host_path = "/home/lab/mosquitto"
-        volume_name = "mqtt_conf"
+    mounts {
+        target = "/mosquitto/config/mosquitto.conf"
+        source = "/home/lab/mosquitto/mosquitto.conf"
     }
 
     networks_advanced {
@@ -266,10 +265,9 @@ resource "docker_container" "mqtt_server_2"{
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
-    volumes {
-        container_path = "/mosquitto/config"
-        host_path = "/home/lab/mosquitto"
-        volume_name = "mqtt_conf"
+    mounts {
+        target = "/mosquitto/config/mosquitto.conf"
+        source = "/home/lab/mosquitto/mosquitto.conf"
     }
 
     networks_advanced {
@@ -283,10 +281,9 @@ resource "docker_container" "mqtt_server_3"{
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
-    volumes {
-        container_path = "/mosquitto/config"
-        host_path = "/home/lab/mosquitto"
-        volume_name = "mqtt_conf"
+    mounts {
+        target = "/mosquitto/config/mosquitto.conf"
+        source = "/home/lab/mosquitto/mosquitto.conf"
     }
 
     networks_advanced {
