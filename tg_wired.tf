@@ -206,7 +206,7 @@ resource "remote_file" "mqtt_conf_1" {
     conn {
         host = "10.41.0.254"
         user = "lab"
-        private_key_path = "/home/lab/.ssh/id_rsa"
+        password = "lab123"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -216,7 +216,7 @@ resource "remote_file" "mqtt_conf_2" {
     conn {
         host = "10.42.0.254"
         user = "lab"
-        private_key_path = "/home/lab/.ssh/id_rsa"
+        password = "lab123"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -227,7 +227,7 @@ resource "remote_file" "mqtt_conf_3" {
     conn {
         host = "10.43.0.254"
         user = "lab"
-        private_key_path = "/home/lab/.ssh/id_rsa"
+        password = "lab123"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
