@@ -39,7 +39,7 @@ resource "docker_registry_image" "web_client_1"{
 resource "docker_image" "web_client_1" {
     provider = docker.client1
     name = data.docker_registry_image.web_client_1.name
-    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+    pull_triggers = [data.docker_registry_image.web_client_1.sha256_digest]
 }
 
 resource "docker_registry_image" "web_client_2"{
@@ -50,7 +50,7 @@ resource "docker_registry_image" "web_client_2"{
 resource "docker_image" "web_client_2" {
     provider = docker.client2
     name = data.docker_registry_image.web_client_2.name
-    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+    pull_triggers = [data.docker_registry_image.web_client_2.sha256_digest]
 }
 resource "docker_registry_image" "web_client_3"{
     provider = docker.client3
@@ -60,7 +60,7 @@ resource "docker_registry_image" "web_client_3"{
 resource "docker_image" "web_client_3" {
     provider = docker.client3
     name = data.docker_registry_image.web_client_3.name
-    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+    pull_triggers = [data.docker_registry_image.web_client_3.sha256_digest]
 }
 resource "docker_network" "services_net_1" {
     provider = docker.client1
