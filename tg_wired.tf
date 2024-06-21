@@ -187,6 +187,7 @@ resource "docker_container" "web_server_1" {
         name = "services_net"
         ipv4_address = "10.41.0.2"
     }
+    wait = true
     env = [
         "PORT=80",
         "TARGETS=web-client-2 web-client-3"
@@ -211,6 +212,7 @@ resource "docker_container" "web_server_2" {
         name = "services_net"
         ipv4_address = "10.42.0.2"
     }
+    wait = true
     env = [
         "PORT=80",
         "TARGETS=web-client-1 web-client-3"
@@ -235,6 +237,7 @@ resource "docker_container" "web_server_3" {
         name = "services_net"
         ipv4_address = "10.43.0.2"
     }
+    wait = true
     env = [
         "PORT=80",
         "TARGETS=web-client-2 web-client-1"
@@ -290,6 +293,7 @@ resource "docker_container" "mqtt_server_1"{
         name = "services_net"
         ipv4_address = "10.41.0.7"
     }
+    depends_on = [ docker_network.services_net_1 ]
 }
 
 resource "docker_container" "mqtt_server_2"{
@@ -307,6 +311,7 @@ resource "docker_container" "mqtt_server_2"{
         name = "services_net"
         ipv4_address = "10.42.0.7"
     }
+    depends_on = [ docker_network.services_net_2 ]
 }
 
 resource "docker_container" "mqtt_server_3"{
@@ -324,4 +329,5 @@ resource "docker_container" "mqtt_server_3"{
         name = "services_net"
         ipv4_address = "10.43.0.7"
     }
+    depends_on = [ docker_network.services_net_3 ]
 }
