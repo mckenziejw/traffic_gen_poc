@@ -1,6 +1,9 @@
 all_hosts:
   hosts:
     lxd-testbed:
+    client1:
+    client2:
+    client3:
     #lappy:
 lxd_hosts:
   hosts:
@@ -8,4 +11,9 @@ lxd_hosts:
 wifi_hosts:
   hosts:
     wifi-host:
+tg_hosts:
+  hosts:
+    client1:
+    client2:
+    client3:
     

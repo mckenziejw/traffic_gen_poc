@@ -1,0 +1,13 @@
+---
+- name: Install config files
+  hosts: tg_hosts
+  vars:
+    - ansible_become_password: lab123
+
+  tasks:
+  - name: Install MQTT config
+    template:
+      src: templates/mosquitto.conf.j2
+      dest: /home/lab/mosquitto.conf
+      owner: lab
+      mode: '0644'
