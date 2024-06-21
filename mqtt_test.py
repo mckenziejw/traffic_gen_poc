@@ -30,7 +30,7 @@ def connect_mqtt():
 
 def publish(client):
     msg_count = 1
-    msg = {'action':'go'}
+    msg = "{'action':'go'}"
     result = client.publish(topic,msg)
     # while True:
     #      time.sleep(1)
