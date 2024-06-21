@@ -93,7 +93,7 @@ resource "docker_container" "web_client_1" {
     env = [
         "INTERVAL=5",
         "TARGETS=web-server-2 web-server-3",
-        "MQTT_BROKER=10.41.0.7:1883"
+        "MQTT_BROKER=10.41.0.7"
     ]
     depends_on = [docker_network.services_net_1]
 }
@@ -112,7 +112,8 @@ resource "docker_container" "web_client_2" {
     }
     env = [
         "INTERVAL=5",
-        "TARGETS=web-server-3 web-server-1"
+        "TARGETS=web-server-3 web-server-1",
+        "MQTT_BROKER=10.42.0.7"
     ]
     depends_on = [docker_network.services_net_2]
 }
@@ -133,7 +134,7 @@ resource "docker_container" "web_client_3" {
     env = [
         "INTERVAL=5",
         "TARGETS=web-server-2 web-server-1",
-        "MQTT_BROKER=10.42.0.7:1883"
+        "MQTT_BROKER=10.43.0.7"
     ]
     depends_on = [docker_network.services_net_3]
 }
@@ -157,8 +158,7 @@ resource "docker_container" "web_server_1" {
     }
     env = [
         "PORT=80",
-        "TARGETS=web-client-2 web-client-3",
-        "MQTT_BROKER=10.43.0.7:1883"
+        "TARGETS=web-client-2 web-client-3"
     ]
     depends_on = [docker_network.services_net_1]
 }
