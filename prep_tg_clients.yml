@@ -5,6 +5,10 @@
     - ansible_become_password: lab123
 
   tasks:
+  - name: Create mosquitto dir
+    file:
+      path: /home/lab/mosquitto
+      state: directory
   - name: Install MQTT config
     template:
       src: templates/mosquitto.conf.j2
