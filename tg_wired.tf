@@ -31,7 +31,7 @@ provider "docker" {
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
 }
 
-resource "docker_registry_image" "web_client_1"{
+data "docker_registry_image" "web_client_1"{
     provider = docker.client1
     name = "autofunbot/tg_web_client:latest"
 }
@@ -42,7 +42,7 @@ resource "docker_image" "web_client_1" {
     pull_triggers = [data.docker_registry_image.web_client_1.sha256_digest]
 }
 
-resource "docker_registry_image" "web_client_2"{
+data "docker_registry_image" "web_client_2"{
     provider = docker.client2
     name = "autofunbot/tg_web_client:latest"
 }
@@ -52,7 +52,7 @@ resource "docker_image" "web_client_2" {
     name = data.docker_registry_image.web_client_2.name
     pull_triggers = [data.docker_registry_image.web_client_2.sha256_digest]
 }
-resource "docker_registry_image" "web_client_3"{
+data "docker_registry_image" "web_client_3"{
     provider = docker.client3
     name = "autofunbot/tg_web_client:latest"
 }
