@@ -31,6 +31,37 @@ provider "docker" {
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
 }
 
+resource "docker_registry_image" "web_client_1"{
+    provider = docker.client1
+    name = "autofunbot/tg_web_client:latest"
+}
+
+resource "docker_image" "web_client_1" {
+    provider = docker.client1
+    name = data.docker_registry_image.web_client_1.name
+    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+}
+
+resource "docker_registry_image" "web_client_2"{
+    provider = docker.client2
+    name = "autofunbot/tg_web_client:latest"
+}
+
+resource "docker_image" "web_client_2" {
+    provider = docker.client2
+    name = data.docker_registry_image.web_client_2.name
+    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+}
+resource "docker_registry_image" "web_client_3"{
+    provider = docker.client3
+    name = "autofunbot/tg_web_client:latest"
+}
+
+resource "docker_image" "web_client_3" {
+    provider = docker.client3
+    name = data.docker_registry_image.web_client_3.name
+    pull_triggers = [data.docker_registry_image.ubuntu.sha256_digest]
+}
 resource "docker_network" "services_net_1" {
     provider = docker.client1
     name = "services_net"
@@ -80,7 +111,7 @@ resource "docker_network" "services_net_3" {
 resource "docker_container" "web_client_1" {
     provider = docker.client1
     name = "web-client"
-    image = "autofunbot/tg_web_client"
+    image = docker_image.web_client_1
     hostname = "web-client-1"
     host  {
         host = "web-server-2"
@@ -95,12 +126,12 @@ resource "docker_container" "web_client_1" {
         "TARGETS=web-server-2 web-server-3",
         "MQTT_BROKER=10.41.0.7"
     ]
-    depends_on = [docker_network.services_net_1, docker_container.mqtt_server_1]
+    depends_on = [docker_network.services_net_1, docker_container.mqtt_server_1, docker_image.web_client_1]
 }
 resource "docker_container" "web_client_2" {
     provider = docker.client2
     name = "web-client"
-    image = "autofunbot/tg_web_client"
+    image = docker_image.web_client_2
     hostname = "web-client-2"
     host  {
         host = "web-server-1"
@@ -115,12 +146,12 @@ resource "docker_container" "web_client_2" {
         "TARGETS=web-server-3 web-server-1",
         "MQTT_BROKER=10.42.0.7"
     ]
-    depends_on = [docker_network.services_net_2, docker_container.mqtt_server_2]
+    depends_on = [docker_network.services_net_2, docker_container.mqtt_server_2, docker_image.web_client_2]
 }
 resource "docker_container" "web_client_3" {
     provider = docker.client3
     name = "web-client"
-    image = "autofunbot/tg_web_client"
+    image = docker_image.web_client_3
     hostname = "web-client-3"
     host  {
         host = "web-server-2"
@@ -136,7 +167,7 @@ resource "docker_container" "web_client_3" {
         "TARGETS=web-server-2 web-server-1",
         "MQTT_BROKER=10.43.0.7"
     ]
-    depends_on = [docker_network.services_net_3, docker_container.mqtt_server_3]
+    depends_on = [docker_network.services_net_3, docker_container.mqtt_server_3, docker_image.web_client_3]
 }
 resource "docker_container" "web_server_1" {
     provider = docker.client1
