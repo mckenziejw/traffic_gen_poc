@@ -252,6 +252,7 @@ resource "docker_container" "mqtt_server_1"{
     mounts {
         target = "/mosquitto/config/mosquitto.conf"
         source = "/home/lab/mosquitto/mosquitto.conf"
+        type = "bind"
     }
 
     networks_advanced {
@@ -268,6 +269,7 @@ resource "docker_container" "mqtt_server_2"{
     mounts {
         target = "/mosquitto/config/mosquitto.conf"
         source = "/home/lab/mosquitto/mosquitto.conf"
+        type = "bind"
     }
 
     networks_advanced {
@@ -284,6 +286,7 @@ resource "docker_container" "mqtt_server_3"{
     mounts {
         target = "/mosquitto/config/mosquitto.conf"
         source = "/home/lab/mosquitto/mosquitto.conf"
+        type = "bind"
     }
 
     networks_advanced {
