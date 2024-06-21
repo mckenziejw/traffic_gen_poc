@@ -25,7 +25,7 @@ mongo_server:
 wp_server:
   ip: 10.41.0.6
 mqtt_server:
-  ip: 10.21.0.7
+  ip: 10.41.0.7
 server_subnet: 10.41.0.0/24
 server_ip_range: 10.41.0.0/24
 server_gateway: 10.41.0.1
