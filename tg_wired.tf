@@ -4,16 +4,16 @@ terraform {
       source  = "kreuzwerker/docker"
       version = "3.0.2"
     }
-    remote = {
-      source = "tenstad/remote"
-      version = "0.1.3"
-    }
+    # remote = {
+    #   source = "tenstad/remote"
+    #   version = "0.1.3"
+    # }
   }
 }
 
-provider "remote" {
-    max_sessions = 3
-}
+# provider "remote" {
+#     max_sessions = 3
+# }
 
 provider "docker" {
   alias    = "client1"
