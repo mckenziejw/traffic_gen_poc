@@ -53,6 +53,7 @@ def subscribe(client: mqtt_client):
 
 client = connect_mqtt()
 subscribe(client)
+client.loop_forever()
 
 # while True:
 #     for t in targets:
