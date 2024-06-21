@@ -95,6 +95,7 @@ resource "docker_container" "web_client_1" {
         "TARGETS=web-server-2 web-server-3",
         "MQTT_BROKER=10.41.0.7:1883"
     ]
+    depends_on = [docker_network.services_net_1]
 }
 resource "docker_container" "web_client_2" {
     provider = docker.client2
@@ -113,6 +114,7 @@ resource "docker_container" "web_client_2" {
         "INTERVAL=5",
         "TARGETS=web-server-3 web-server-1"
     ]
+    depends_on = [docker_network.services_net_2]
 }
 resource "docker_container" "web_client_3" {
     provider = docker.client3
@@ -133,6 +135,7 @@ resource "docker_container" "web_client_3" {
         "TARGETS=web-server-2 web-server-1",
         "MQTT_BROKER=10.42.0.7:1883"
     ]
+    depends_on = [docker_network.services_net_3]
 }
 resource "docker_container" "web_server_1" {
     provider = docker.client1
@@ -157,6 +160,7 @@ resource "docker_container" "web_server_1" {
         "TARGETS=web-client-2 web-client-3",
         "MQTT_BROKER=10.43.0.7:1883"
     ]
+    depends_on = [docker_network.services_net_1]
 }
 resource "docker_container" "web_server_2" {
     provider = docker.client2
@@ -180,6 +184,7 @@ resource "docker_container" "web_server_2" {
         "PORT=80",
         "TARGETS=web-client-1 web-client-3"
     ]
+    depends_on = [docker_network.services_net_2]
 }
 resource "docker_container" "web_server_3" {
     provider = docker.client3
@@ -203,6 +208,7 @@ resource "docker_container" "web_server_3" {
         "PORT=80",
         "TARGETS=web-client-2 web-client-1"
     ]
+    depends_on = [docker_network.services_net_3]
 }
 # create the MQTT server config
 
