@@ -210,8 +210,7 @@ resource "remote_file" "mqtt_conf_1" {
     conn {
         host = "10.41.0.254"
         user = "lab"
-        password = "lab123"
-        agent = true
+        private_key_path = "/home/lab/.ssh/id_rsa"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -222,7 +221,6 @@ resource "remote_file" "mqtt_conf_2" {
         host = "10.42.0.254"
         user = "lab"
         password = "lab123"
-        agent = true
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -234,13 +232,11 @@ resource "remote_file" "mqtt_conf_3" {
         host = "10.43.0.254"
         user = "lab"
         password = "lab123"
-        agent = true
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
     permissions = "0644"
 }
-
 
 resource "docker_container" "mqtt_server_1"{
     provider = docker.client1
