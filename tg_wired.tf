@@ -84,7 +84,8 @@ resource "docker_container" "web_client_1" {
     }
     env = [
         "INTERVAL=5",
-        "TARGETS=web-server-2 web-server-3"
+        "TARGETS=web-server-2 web-server-3",
+        "MQTT_BROKER=10.41.0.7:1883"
     ]
 }
 resource "docker_container" "web_client_2" {
@@ -121,7 +122,8 @@ resource "docker_container" "web_client_3" {
 
     env = [
         "INTERVAL=5",
-        "TARGETS=web-server-2 web-server-1"
+        "TARGETS=web-server-2 web-server-1",
+        "MQTT_BROKER=10.42.0.7:1883"
     ]
 }
 resource "docker_container" "web_server_1" {
@@ -144,7 +146,8 @@ resource "docker_container" "web_server_1" {
     }
     env = [
         "PORT=80",
-        "TARGETS=web-client-2 web-client-3"
+        "TARGETS=web-client-2 web-client-3",
+        "MQTT_BROKER=10.43.0.7:1883"
     ]
 }
 resource "docker_container" "web_server_2" {
@@ -192,4 +195,89 @@ resource "docker_container" "web_server_3" {
         "PORT=80",
         "TARGETS=web-client-2 web-client-1"
     ]
+}
+# create the MQTT server config
+
+resource "remote_file" "mqtt_conf_1" {
+    conn {
+        host = "client1"
+        port = 22
+        user = "lab"
+    }
+    path = "/home/lab/mosquitto.conf"
+    content = templatefile("templates/mosquitto.conf.tftpl",{})
+    permissions = "0644"
+}
+resource "remote_file" "mqtt_conf_2" {
+    conn {
+        host = "client2"
+        port = 22
+        user = "lab"
+    }
+    path = "/home/lab/mosquitto.conf"
+    content = templatefile("templates/mosquitto.conf.tftpl",{})
+    permissions = "0644"
+}
+
+resource "remote_file" "mqtt_conf_3" {
+    conn {
+        host = "client3"
+        port = 22
+        user = "lab"
+    }
+    path = "/home/lab/mosquitto.conf"
+    content = templatefile("templates/mosquitto.conf.tftpl",{})
+    permissions = "0644"
+}
+
+
+resource "docker_container" "mqtt_server_1"{
+    provide = docker.client1
+    name = "mqtt_server"
+    image = eclipse-mosquitto
+
+    volumes {
+        container_path = "/mosquitto/config/mosquitto.conf"
+        host_path = "/home/lab/mosquitto.conf"
+        volume_name = "mqtt_conf"
+    }
+
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.41.0.7"
+    }
+}
+
+resource "docker_container" "mqtt_server_2"{
+    provide = docker.client2
+    name = "mqtt_server"
+    image = eclipse-mosquitto
+
+    volumes {
+        container_path = "/mosquitto/config/mosquitto.conf"
+        host_path = "/home/lab/mosquitto.conf"
+        volume_name = "mqtt_conf"
+    }
+
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.42.0.7"
+    }
+}
+
+resource "docker_container" "mqtt_server_3"{
+    provide = docker.client3
+    name = "mqtt_server"
+    image = eclipse-mosquitto
+
+    volumes {
+        container_path = "/mosquitto/config/mosquitto.conf"
+        host_path = "/home/lab/mosquitto.conf"
+        volume_name = "mqtt_conf"
+    }
+
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.43.0.7"
+    }
 }
