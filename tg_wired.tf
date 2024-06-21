@@ -205,8 +205,8 @@ resource "docker_container" "web_server_3" {
 resource "remote_file" "mqtt_conf_1" {
     conn {
         host = "client1"
-        port = 22
         user = "lab"
+        private_key_path = "/home/lab/.ssh/id_rsa"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -215,8 +215,8 @@ resource "remote_file" "mqtt_conf_1" {
 resource "remote_file" "mqtt_conf_2" {
     conn {
         host = "client2"
-        port = 22
         user = "lab"
+        private_key_path = "/home/lab/.ssh/id_rsa"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
@@ -226,8 +226,8 @@ resource "remote_file" "mqtt_conf_2" {
 resource "remote_file" "mqtt_conf_3" {
     conn {
         host = "client3"
-        port = 22
         user = "lab"
+        private_key_path = "/home/lab/.ssh/id_rsa"
     }
     path = "/home/lab/mosquitto.conf"
     content = templatefile("templates/mosquitto.conf.tftpl",{})
