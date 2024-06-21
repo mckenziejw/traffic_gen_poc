@@ -236,7 +236,7 @@ resource "remote_file" "mqtt_conf_3" {
 
 
 resource "docker_container" "mqtt_server_1"{
-    provide = docker.client1
+    provider = docker.client1
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
@@ -253,7 +253,7 @@ resource "docker_container" "mqtt_server_1"{
 }
 
 resource "docker_container" "mqtt_server_2"{
-    provide = docker.client2
+    provider = docker.client2
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
@@ -270,7 +270,7 @@ resource "docker_container" "mqtt_server_2"{
 }
 
 resource "docker_container" "mqtt_server_3"{
-    provide = docker.client3
+    provider = docker.client3
     name = "mqtt_server"
     image = "eclipse-mosquitto"
 
