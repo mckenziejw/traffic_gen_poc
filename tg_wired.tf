@@ -244,8 +244,8 @@ resource "docker_container" "mqtt_server_1"{
     image = "eclipse-mosquitto"
 
     volumes {
-        container_path = "/mosquitto/config/mosquitto.conf"
-        host_path = "/home/lab/mosquitto.conf"
+        container_path = "/mosquitto/config"
+        host_path = "/home/lab/mosquitto"
         volume_name = "mqtt_conf"
     }
 
@@ -261,8 +261,8 @@ resource "docker_container" "mqtt_server_2"{
     image = "eclipse-mosquitto"
 
     volumes {
-        container_path = "/mosquitto/config/mosquitto.conf"
-        host_path = "/home/lab/mosquitto.conf"
+        container_path = "/mosquitto/config"
+        host_path = "/home/lab/mosquitto"
         volume_name = "mqtt_conf"
     }
 
@@ -278,8 +278,8 @@ resource "docker_container" "mqtt_server_3"{
     image = "eclipse-mosquitto"
 
     volumes {
-        container_path = "/mosquitto/config/mosquitto.conf"
-        host_path = "/home/lab/mosquitto.conf"
+        container_path = "/mosquitto/config"
+        host_path = "/home/lab/mosquitto"
         volume_name = "mqtt_conf"
     }
 
