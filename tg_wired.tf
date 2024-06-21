@@ -204,7 +204,7 @@ resource "docker_container" "web_server_3" {
 
 resource "remote_file" "mqtt_conf_1" {
     conn {
-        host = "client1"
+        host = "10.41.0.254"
         user = "lab"
         private_key_path = "/home/lab/.ssh/id_rsa"
     }
@@ -214,7 +214,7 @@ resource "remote_file" "mqtt_conf_1" {
 }
 resource "remote_file" "mqtt_conf_2" {
     conn {
-        host = "client2"
+        host = "10.42.0.254"
         user = "lab"
         private_key_path = "/home/lab/.ssh/id_rsa"
     }
@@ -225,7 +225,7 @@ resource "remote_file" "mqtt_conf_2" {
 
 resource "remote_file" "mqtt_conf_3" {
     conn {
-        host = "client3"
+        host = "10.43.0.254"
         user = "lab"
         private_key_path = "/home/lab/.ssh/id_rsa"
     }
