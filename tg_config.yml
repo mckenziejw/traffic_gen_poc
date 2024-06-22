@@ -64,6 +64,30 @@ scenario:
     # So later actions can continue while it runs
     # Ignored if loop_for = 1
       create_thread: False
+  - decription: Describe the thing
+    service_type: web
+    service_host: web-client-1
+    action:
+      type: get
+      targets:
+        - neverssl.com
+      uri: /
+      # The loop_for setting determines how many times and how often the action is performed
+      # 0 = Loop until interrupted
+      # 1 = Do not loop
+      # Any integer > 1 will create a loop that runs that number of times
+      loop_for: 1
+      loop_delay:
+      # Creates an, optionally random, delay between loops.
+      # To have a consistent delay set min = max
+        min: 2
+        max: 5
+        # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
+        randomize_method: random
+    # The create_thread setting configures multithreading. If True, the action will run in its own thread
+    # So later actions can continue while it runs
+    # Ignored if loop_for = 1
+      create_thread: False
   # - decription: Describe the thing
   #   service_type: web
   #   service_host: web-client-2
