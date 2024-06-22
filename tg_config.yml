@@ -39,7 +39,7 @@ scenario:
     # The create_thread setting configures multithreading. If True, the action will run in its own thread
     # So later actions can continue while it runs
     # Ignored if loop_for = 1
-    create_thread: True
+      create_thread: True
   # - decription: Describe the thing
   #   service_type: web
   #   service_host: web-client-2
