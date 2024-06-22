@@ -46,7 +46,7 @@ scenario:
     action:
       type: get
       targets:
-        - cnn.com
+        - neverssl.com
       uri: /
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
