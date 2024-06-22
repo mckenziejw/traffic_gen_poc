@@ -55,6 +55,8 @@ f = open("tg_config.yml", "r")
 config = yaml.safe_load(f)
 client = connect_mqtt()
 pprint(config)
+client.loop_start()
 for action in config['scenario']:
     print("running action")
     publish(client, action)
+client.loop_stop()
