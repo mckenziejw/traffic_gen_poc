@@ -86,7 +86,7 @@ def do_action(action):
 
 def handle_mqtt_msg(client, userdata, msg):
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-    action = json.load(msg.payload.decode())
+    action = json.loads(msg.payload.decode())
     req_type = action['type']
     targets = action['targets']
     loop_for = action['loop_for']
