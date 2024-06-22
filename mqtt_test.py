@@ -32,6 +32,7 @@ def connect_mqtt():
 
 def publish(client, action):
     topic = f"{action['service_type']}/{action['service_host']}"
+    print(f"Topic {topic}")
     msg = action['action']
     result = client.publish(topic,json.dumps(msg))
     # while True:
