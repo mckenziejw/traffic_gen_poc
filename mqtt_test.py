@@ -5,6 +5,7 @@ from paho.mqtt import client as mqtt_client
 import random
 import yaml
 import json
+from pprint import pprint
 
 broker = '10.41.0.7'
 port = 1883
@@ -49,6 +50,6 @@ def publish(client, action):
 f = open("tg_config.yml", "r")
 config = yaml.safe_load(f)
 client = connect_mqtt()
-
+pprint(config)
 for action in config['scenario']:
     publish(client, action)
