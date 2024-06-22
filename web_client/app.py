@@ -33,31 +33,6 @@ def on_connect(client, userdata, flags, rc, properties):
         else:
             print("Failed to connect, return code %d\n", rc)
 
-#   - decription: Describe the thing
-#     service_type: web
-#     service_host: web-client-3
-#     action:
-#       type: get
-#       targets:
-#         - 10.42.0.2
-#         - 10.41.0.2 
-#       uri: /employees
-#       # The loop_for setting determines how many times and how often the action is performed
-#       # 0 = Loop until interrupted
-#       # 1 = Do not loop
-#       # Any integer > 1 will create a loop that runs that number of times
-#       loop_for: 0
-#       loop_delay:
-#       # Creates an, optionally random, delay between loops.
-#       # To have a consistent delay set min = max
-#         min: 2
-#         max: 10
-#         # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
-#         randomize_method: random
-#     # The create_thread setting configures multithreading. If True, the action will run in its own thread
-#     # So later actions can continue while it runs
-#     # Ignored if loop_for = 1
-#     create_thread: True
 def do_action(action):
     if action['type'] == 'get':
         if action['loop_for'] == 0:
@@ -95,7 +70,9 @@ def handle_mqtt_msg(client, userdata, msg):
         processes.append(p)
         p.start()
         print(f"Created long-running process {p.pid}")
+        print(processes)
     else:
+        print("running a one-off request")
         do_action(action)    
     
     
