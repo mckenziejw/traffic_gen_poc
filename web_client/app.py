@@ -23,7 +23,7 @@ hostname = os.environ['HOSTNAME']
 port = 1883
 topic = "web/{}".format(hostname)
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
-
+print(topic)
 processes = []
 
 def on_connect(client, userdata, flags, rc, properties):
@@ -85,6 +85,7 @@ def do_action(action):
                     time.sleep(delay)
 
 def handle_mqtt_msg(client, userdata, msg):
+    print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
     action = json.load(msg.payload.decode())
     req_type = action['type']
     targets = action['targets']
@@ -96,7 +97,7 @@ def handle_mqtt_msg(client, userdata, msg):
         print(f"Created long-running process {p.pid}")
     else:
         do_action(action)    
-    print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+    
     
 def on_message(client, userdata, msg):
         handle_mqtt_msg(client, userdata, msg)
