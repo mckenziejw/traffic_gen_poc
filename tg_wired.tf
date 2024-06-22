@@ -265,38 +265,38 @@ resource "docker_container" "mqtt_server_1"{
     depends_on = [ docker_network.services_net_1 ]
 }
 
-# resource "docker_container" "mqtt_server_2"{
-#     provider = docker.client2
-#     name = "mqtt_server"
-#     image = "eclipse-mosquitto"
+resource "docker_container" "mqtt_server_2"{
+    provider = docker.client2
+    name = "mqtt_server"
+    image = "eclipse-mosquitto"
 
-#     mounts {
-#         target = "/mosquitto/config/mosquitto.conf"
-#         source = "/home/lab/mosquitto/mosquitto.conf"
-#         type = "bind"
-#     }
+    mounts {
+        target = "/mosquitto/config/mosquitto.conf"
+        source = "/home/lab/mosquitto/mosquitto.conf"
+        type = "bind"
+    }
 
-#     networks_advanced {
-#         name = "services_net"
-#         ipv4_address = "10.42.0.7"
-#     }
-#     depends_on = [ docker_network.services_net_2 ]
-# }
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.42.0.7"
+    }
+    depends_on = [ docker_network.services_net_2 ]
+}
 
-# resource "docker_container" "mqtt_server_3"{
-#     provider = docker.client3
-#     name = "mqtt_server"
-#     image = "eclipse-mosquitto"
+resource "docker_container" "mqtt_server_3"{
+    provider = docker.client3
+    name = "mqtt_server"
+    image = "eclipse-mosquitto"
 
-#     mounts {
-#         target = "/mosquitto/config/mosquitto.conf"
-#         source = "/home/lab/mosquitto/mosquitto.conf"
-#         type = "bind"
-#     }
+    mounts {
+        target = "/mosquitto/config/mosquitto.conf"
+        source = "/home/lab/mosquitto/mosquitto.conf"
+        type = "bind"
+    }
 
-#     networks_advanced {
-#         name = "services_net"
-#         ipv4_address = "10.43.0.7"
-#     }
-#     depends_on = [ docker_network.services_net_3 ]
-# }
+    networks_advanced {
+        name = "services_net"
+        ipv4_address = "10.43.0.7"
+    }
+    depends_on = [ docker_network.services_net_3 ]
+}
