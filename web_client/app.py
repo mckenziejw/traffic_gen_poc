@@ -66,14 +66,14 @@ def do_action(action):
                     resp = requests.get("http://{}/{}".format(t, action['uri']))
                     print(f"GET response from {t} with status: {resp.status_code}")
                 if action.get('loop_delay'):
-                    delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                    delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
         elif action['loop_for'] == 1:
             for t in action['targets']:
                 resp = requests.get("http://{}/{}".format(t, action['uri']))
                 print(f"GET response from {t} with status: {resp.status_code}")
             if action.get('loop_delay'):
-                delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                 time.sleep(delay)
         elif action['loop_for'] >1:
             for _ in range(action['loop_for']):
@@ -81,7 +81,7 @@ def do_action(action):
                     resp = requests.get("http://{}/{}".format(t, action['uri']))
                     print(f"GET response from {t} with status: {resp.status_code}")
                 if action.get('loop_delay'):
-                    delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                    delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
 
 def handle_mqtt_msg(client, userdata, msg):
