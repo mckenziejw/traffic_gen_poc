@@ -11,6 +11,8 @@ import time
 import os
 from paho.mqtt import client as mqtt_client
 import random
+import multiprocessing
+import json
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
@@ -22,14 +24,80 @@ port = 1883
 topic = "web/{}".format(hostname)
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
+processes = []
+
 def on_connect(client, userdata, flags, rc, properties):
         if rc == 0:
             print("Connected to MQTT Broker!")
             client.subscribe(topic)
         else:
             print("Failed to connect, return code %d\n", rc)
+
+#   - decription: Describe the thing
+#     service_type: web
+#     service_host: web-client-3
+#     action:
+#       type: get
+#       targets:
+#         - 10.42.0.2
+#         - 10.41.0.2 
+#       uri: /employees
+#       # The loop_for setting determines how many times and how often the action is performed
+#       # 0 = Loop until interrupted
+#       # 1 = Do not loop
+#       # Any integer > 1 will create a loop that runs that number of times
+#       loop_for: 0
+#       loop_delay:
+#       # Creates an, optionally random, delay between loops.
+#       # To have a consistent delay set min = max
+#         min: 2
+#         max: 10
+#         # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
+#         randomize_method: random
+#     # The create_thread setting configures multithreading. If True, the action will run in its own thread
+#     # So later actions can continue while it runs
+#     # Ignored if loop_for = 1
+#     create_thread: True
+def do_action(action):
+    if action['type'] == 'get':
+        if action['loop_for'] == 0:
+            while True:
+                for t in action['targets']:
+                    resp = requests.get("http://{}/{}".format(t, action['uri']))
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                if action.get('loop_delay'):
+                    delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                    time.sleep(delay)
+        elif action['loop_for'] == 1:
+            for t in action['targets']:
+                resp = requests.get("http://{}/{}".format(t, action['uri']))
+                print(f"GET response from {t} with status: {resp.status_code}")
+            if action.get('loop_delay'):
+                delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                time.sleep(delay)
+        elif action['loop_for'] >1:
+            for _ in range(action['loop_for']):
+                for t in action['targets']:
+                    resp = requests.get("http://{}/{}".format(t, action['uri']))
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                if action.get('loop_delay'):
+                    delay = random(action['loop_delay']['min'],action['loop_delay']['max'])
+                    time.sleep(delay)
+
 def handle_mqtt_msg(client, userdata, msg):
+    action = json.load(msg.payload.decode())
+    req_type = action['type']
+    targets = action['targets']
+    loop_for = action['loop_for']
+    if action['create_thread']:
+        p = multiprocessing.Process(target=do_action, args=[action])
+        processes.append(p)
+        p.start()
+        print(f"Created long-running process {p.pid}")
+    else:
+        do_action(action)    
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+    
 def on_message(client, userdata, msg):
         handle_mqtt_msg(client, userdata, msg)
 client = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)

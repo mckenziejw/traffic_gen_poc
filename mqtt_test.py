@@ -3,11 +3,11 @@ import time
 import os
 from paho.mqtt import client as mqtt_client
 import random
+import yaml
 
 broker = '10.41.0.7'
 port = 1883
-topic = 'web/web-client-1'
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
+client_id = f'python-mqtt-1'
 
 def connect_mqtt():
     #def on_connect(client, userdata, flags, rc):
@@ -28,9 +28,9 @@ def connect_mqtt():
     client.connect(broker, port)
     return client
 
-def publish(client):
-    msg_count = 1
-    msg = "{'action':'go'}"
+def publish(client, action):
+    topic = f"{action['service_type']}/{action['service_host']}"
+    msg = action['action']
     result = client.publish(topic,msg)
     # while True:
     #      time.sleep(1)
@@ -45,6 +45,9 @@ def publish(client):
     #      msg_count += 1
     #      if msg_count > 5:
     #          break
-
+f = open("tg_config.yml", "r")
+config = yaml.safe_load(f)
 client = connect_mqtt()
-publish(client)
+
+for action in config['scenario']:
+    publish(client, action)
