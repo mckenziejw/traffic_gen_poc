@@ -52,4 +52,5 @@ config = yaml.safe_load(f)
 client = connect_mqtt()
 pprint(config)
 for action in config['scenario']:
+    print("running action")
     publish(client, action)
