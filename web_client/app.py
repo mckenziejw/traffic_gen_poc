@@ -73,7 +73,8 @@ def handle_mqtt_msg(client, userdata, msg):
         print(processes)
     else:
         print("running a one-off request")
-        do_action(action)    
+        print(action)
+        #do_action(action)    
     
     
 def on_message(client, userdata, msg):
