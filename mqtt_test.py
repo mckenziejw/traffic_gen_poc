@@ -35,8 +35,6 @@ def publish(client, action):
     print(f"Topic {topic}")
     msg = action['action']
     result = client.publish(topic,json.dumps(msg))
-    result = client.publish(topic,json.dumps(msg))
-    result = client.publish(topic,json.dumps(msg))
     print(result)
     # while True:
     #      time.sleep(1)
