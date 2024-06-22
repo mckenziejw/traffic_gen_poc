@@ -4,6 +4,7 @@ import os
 from paho.mqtt import client as mqtt_client
 import random
 import yaml
+import json
 
 broker = '10.41.0.7'
 port = 1883
@@ -31,7 +32,7 @@ def connect_mqtt():
 def publish(client, action):
     topic = f"{action['service_type']}/{action['service_host']}"
     msg = action['action']
-    result = client.publish(topic,msg)
+    result = client.publish(topic,json.dumps(msg))
     # while True:
     #      time.sleep(1)
     #      msg = f"messages: {msg_count}"
