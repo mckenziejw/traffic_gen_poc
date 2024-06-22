@@ -70,7 +70,7 @@ def do_action(action):
                     time.sleep(delay)
         elif action['loop_for'] == 1:
             for t in action['targets']:
-                resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload'])
+                resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
                 print(f"GET response from {t} with status: {resp.status_code}")
             if action.get('loop_delay'):
                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
@@ -78,7 +78,7 @@ def do_action(action):
         elif action['loop_for'] >1:
             for _ in range(action['loop_for']):
                 for t in action['targets']:
-                    resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload'])
+                    resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
                     print(f"GET response from {t} with status: {resp.status_code}")
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
