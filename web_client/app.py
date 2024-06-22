@@ -38,14 +38,14 @@ def do_action(action):
         if action['loop_for'] == 0:
             while True:
                 for t in action['targets']:
-                    resp = requests.get("http://{}/{}".format(t, action['uri']))
+                    resp = requests.get("{}/{}".format(t, action['uri']))
                     print(f"GET response from {t} with status: {resp.status_code}")
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
         elif action['loop_for'] == 1:
             for t in action['targets']:
-                resp = requests.get("http://{}/{}".format(t, action['uri']))
+                resp = requests.get("{}/{}".format(t, action['uri']))
                 print(f"GET response from {t} with status: {resp.status_code}")
             if action.get('loop_delay'):
                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
@@ -53,11 +53,85 @@ def do_action(action):
         elif action['loop_for'] >1:
             for _ in range(action['loop_for']):
                 for t in action['targets']:
-                    resp = requests.get("http://{}/{}".format(t, action['uri']))
+                    resp = requests.get("{}/{}".format(t, action['uri']))
                     print(f"GET response from {t} with status: {resp.status_code}")
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
+    elif action['type'] == 'post':
+        ## do a post
+        if action['loop_for'] == 0:
+            while True:
+                for t in action['targets']:
+                    resp = requests.post("http://{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                if action.get('loop_delay'):
+                    delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                    time.sleep(delay)
+        elif action['loop_for'] == 1:
+            for t in action['targets']:
+                resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload'])
+                print(f"GET response from {t} with status: {resp.status_code}")
+            if action.get('loop_delay'):
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                time.sleep(delay)
+        elif action['loop_for'] >1:
+            for _ in range(action['loop_for']):
+                for t in action['targets']:
+                    resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload'])
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                if action.get('loop_delay'):
+                    delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                    time.sleep(delay)
+    # elif action['type'] == 'put':
+    #     ## do a put
+    #     if action['loop_for'] == 0:
+    #         while True:
+    #             for t in action['targets']:
+    #                 resp = requests.put("{}/{}".format(t, action['uri']))
+    #                 print(f"GET response from {t} with status: {resp.status_code}")
+    #             if action.get('loop_delay'):
+    #                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #                 time.sleep(delay)
+    #     elif action['loop_for'] == 1:
+    #         for t in action['targets']:
+    #             resp = requests.put("{}/{}".format(t, action['uri']))
+    #             print(f"GET response from {t} with status: {resp.status_code}")
+    #         if action.get('loop_delay'):
+    #             delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #             time.sleep(delay)
+    #     elif action['loop_for'] >1:
+    #         for _ in range(action['loop_for']):
+    #             for t in action['targets']:
+    #                 resp = requests.put("{}/{}".format(t, action['uri']))
+    #                 print(f"GET response from {t} with status: {resp.status_code}")
+    #             if action.get('loop_delay'):
+    #                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #                 time.sleep(delay)
+    # elif action['type'] == 'delete':
+    #     if action['loop_for'] == 0:
+    #         while True:
+    #             for t in action['targets']:
+    #                 resp = requests.delete("{}/{}".format(t, action['uri']))
+    #                 print(f"GET response from {t} with status: {resp.status_code}")
+    #             if action.get('loop_delay'):
+    #                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #                 time.sleep(delay)
+    #     elif action['loop_for'] == 1:
+    #         for t in action['targets']:
+    #             resp = requests.delete("{}/{}".format(t, action['uri']))
+    #             print(f"GET response from {t} with status: {resp.status_code}")
+    #         if action.get('loop_delay'):
+    #             delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #             time.sleep(delay)
+    #     elif action['loop_for'] >1:
+    #         for _ in range(action['loop_for']):
+    #             for t in action['targets']:
+    #                 resp = requests.delete("{}/{}".format(t, action['uri']))
+    #                 print(f"GET response from {t} with status: {resp.status_code}")
+    #             if action.get('loop_delay'):
+    #                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+    #                 time.sleep(delay)
 
 def handle_mqtt_msg(client, userdata, msg):
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
