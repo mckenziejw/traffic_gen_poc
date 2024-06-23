@@ -40,7 +40,7 @@ def watch_youtube(path):
     browser.get(path)
     for i in range(10):
         time.sleep(1)
-    video = browser.find_element_by_id('movie_player')
+    video = browser.find_element(By.ID,'movie_player')
     video.send_keys(Keys.SPACE) #hits space
     time.sleep(600)
     browser.quit()
