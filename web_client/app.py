@@ -30,7 +30,7 @@ print(topic)
 processes = []
 
 def watch_youtube(path):
-    browser = webdriver.Firefox()
+    browser = webdriver.Chrome()
     browser.get(path)
     for i in range(10):
         time.sleep(1)
