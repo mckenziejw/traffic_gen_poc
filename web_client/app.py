@@ -16,6 +16,8 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
@@ -30,7 +32,10 @@ print(topic)
 processes = []
 
 def watch_youtube(path):
-    browser = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-extensions")
+    browser = webdriver.Chrome(chrome_options=chrome_options)
     browser.get(path)
     for i in range(10):
         time.sleep(1)
