@@ -35,7 +35,7 @@ def watch_youtube(path):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-extensions")
-    browser = webdriver.Chrome(chrome_options=chrome_options)
+    browser = webdriver.Chrome(options=chrome_options)
     browser.get(path)
     for i in range(10):
         time.sleep(1)
