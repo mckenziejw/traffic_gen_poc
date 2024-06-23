@@ -3,7 +3,7 @@ COPY requirements.txt requirements.txt
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3 python3-pip wget firefox
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dkpg -i google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb
 RUN pip3 install -r requirements.txt
 ENV DISPLAY=:0
 COPY . . 
