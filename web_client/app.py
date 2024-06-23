@@ -43,7 +43,7 @@ def watch_youtube(path, watch_time=300):
     time.sleep(watch_time)
     browser.quit()
 
-def kill_all_loops():
+def kill_all_loops(processes):
     for p in processes:
         p.kill()
     processes = []
@@ -163,7 +163,7 @@ def handle_mqtt_msg(client, userdata, msg):
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
     action = json.loads(msg.payload.decode())
     if action['type'] == 'kill':
-        kill_all_loops()
+        kill_all_loops(processes)
     else:
         req_type = action['type']
         targets = action['targets']
