@@ -43,6 +43,11 @@ def watch_youtube(path, watch_time=300):
     time.sleep(watch_time)
     browser.quit()
 
+def kill_all_loops():
+    for p in processes:
+        p.kill()
+    processes = []
+
 def on_connect(client, userdata, flags, rc, properties):
         if rc == 0:
             print("Connected to MQTT Broker!")
@@ -157,19 +162,22 @@ def do_action(action):
 def handle_mqtt_msg(client, userdata, msg):
     print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
     action = json.loads(msg.payload.decode())
-    req_type = action['type']
-    targets = action['targets']
-    loop_for = action['loop_for']
-    if action['create_thread']:
-        p = multiprocessing.Process(target=do_action, args=[action])
-        processes.append(p)
-        p.start()
-        print(f"Created long-running process {p.pid}")
-        print(processes)
+    if action['type'] == 'kill':
+        kill_all_loops()
     else:
-        print("running a one-off request")
-        print(action)
-        do_action(action)    
+        req_type = action['type']
+        targets = action['targets']
+        loop_for = action['loop_for']
+        if action['create_thread']:
+            p = multiprocessing.Process(target=do_action, args=[action])
+            processes.append(p)
+            p.start()
+            print(f"Created long-running process {p.pid}")
+            print(processes)
+        else:
+            print("running a one-off request")
+            print(action)
+            do_action(action)    
     
     
 def on_message(client, userdata, msg):
