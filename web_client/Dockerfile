@@ -8,7 +8,7 @@ RUN pip3 install -r requirements.txt
 ENV DISPLAY=:0
 COPY . . 
 COPY geckodriver /usr/bin
-COPY chrome-driver /usr/bin
+COPY chromedriver /usr/bin
 CMD ["python3", "app.py"]
 
 
