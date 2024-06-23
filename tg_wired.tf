@@ -105,7 +105,7 @@ resource "docker_container" "web_client_1" {
     name = "web-client"
     image = docker_image.web_client_1.image_id
     hostname = "web-client-1"
-    shm_size = "2g"
+    shm_size = 2048
     host  {
         host = "web-server-2"
         ip = "10.42.0.2"
@@ -134,7 +134,7 @@ resource "docker_container" "web_client_2" {
     name = "web-client"
     image = docker_image.web_client_2.image_id
     hostname = "web-client-2"
-    shm_size = "2g"
+    shm_size = 2048
     host  {
         host = "web-server-1"
         ip = "10.41.0.2"
@@ -159,7 +159,7 @@ resource "docker_container" "web_client_3" {
     name = "web-client"
     image = docker_image.web_client_3.image_id
     hostname = "web-client-3"
-    shm_size = "2g"
+    shm_size = 2048
     host  {
         host = "web-server-2"
         ip = "10.42.0.2"
