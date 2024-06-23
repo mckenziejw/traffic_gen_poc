@@ -21,17 +21,15 @@ from selenium.webdriver.chrome.options import Options
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
-print(targets)
 interval = int(os.environ['INTERVAL'])
 mqtt_broker = os.environ['MQTT_SERVER']
 hostname = os.environ['HOSTNAME']
 port = 1883
 topic = "web/{}".format(hostname)
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
-print(topic)
 processes = []
 
-def watch_youtube(path):
+def watch_youtube(path, watch_time=300):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-extensions")
@@ -42,7 +40,7 @@ def watch_youtube(path):
         time.sleep(1)
     video = browser.find_element(By.ID,'movie_player')
     video.send_keys(Keys.SPACE) #hits space
-    time.sleep(600)
+    time.sleep(watch_time)
     browser.quit()
 
 def on_connect(client, userdata, flags, rc, properties):
@@ -104,7 +102,9 @@ def do_action(action):
                     time.sleep(delay)
     elif action['type'] == 'watch_youtube':
         for t in action['targets']:
-            watch_youtube(f"{t}{action['uri']}")
+            print("watching {t}")
+            delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+            watch_youtube(f"https://youtube.com/watch?v={t}", delay)
     # elif action['type'] == 'put':
     #     ## do a put
     #     if action['loop_for'] == 0:
@@ -180,16 +180,4 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.connect(mqtt_broker, port)
 client.loop_forever()
-
-# while True:
-#     for t in targets:
-#         try:
-#             resp = requests.get("http://" + t + "/employees")
-#             print("Issued GET to {}, received response code {}".format(t, resp.status_code))
-#         except:
-#             print("something bad happened, let's try again")
-#             continue
-#     time.sleep(interval)
-    
-# Define some scenarios
 

@@ -147,8 +147,9 @@ scenario:
     action:
       type: watch_youtube
       targets:
-        - https://youtube.com
-      uri: /watch?v=pUqm8Tkyjzk
+        - pUqm8Tkyjzk
+        - YQ_xWvX1n9g
+        - pUqm8Tkyjzk
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
       # 1 = Do not loop
@@ -157,8 +158,8 @@ scenario:
       loop_delay:
       # Creates an, optionally random, delay between loops.
       # To have a consistent delay set min = max
-        min: 0
-        max: 0
+        min: 20
+        max: 30
         # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
         randomize_method: random
     # The create_thread setting configures multithreading. If True, the action will run in its own thread
