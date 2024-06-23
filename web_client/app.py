@@ -13,6 +13,9 @@ from paho.mqtt import client as mqtt_client
 import random
 import multiprocessing
 import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 targets = os.environ['TARGETS']
 targets = targets.split(" ")
@@ -25,6 +28,16 @@ topic = "web/{}".format(hostname)
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 print(topic)
 processes = []
+
+def watch_youtube(path):
+    browser = webdriver.Firefox()
+    browser.get(path)
+    for i in range(10):
+        time.sleep(1)
+    video = browser.find_element_by_id('movie_player')
+    video.send_keys(Keys.SPACE) #hits space
+    time.sleep(600)
+    browser.quit()
 
 def on_connect(client, userdata, flags, rc, properties):
         if rc == 0:
@@ -83,6 +96,9 @@ def do_action(action):
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
+    elif action['type'] == 'watch_youtube':
+        for i in action['targets']:
+            watch_youtube(f"{t}{action['uri']}")
     # elif action['type'] == 'put':
     #     ## do a put
     #     if action['loop_for'] == 0:
