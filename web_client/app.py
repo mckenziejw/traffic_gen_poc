@@ -97,7 +97,7 @@ def do_action(action):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
     elif action['type'] == 'watch_youtube':
-        for i in action['targets']:
+        for t in action['targets']:
             watch_youtube(f"{t}{action['uri']}")
     # elif action['type'] == 'put':
     #     ## do a put
