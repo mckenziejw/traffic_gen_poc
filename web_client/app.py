@@ -182,6 +182,8 @@ def handle_mqtt_msg(client, userdata, msg):
     
 def on_message(client, userdata, msg):
         handle_mqtt_msg(client, userdata, msg)
+        
+        
 client = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
