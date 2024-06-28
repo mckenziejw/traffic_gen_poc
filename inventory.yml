@@ -1,19 +1,20 @@
 all_hosts:
   hosts:
-    lxd-testbed:
-    client1:
-    client2:
-    client3:
-    #lappy:
+    desktop1-mgmt:
+    desktop2-mgmt:
+    desktop3-mgmt:
+    desktop4-mgmt:
+    desktop5-mgmt:
 lxd_hosts:
   hosts:
-    lxd-testbed:
+    desktop3-mgmt:
 wifi_hosts:
   hosts:
-    wifi-host:
+    desktop3-mgmt:
 tg_hosts:
   hosts:
-    client1:
-    client2:
-    client3:
+    desktop1-mgmt:
+    desktop2-mgmt:
+    desktop4-mgmt:
+    desktop5-mgmt:
     

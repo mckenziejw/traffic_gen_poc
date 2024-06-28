@@ -6,7 +6,7 @@ import argparse
 # openssl req -x509 -newkey rsa:2048 -keyout lxd.key -nodes -out lxd.crt -subj "/CN=lxd.local"
 
 client = Client(
-    endpoint='https://wifi-host:8443',
+    endpoint='https://desktop3:8443',
     verify=False
 )
 
@@ -20,7 +20,7 @@ parser.add_argument('-psk')
 
 args = parser.parse_args()
 
-client.authenticate('lab123')
+client.authenticate('juniper123')
 containers = client.instances.all()
 buffer = []
 for c in containers:

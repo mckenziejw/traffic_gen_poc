@@ -1,8 +1,49 @@
 ---
+- name: Install Docker
+  hosts: tg_hosts
+  vars:
+    - ansible_become_password: juniper123
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cacge: true
+    - name: Add Docker GPG apt Key
+        apt_key:
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
 - name: Install config files
   hosts: tg_hosts
   vars:
-    - ansible_become_password: lab123
+    - ansible_become_password: juniper123
 
   tasks:
   - name: Create mosquitto dir
@@ -13,5 +54,5 @@
     template:
       src: templates/mosquitto.conf.j2
       dest: /home/lab/mosquitto/mosquitto.conf
-      owner: lab
+      owner: root
       mode: '0644'
