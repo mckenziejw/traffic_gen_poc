@@ -2,19 +2,37 @@ all_hosts:
   hosts:
     desktop1-mgmt:
     desktop2-mgmt:
-    desktop3-mgmt:
+    10.210.14.9:
     desktop4-mgmt:
     desktop5-mgmt:
 lxd_hosts:
   hosts:
-    desktop3-mgmt:
+    10.210.14.9:
 wifi_hosts:
   hosts:
-    desktop3-mgmt:
+    10.210.14.9:
 tg_hosts:
   hosts:
     desktop1-mgmt:
     desktop2-mgmt:
     desktop4-mgmt:
     desktop5-mgmt:
-    
+# all_hosts:
+#   hosts:
+#     desktop1-mgmt:
+#     desktop2-mgmt:
+#     desktop3-mgmt:
+#     desktop4-mgmt:
+#     desktop5-mgmt:
+# lxd_hosts:
+#   hosts:
+#     desktop3-mgmt:
+# wifi_hosts:
+#   hosts:
+#     desktop3-mgmt:
+# tg_hosts:
+#   hosts:
+#     desktop1-mgmt:
+#     desktop2-mgmt:
+#     desktop4-mgmt:
+#     desktop5-mgmt:    

@@ -2,7 +2,7 @@
 - name: Install dependencies
   hosts: lxd_hosts
   vars:
-    - ansible_become_password: lab123
+    - ansible_become_password: juniper123
 
   tasks:
   - name: Install Apt packages

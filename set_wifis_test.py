@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 # openssl req -x509 -newkey rsa:2048 -keyout lxd.key -nodes -out lxd.crt -subj "/CN=lxd.local"
 
 client = Client(
-    endpoint='https://wifi-host:8443',
+    endpoint='https://10.210.14.9:8443',
     verify=False
 )
 
@@ -25,11 +25,11 @@ client = Client(
 
 # args = parser.parse_args()
 
-client.authenticate('lab123')
+client.authenticate('juniper123')
 ## Provision the AP
 ap = client.instances.get('wifi-client-1')
 ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
-psk = 'lab123lab123'
+psk = 'juniper123'
 print("Installing AP dependencies")
 exit_code,s_out,s_err = ap.execute(
     commands = ['apt','install','-y','network-manager']
@@ -80,6 +80,6 @@ for i in range(2,5):
     time.sleep(10)
     print("Running ping test for wifi-client-{}".format(i))
     exit_code,s_out,s_err = c.execute(
-        commands = ['ping','-c', '4','10.42.0.1']
+        commands = ['ping','-c', '4','8.8.8.8']
         )
     print(exit_code,s_out,s_err)

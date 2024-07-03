@@ -7,8 +7,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.42.0.2
-        - http://10.43.0.2 
+        - http://web-server-2-lan
+        - http://web-server-3-lan
+        - http://web-server-4-lan
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -31,8 +32,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.41.0.2
-        - http://10.43.0.2 
+        - http://web-server-1-lan
+        - http://web-server-3-lan
+        - http://web-server-4-lan
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -56,8 +58,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.42.0.2
-        - http://10.41.0.2 
+        - http://web-server-1-lan
+        - http://web-server-2-lan
+        - http://web-server-4-lan
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -80,8 +83,9 @@ scenario:
     action:
       type: post
       targets:
-        - http://10.42.0.2
-        - http://10.43.0.2 
+        - http://web-server-2-lan
+        - http://web-server-3-lan
+        - http://web-server-4-lan
       uri: /employees
       payload:
         name: Tim

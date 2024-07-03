@@ -18,10 +18,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 
-
-targets = os.environ['TARGETS']
-targets = targets.split(" ")
-interval = int(os.environ['INTERVAL'])
 mqtt_broker = os.environ['MQTT_SERVER']
 hostname = os.environ['HOSTNAME']
 port = 1883

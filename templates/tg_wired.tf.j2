@@ -1,0 +1,104 @@
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "3.0.2"
+    }
+  }
+}
+{% set hosts = [] -%}
+{%- for client in clients -%}
+{%- for c in client.containers -%}
+{%- for n in c.networks -%}
+{%- set hosts = hosts.append({'host':c.hostname + '-' + n.name, 'address':n.ip_address}) or "" -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- for client in clients -%}
+provider "docker" {
+  alias    = "{{client.alias}}"
+  host     = "ssh://{{client.user}}@{{client.hostname}}:22"
+  ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
+}
+{% for network in client.networks %}
+resource "docker_network" "{{network.tf_name}}" {
+    provider = docker.{{client.alias}}
+    name = "{{network.name}}"
+    driver = "{{network.driver}}"
+
+    ipam_config {
+        subnet = "{{network.ipam.subnet}}"
+        ip_range = "{{network.ipam.ip_range}}"
+        gateway = "{{network.ipam.gateway}}"
+    }
+    options = {
+        parent = "{{network.options.parent}}"
+        ipvlan_mode = "{{network.options.ipvlan_mode}}"
+    }
+}
+{% endfor %}
+{% for container in client.containers %}
+data "docker_registry_image" "{{container.tf_name}}"{
+    provider = docker.{{client.alias}}
+    name = "{{container.image}}"
+}
+
+resource "docker_image" "{{container.tf_name}}" {
+    provider = docker.{{client.alias}}
+    name = data.docker_registry_image.{{container.tf_name}}.name
+    pull_triggers = [data.docker_registry_image.{{container.tf_name}}.sha256_digest]
+}
+resource "docker_container" "{{container.tf_name}}" {
+    provider = docker.{{client.alias}}
+    name = "{{container.name}}"
+    image = docker_image.{{container.tf_name}}.image_id
+    hostname = "{{container.hostname}}"
+   {% if container.options is defined -%}
+   {%- for key, val in container.options.items() %}
+    {{key}} = {{val}}
+   {% endfor -%}
+   {%- endif -%}
+   {% for host in hosts %}
+    host {
+        host = "{{ host.host }}"
+        ip = "{{ host.address }}"
+    }
+   {% endfor -%}
+    {%- if container.env is defined %}
+    env = [
+        {%- for key,val in container.env.items() -%}
+        {%- if loop.last -%}
+        "{{key}}={{val}}"
+        {%- else -%}
+        "{{key}}={{val}}",
+        {%- endif -%}
+        {%- endfor -%}
+    ]
+    {%- endif -%}
+    {% for net in container.networks %}
+    networks_advanced {
+        name = "{{net.name}}"
+        ipv4_address = "{{net.ip_address}}"
+    }
+    {%- endfor %}
+    depends_on = [
+    {%- for d in container.depends_on -%}
+        {%- if loop.last -%}
+        "{{d}}"
+        {%- else -%}
+        "{{d}}",
+        {%- endif -%}
+    {%- endfor -%}
+    ]
+    {% if container.mounts is defined %}
+    {% for m in container.mounts %}
+    mounts {
+        target = "{{m.target}}",
+        source = "{{m.source}}",
+        type = "{{m.type}}"
+    }
+    {% endfor %}
+    {% endif %}
+}
+{% endfor %}
+{% endfor %}

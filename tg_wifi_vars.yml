@@ -1,0 +1,306 @@
+---
+clients:
+- alias: client1
+  hostname: desktop1-mgmt
+  user: root
+  networks:
+  - name: lan
+    tf_name: lan_1
+    driver: ipvlan
+    ipam:
+      subnet: 10.99.99.0/24
+      ip_range: 10.99.99.0/24
+      gateway: 10.99.99.1
+    options:
+      parent: ens192
+      ipvlan_mode: l2
+  - name: mgmt
+    tf_name: mgmt_1
+    driver: ipvlan
+    ipam:
+      subnet: 192.168.10.0/24
+      ip_range: 192.168.10.0/24
+      gateway: 192.168.10.1
+    options:
+      parent: ens160
+      ipvlan_mode: l2
+  containers:
+  - image: "autofunbot/tg_web_client:latest"
+    tf_name: web_client_1
+    hostname: web-client-1
+    name: web-client
+    options:
+      shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.99.99.100
+    - name: mgmt
+      ip_address: 192.168.10.111
+    env:
+      INTERVAL: 5
+      MQTT_SERVER: mqtt-server-1-mgmt
+      TARGETS: web-server-2
+    depends_on:
+      - docker_network.lan_1
+      - docker_container.mqtt_server_1
+      - docker_image.web_client_1
+      - docker_network.mgmt_1
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_1
+    hostname: web-server-1
+    name: web-server
+    networks:
+    - name: lan
+      ip_address: 10.99.99.2
+    - name: mgmt
+      ip_address: 192.168.10.112
+    env:
+      TARGETS: web-server-2
+      PORT: 80
+    depends_on:
+      - docker_network.lan_1
+      - docker_network.mgmt_1
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_1
+    hostname: mqtt-server-1
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.99.99.7
+    - name: mgmt
+      ip_address: 192.168.10.117
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_1
+      - docker_network.mgmt_1
+- alias: client2
+  hostname: desktop2-mgmt
+  user: root
+  networks:
+  - name: lan
+    tf_name: lan_2
+    driver: ipvlan
+    ipam:
+      subnet: 10.88.88.0/24
+      ip_range: 10.88.88.0/24
+      gateway: 10.88.88.1
+    options:
+      parent: ens192
+      ipvlan_mode: l2
+  - name: mgmt
+    tf_name: mgmt_2
+    driver: ipvlan
+    ipam:
+      subnet: 192.168.10.0/24
+      ip_range: 192.168.10.0/24
+      gateway: 192.168.10.1
+    options:
+      parent: ens160
+      ipvlan_mode: l2
+  containers:
+  - image: "autofunbot/tg_web_client:latest"
+    tf_name: web_client_2
+    hostname: web-client-2
+    name: web-client
+    options:
+      shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.88.88.100
+    - name: mgmt
+      ip_address: 192.168.10.121
+    env:
+      INTERVAL: 5
+      MQTT_SERVER: mqtt-server-1-mgmt
+      TARGETS: web-server-2
+    depends_on:
+      - docker_network.lan_2
+      - docker_container.mqtt_server_1
+      - docker_image.web_client_2
+      - docker_network.mgmt_2
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_2
+    hostname: web-server-2
+    name: web-server
+    networks:
+    - name: lan
+      ip_address: 10.88.88.2
+    - name: mgmt
+      ip_address: 192.168.10.122
+    env:
+      TARGETS: web-server-2
+      PORT: 80
+    depends_on:
+      - docker_network.lan_2
+      - docker_network.mgmt_2
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_2
+    hostname: mqtt-server-2
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.88.88.7
+    - name: mgmt
+      ip_address: 192.168.10.127
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_2
+      - docker_network.mgmt_2
+- alias: client3
+  hostname: desktop4-mgmt
+  user: root
+  networks:
+  - name: lan
+    tf_name: lan_3
+    driver: ipvlan
+    ipam:
+      subnet: 10.66.66.0/24
+      ip_range: 10.66.66.0/24
+      gateway: 10.66.66.1
+    options:
+      parent: ens192
+      ipvlan_mode: l2
+  - name: mgmt
+    tf_name: mgmt_3
+    driver: ipvlan
+    ipam:
+      subnet: 192.168.10.0/24
+      ip_range: 192.168.10.0/24
+      gateway: 192.168.10.1
+    options:
+      parent: ens160
+      ipvlan_mode: l2
+  containers:
+  - image: "autofunbot/tg_web_client:latest"
+    tf_name: web_client_3
+    hostname: web-client-3
+    name: web-client
+    options:
+      shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.66.66.100
+    - name: mgmt
+      ip_address: 192.168.10.141
+    env:
+      INTERVAL: 5
+      MQTT_SERVER: mqtt-server-1-mgmt
+      TARGETS: web-server-2
+    depends_on:
+      - docker_network.lan_3
+      - docker_container.mqtt_server_1
+      - docker_image.web_client_3
+      - docker_network.mgmt_3
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_3
+    hostname: web-server-3
+    name: web-server
+    networks:
+    - name: lan
+      ip_address: 10.66.66.2
+    - name: mgmt
+      ip_address: 192.168.10.142
+    env:
+      TARGETS: web-server-2
+      PORT: 80
+    depends_on:
+      - docker_network.lan_3
+      - docker_network.mgmt_3
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_3
+    hostname: mqtt-server-3
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.66.66.7
+    - name: mgmt
+      ip_address: 192.168.10.147
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_3
+      - docker_network.mgmt_3
+- alias: client4
+  hostname: desktop5-mgmt
+  user: root
+  networks:
+  - name: lan
+    tf_name: lan_4
+    driver: ipvlan
+    ipam:
+      subnet: 10.55.55.0/24
+      ip_range: 10.55.55.0/24
+      gateway: 10.55.55.1
+    options:
+      parent: ens192
+      ipvlan_mode: l2
+  - name: mgmt
+    tf_name: mgmt_4
+    driver: ipvlan
+    ipam:
+      subnet: 192.168.10.0/24
+      ip_range: 192.168.10.0/24
+      gateway: 192.168.10.1
+    options:
+      parent: ens160
+      ipvlan_mode: l2
+  containers:
+  - image: "autofunbot/tg_web_client:latest"
+    tf_name: web_client_4
+    hostname: web-client-4
+    name: web-client
+    options:
+      shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.55.55.100
+    - name: mgmt
+      ip_address: 192.168.10.151
+    env:
+      INTERVAL: 5
+      MQTT_SERVER: mqtt-server-1-mgmt
+      TARGETS: web-server-2
+    depends_on:
+      - docker_network.lan_4
+      - docker_container.mqtt_server_1
+      - docker_image.web_client_4
+      - docker_network.mgmt_4
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_4
+    hostname: web-server-4
+    name: web-server
+    networks:
+    - name: lan
+      ip_address: 10.55.55.2
+    - name: mgmt
+      ip_address: 192.168.10.152
+    env:
+      TARGETS: web-server-2
+      PORT: 80
+    depends_on:
+      - docker_network.lan_4
+      - docker_network.mgmt_4
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_4
+    hostname: mqtt-server-4
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.55.55.7
+    - name: mgmt
+      ip_address: 192.168.10.157
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_4
+      - docker_network.mgmt_4
