@@ -84,17 +84,17 @@ resource "docker_container" "{{container.tf_name}}" {
     depends_on = [
     {%- for d in container.depends_on -%}
         {%- if loop.last -%}
-        "{{d}}"
+        {{d}}
         {%- else -%}
-        "{{d}}",
+        {{d}},
         {%- endif -%}
     {%- endfor -%}
     ]
     {% if container.mounts is defined %}
     {% for m in container.mounts %}
     mounts {
-        target = "{{m.target}}",
-        source = "{{m.source}}",
+        target = "{{m.target}}"
+        source = "{{m.source}}"
         type = "{{m.type}}"
     }
     {% endfor %}

@@ -38,7 +38,7 @@ clients:
       ip_address: 192.168.10.111
     env:
       MQTT_SERVER: 192.168.10.117
-      TG_TYPE: web
+      TGTYPE: web
     depends_on:
       - docker_network.lan_1
       - docker_container.mqtt_server_1
@@ -110,7 +110,7 @@ clients:
       ip_address: 192.168.10.121
     env:
       MQTT_SERVER: 192.168.10.117
-      TG_TYPE: web
+      TGTYPE: web
     depends_on:
       - docker_network.lan_2
       - docker_container.mqtt_server_1
@@ -181,9 +181,8 @@ clients:
     - name: mgmt
       ip_address: 192.168.10.141
     env:
-      INTERVAL: 5
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TARGETS: web-server-2
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
     depends_on:
       - docker_network.lan_3
       - docker_container.mqtt_server_1
@@ -257,9 +256,8 @@ clients:
     - name: mgmt
       ip_address: 192.168.10.151
     env:
-      INTERVAL: 5
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TARGETS: web-server-2
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
     depends_on:
       - docker_network.lan_4
       - docker_container.mqtt_server_1

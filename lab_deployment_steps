@@ -2,3 +2,4 @@
 2. configure /etc/hosts
 - desktop1-mgmt (1,2,4,5)
 - lxd_host
+3. Insure the root user (desktop) ssh key is installed on TG hosts
