@@ -25,12 +25,7 @@ client.authenticate(args.wifi_host_password)
 
 psk = args.psk
 ssid = args.ssid
-if(exit_code == 0):
-    print("AP Successfully enabled")
-else:
-    print("AP initialization failed")
 
-time.sleep(10)
 for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)

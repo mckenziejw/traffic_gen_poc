@@ -19,11 +19,7 @@ def main():
     parser.add_argument('-host_password', default='juniper123')
     parser.add_argument('-lxd_password', default='juniper123')
     parser.add_argument('-mqtt_broker')
-    parser.add_argument(
-        '-tg_type', 
-        description="The type of traffic generator to create. This determines the MQTT topic the client subscribes to", 
-        default="web"
-    )
+    parser.add_argument('-tg_type', default="web")
     args = parser.parse_args()
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())

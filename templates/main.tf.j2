@@ -32,9 +32,9 @@ resource "lxd_instance" "wifi_client_{{loop.index}}" {
     execs = {
         "clone_git" = {
             command = ["/bin/bash", "git","clone","https://github.com/mckenziejw/traffic_gen_poc"]
-        },
+        }
         "run_client" = {
-            command = ["python3","traffic_gen_poc/web_client/app.py"]
+            command = ["/bin/bash", "python3", "traffic_gen_poc/web_client/app.py"]
             environment = {
                 "MQTT_SERVER"="{{mqtt_broker}}"
                 "TGTYPE"="{{tg_type}}"
