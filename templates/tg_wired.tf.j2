@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "3.0.2"
-    }
-  }
-}
 {% set hosts = [] -%}
 {%- for client in clients -%}
 {%- for c in client.containers -%}
