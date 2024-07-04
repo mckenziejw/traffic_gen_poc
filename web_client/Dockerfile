@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 COPY requirements.txt requirements.txt
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y python3 python3-pip wget firefox
+RUN apt-get update && apt-get install -y python3 python3-pip wget 
 RUN apt-get install -y libcurl3-gnutls libcurl3-nss libcurl4 libcurl4 libdrm2 libgbm1 libnspr4 libnss3 libu2f-udev libvulkan1 xdg-utils fonts-liberation
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
