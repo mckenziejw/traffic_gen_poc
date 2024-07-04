@@ -20,8 +20,9 @@ from selenium.webdriver.chrome.options import Options
 
 mqtt_broker = os.environ['MQTT_SERVER']
 hostname = os.environ['HOSTNAME']
+traffic_gen_type = os.environ['TGTYPE']
 port = 1883
-topic = "web/{}".format(hostname)
+topic = "{}/{}".format(traffic_gen_type, hostname)
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 processes = []
 

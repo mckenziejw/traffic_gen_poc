@@ -4,49 +4,34 @@ from pylxd import Client
 from pylxd.models.instance import Instance
 from pprint import pprint
 import time
-
 import argparse
+
 import warnings
 warnings.filterwarnings('ignore')
 # openssl req -x509 -newkey rsa:2048 -keyout lxd.key -nodes -out lxd.crt -subj "/CN=lxd.local"
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-wifi_host')
+parser.add_argument('-ssid')
+parser.add_argument('-psk')
+parser.add_argument('wifi_host_password')
+args = parser.parse_args()
 client = Client(
-    endpoint='https://10.210.14.9:8443',
+    endpoint=f"https://{args.wifi_host}:8443",
     verify=False
 )
 
-# parser = argparse.ArgumentParser(
-# prog='MIST WiFi Controller',
-# description='Update settings on WiFi Clients with self-test AP'
-# )
+client.authenticate(args.wifi_host_password)
 
-# parser.add_argument('-ssid')
-# parser.add_argument('-psk')
-
-# args = parser.parse_args()
-
-client.authenticate('juniper123')
-## Provision the AP
-ap = client.instances.get('wifi-client-1')
-ssid = ap.state().network['eth1']['hwaddr'].replace(':','')
-psk = 'juniper123'
-print("Installing AP dependencies")
-exit_code,s_out,s_err = ap.execute(
-    commands = ['apt','install','-y','network-manager']
-)
-print(exit_code,s_out,s_err)
-print("Configuring AP hotspot with name {}".format(ssid))
-exit_code,s_out,s_err = ap.execute(
-    commands = ['nmcli','device','wifi','hotspot','ifname','eth1','con-name',ssid, 'ssid', ssid, 'password', psk]
-)
-print(exit_code,s_out,s_err)
+psk = args.psk
+ssid = args.ssid
 if(exit_code == 0):
     print("AP Successfully enabled")
 else:
     print("AP initialization failed")
 
 time.sleep(10)
-for i in range(2,5):
+for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)
     put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",data)

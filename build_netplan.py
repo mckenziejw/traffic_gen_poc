@@ -18,6 +18,12 @@ def main():
     parser.add_argument('-user', default='lab')
     parser.add_argument('-host_password', default='juniper123')
     parser.add_argument('-lxd_password', default='juniper123')
+    parser.add_argument('-mqtt_broker')
+    parser.add_argument(
+        '-tg_type', 
+        description="The type of traffic generator to create. This determines the MQTT topic the client subscribes to", 
+        default="web"
+    )
     args = parser.parse_args()
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -29,7 +35,6 @@ def main():
         wifis_raw.append(line.strip('\n'))
 
     client.close()
-    print(wifis_raw)
     environment = Environment(loader=FileSystemLoader("./templates/"))
     template = environment.get_template("main.tf.j2")
 
@@ -38,12 +43,13 @@ def main():
     data = {
         'wifis':[],
         'lxd_host': args.lxd_host,
-        'lxd_password': args.lxd_password
+        'lxd_password': args.lxd_password,
+        'mqtt_broker':args.mqtt_broker,
+        'tg_type':args.tg_type
     }
     for intf in wifis_raw:
         print(f"checking {intf}")
         if re.match('wlp[a-zA-Z0-9]*', intf):
-            print(f"match found for {intf}")
             data['wifis'].append(
                 {
                     'name':'wlan0',
@@ -51,7 +57,6 @@ def main():
                 }
             )
         elif re.match('wlx[a-zA-Z0-9]*', intf):
-            print(f"match found for {intf}")
             data['wifis'].append(
                 {
                     'name':'wlan'+str(count),
@@ -59,7 +64,6 @@ def main():
                 }
             )
             count += 1
-    print(data)
     with open('main.tf', 'w') as out_file:
         output = template.render(data)
         out_file.write(output)

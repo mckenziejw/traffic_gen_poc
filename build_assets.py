@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import yaml
 from pprint import pprint
-f = open("tg_wifi_vars.yml")
+f = open("tg_wired_vars.yml")
 settings = yaml.safe_load(f)
 f.close()
 

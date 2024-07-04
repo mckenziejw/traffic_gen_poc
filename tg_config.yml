@@ -7,9 +7,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://web-server-2-lan
-        - http://web-server-3-lan
-        - http://web-server-4-lan
+        - http://10.88.88.130 # 2
+        - http://10.66.66.130 # 3
+        - http://10.55.55.130 # 4
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -32,9 +32,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://web-server-1-lan
-        - http://web-server-3-lan
-        - http://web-server-4-lan
+        - http://10.99.99.130 # 1
+        - http://10.66.66.130 # 3
+        - http://10.55.55.130 # 4
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -58,9 +58,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://web-server-1-lan
-        - http://web-server-2-lan
-        - http://web-server-4-lan
+        - http://10.99.99.130 # 1
+        - http://10.88.88.130 # 2
+        - http://10.55.55.130 # 4
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -83,9 +83,9 @@ scenario:
     action:
       type: post
       targets:
-        - http://web-server-2-lan
-        - http://web-server-3-lan
-        - http://web-server-4-lan
+        - http://10.88.88.130 # 2
+        - http://10.66.66.130 # 3
+        - http://10.55.55.130 # 4
       uri: /employees
       payload:
         name: Tim
@@ -132,6 +132,50 @@ scenario:
   - decription: Describe the thing
     service_type: web
     service_host: web-client-1
+    action:
+      type: watch_youtube
+      targets:
+        - nBIX7MY_6eA
+      # The loop_for setting determines how many times and how often the action is performed
+      # 0 = Loop until interrupted
+      # 1 = Do not loop
+      # Any integer > 1 will create a loop that runs that number of times
+      loop_for: 1
+      loop_delay:
+      # Creates an, optionally random, delay between loops.
+      # To have a consistent delay set min = max
+        min: 250000
+        max: 250000
+        # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
+        randomize_method: random
+    # The create_thread setting configures multithreading. If True, the action will run in its own thread
+    # So later actions can continue while it runs
+      create_thread: True
+  - decription: Describe the thing
+    service_type: web
+    service_host: wifi-client-1
+    action:
+      type: watch_youtube
+      targets:
+        - nBIX7MY_6eA
+      # The loop_for setting determines how many times and how often the action is performed
+      # 0 = Loop until interrupted
+      # 1 = Do not loop
+      # Any integer > 1 will create a loop that runs that number of times
+      loop_for: 1
+      loop_delay:
+      # Creates an, optionally random, delay between loops.
+      # To have a consistent delay set min = max
+        min: 250000
+        max: 250000
+        # supported randomize methods are 'random', 'normal' (normally distributed around the mean)
+        randomize_method: random
+    # The create_thread setting configures multithreading. If True, the action will run in its own thread
+    # So later actions can continue while it runs
+      create_thread: True
+  - decription: Describe the thing
+    service_type: web
+    service_host: wifi-client-2
     action:
       type: watch_youtube
       targets:

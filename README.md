@@ -14,3 +14,16 @@ The wireless clients are deployed as LXD containers. LXD was chosen for the flex
 4. Run `build_netplan.py`. This script queries the LXD hosts, grabbing WiFi interface names and using them to generate the `main.tf` Terraform configuration file
 5. Run `terraform apply` to build the WiFi clients.
 6. Run `set_wifi_test.py` to configure the WiFi containers and authenticate
+
+## Deployment (Wired)
+
+1. Configure the Ansible inventory
+2. Run the `prep_tg_clients.yml` playbook
+3. Configure `tg_wired_vars.yml`
+4. Run `build_assets.py`
+5. Terraform apply
+
+## Launch traffic generation
+
+1. Configure `tg_config.yml`
+2. Run `mqtt_test.py`

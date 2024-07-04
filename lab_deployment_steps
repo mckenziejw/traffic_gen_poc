@@ -1,0 +1,4 @@
+1. Set the netplan to define static IP
+2. configure /etc/hosts
+- desktop1-mgmt (1,2,4,5)
+- lxd_host

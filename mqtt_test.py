@@ -6,10 +6,16 @@ import random
 import yaml
 import json
 from pprint import pprint
+import argparse
 
-broker = '10.41.0.7'
+parser = argparse.ArgumentParser()
+parser.add_argument('-broker')
+parser.add_argument('-client_id')
+args=parser.parse_args()
+
+broker = args.broker
 port = 1883
-client_id = f'python-mqtt-1'
+client_id = args.client_id
 
 def connect_mqtt():
     #def on_connect(client, userdata, flags, rc):
