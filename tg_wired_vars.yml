@@ -42,7 +42,6 @@ clients:
     depends_on:
       - docker_network.lan_1
       - docker_container.mqtt_server_1
-      - docker_image.web_client_1
       - docker_network.mgmt_1
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_1
@@ -114,7 +113,6 @@ clients:
   #   depends_on:
   #     - docker_network.lan_2
   #     - docker_container.mqtt_server_1
-  #     - docker_image.web_client_2
   #     - docker_network.mgmt_2
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_2
@@ -186,7 +184,6 @@ clients:
   #   depends_on:
   #     - docker_network.lan_3
   #     - docker_container.mqtt_server_1
-  #     - docker_image.web_client_3
   #     - docker_network.mgmt_3
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_3
@@ -261,7 +258,6 @@ clients:
   #   depends_on:
   #     - docker_network.lan_4
   #     - docker_container.mqtt_server_1
-  #     - docker_image.web_client_4
   #     - docker_network.mgmt_4
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_4
