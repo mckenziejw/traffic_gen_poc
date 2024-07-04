@@ -2,7 +2,7 @@
 clients:
 - alias: client1
   hostname: desktop1-mgmt
-  user: root
+  user: lab
   networks:
   - name: lan
     tf_name: lan_1
@@ -74,7 +74,7 @@ clients:
       - docker_network.mgmt_1
 - alias: client2
   hostname: desktop2-mgmt
-  user: root
+  user: lab
   networks:
   - name: lan
     tf_name: lan_2
@@ -146,7 +146,7 @@ clients:
       - docker_network.mgmt_2
 - alias: client3
   hostname: desktop4-mgmt
-  user: root
+  user: lab
   networks:
   - name: lan
     tf_name: lan_3
@@ -221,7 +221,7 @@ clients:
       - docker_network.mgmt_3
 - alias: client4
   hostname: desktop5-mgmt
-  user: root
+  user: lab
   networks:
   - name: lan
     tf_name: lan_4

@@ -23,7 +23,7 @@ def main():
     args = parser.parse_args()
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(args.lxd_host, username=args.user, password=args.host_password)
+    client.connect(args.lxd_host, username=args.user)#, password=args.host_password)
 
     stdin, stdout, stderr = client.exec_command('ls /sys/class/net')
     wifis_raw=[]

@@ -1,0 +1,3 @@
+---
+ansible_become_password: lab123
+mosquitto_path: /home/lab/mosquitto/mosquitto.conf

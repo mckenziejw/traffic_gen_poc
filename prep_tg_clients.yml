@@ -1,9 +1,6 @@
 ---
 - name: Install Docker
   hosts: tg_hosts
-  vars:
-    - ansible_become_password: juniper123
-    - ansible_become_user: root
   tasks:
     - name: Install required system packages
       apt:
@@ -42,20 +39,16 @@
 
 - name: Install config files
   hosts: tg_hosts
-  vars:
-    - ansible_become_password: juniper123
-    - ansible_become_user: root
-
   tasks:
   - name: Create mosquitto dir
     file:
-      path: /home/lab/mosquitto
+      path: "{{mosquitto_path}}"
       state: directory
     become: true
   - name: Install MQTT config
     template:
       src: templates/mosquitto.conf.j2
-      dest: /home/lab/mosquitto/mosquitto.conf
+      dest: "{{mosquitto_path}}"
       owner: root
       mode: '0644'
     become: true

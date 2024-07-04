@@ -2,37 +2,18 @@ all_hosts:
   hosts:
     desktop1-mgmt:
     desktop2-mgmt:
-    lxd_host:
+    lxdhost:
     desktop4-mgmt:
     desktop5-mgmt:
 lxd_hosts:
   hosts:
-    lxd_host:
+    lxdhost:
 wifi_hosts:
   hosts:
-    lxd_host:
+    lxdhost:
 tg_hosts:
   hosts:
     desktop1-mgmt:
     desktop2-mgmt:
     desktop4-mgmt:
     desktop5-mgmt:
-# all_hosts:
-#   hosts:
-#     desktop1-mgmt:
-#     desktop2-mgmt:
-#     desktop3-mgmt:
-#     desktop4-mgmt:
-#     desktop5-mgmt:
-# lxd_hosts:
-#   hosts:
-#     desktop3-mgmt:
-# wifi_hosts:
-#   hosts:
-#     desktop3-mgmt:
-# tg_hosts:
-#   hosts:
-#     desktop1-mgmt:
-#     desktop2-mgmt:
-#     desktop4-mgmt:
-#     desktop5-mgmt:    

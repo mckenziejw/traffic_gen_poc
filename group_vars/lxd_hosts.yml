@@ -1,8 +1,10 @@
 ---
-management_interfaces:
-  - ens160
-excluded_interfaces:
-  - lo
-  - lxdbr0
-  - docker0
-net_name_prefix: wifi_
+# management_interfaces:
+#   - ens160
+# excluded_interfaces:
+#   - lo
+#   - lxdbr0
+#   - docker0
+# net_name_prefix: wifi_
+---
+ansible_become_password: lab123
