@@ -40,6 +40,11 @@
 - name: Install config files
   hosts: tg_hosts
   tasks:
+  - name: Delete mosquitto dir
+    file:
+      path: "{{mosquitto_path}}/mosquitto.conf"
+      state: absent
+    become: true
   - name: Create mosquitto dir
     file:
       path: "{{mosquitto_path}}"
@@ -48,7 +53,7 @@
   - name: Install MQTT config
     template:
       src: templates/mosquitto.conf.j2
-      dest: "{{mosquitto_path}}"
+      dest: "{{mosquitto_path}}/mosquitto.conf"
       owner: root
       mode: '0644'
     become: true
