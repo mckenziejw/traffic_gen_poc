@@ -97,25 +97,25 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
-    tf_name: web_client_2
-    hostname: web-client-2
-    name: web-client
-    options:
-      shm_size: 2048
-    networks:
-    - name: lan
-      ip_address: 10.88.88.129
-    - name: mgmt
-      ip_address: 192.168.10.121
-    env:
-      MQTT_SERVER: 192.168.10.117
-      TGTYPE: web
-    depends_on:
-      - docker_network.lan_2
-      - docker_container.mqtt_server_1
-      - docker_image.web_client_2
-      - docker_network.mgmt_2
+  # - image: "autofunbot/tg_web_client:latest"
+  #   tf_name: web_client_2
+  #   hostname: web-client-2
+  #   name: web-client
+  #   options:
+  #     shm_size: 2048
+  #   networks:
+  #   - name: lan
+  #     ip_address: 10.88.88.129
+  #   - name: mgmt
+  #     ip_address: 192.168.10.121
+  #   env:
+  #     MQTT_SERVER: 192.168.10.117
+  #     TGTYPE: web
+  #   depends_on:
+  #     - docker_network.lan_2
+  #     - docker_container.mqtt_server_1
+  #     - docker_image.web_client_2
+  #     - docker_network.mgmt_2
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_2
     hostname: web-server-2
@@ -169,25 +169,25 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
-    tf_name: web_client_3
-    hostname: web-client-3
-    name: web-client
-    options:
-      shm_size: 2048
-    networks:
-    - name: lan
-      ip_address: 10.66.66.129
-    - name: mgmt
-      ip_address: 192.168.10.141
-    env:
-      MQTT_SERVER: 192.168.10.117
-      TGTYPE: web
-    depends_on:
-      - docker_network.lan_3
-      - docker_container.mqtt_server_1
-      - docker_image.web_client_3
-      - docker_network.mgmt_3
+  # - image: "autofunbot/tg_web_client:latest"
+  #   tf_name: web_client_3
+  #   hostname: web-client-3
+  #   name: web-client
+  #   options:
+  #     shm_size: 2048
+  #   networks:
+  #   - name: lan
+  #     ip_address: 10.66.66.129
+  #   - name: mgmt
+  #     ip_address: 192.168.10.141
+  #   env:
+  #     MQTT_SERVER: 192.168.10.117
+  #     TGTYPE: web
+  #   depends_on:
+  #     - docker_network.lan_3
+  #     - docker_container.mqtt_server_1
+  #     - docker_image.web_client_3
+  #     - docker_network.mgmt_3
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_3
     hostname: web-server-3
@@ -244,25 +244,25 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
-    tf_name: web_client_4
-    hostname: web-client-4
-    name: web-client
-    options:
-      shm_size: 2048
-    networks:
-    - name: lan
-      ip_address: 10.55.55.129
-    - name: mgmt
-      ip_address: 192.168.10.151
-    env:
-      MQTT_SERVER: 192.168.10.117
-      TGTYPE: web
-    depends_on:
-      - docker_network.lan_4
-      - docker_container.mqtt_server_1
-      - docker_image.web_client_4
-      - docker_network.mgmt_4
+  # - image: "autofunbot/tg_web_client:latest"
+  #   tf_name: web_client_4
+  #   hostname: web-client-4
+  #   name: web-client
+  #   options:
+  #     shm_size: 2048
+  #   networks:
+  #   - name: lan
+  #     ip_address: 10.55.55.129
+  #   - name: mgmt
+  #     ip_address: 192.168.10.151
+  #   env:
+  #     MQTT_SERVER: 192.168.10.117
+  #     TGTYPE: web
+  #   depends_on:
+  #     - docker_network.lan_4
+  #     - docker_container.mqtt_server_1
+  #     - docker_image.web_client_4
+  #     - docker_network.mgmt_4
   - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_4
     hostname: web-server-4
