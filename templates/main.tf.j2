@@ -36,8 +36,8 @@ resource "lxd_instance" "wifi_client_{{loop.index}}" {
         "run_client" = {
             command = ["/bin/bash", "python3", "traffic_gen_poc/web_client/app.py"]
             environment = {
-                "MQTT_SERVER"="{{mqtt_broker}}"
-                "TGTYPE"="{{tg_type}}"
+                "MQTT_SERVER" = "{{mqtt_broker}}"
+                "TGTYPE" = "{{tg_type}}"
             }
         }
     }
