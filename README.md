@@ -27,3 +27,17 @@ The wireless clients are deployed as LXD containers. LXD was chosen for the flex
 
 1. Configure `tg_config.yml`
 2. Run `mqtt_test.py`
+
+
+
+
+# data "docker_registry_image" "{{container.tf_name}}"{
+#     provider = docker.{{client.alias}}
+#     name = "{{container.image}}"
+# }
+
+# resource "docker_image" "{{container.tf_name}}" {
+#     provider = docker.{{client.alias}}
+#     name = data.docker_registry_image.{{container.tf_name}}.name
+#     pull_triggers = [data.docker_registry_image.{{container.tf_name}}.sha256_digest]
+# }

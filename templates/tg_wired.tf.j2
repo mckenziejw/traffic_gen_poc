@@ -30,20 +30,11 @@ resource "docker_network" "{{network.tf_name}}" {
 }
 {% endfor %}
 {% for container in client.containers %}
-data "docker_registry_image" "{{container.tf_name}}"{
-    provider = docker.{{client.alias}}
-    name = "{{container.image}}"
-}
 
-resource "docker_image" "{{container.tf_name}}" {
-    provider = docker.{{client.alias}}
-    name = data.docker_registry_image.{{container.tf_name}}.name
-    pull_triggers = [data.docker_registry_image.{{container.tf_name}}.sha256_digest]
-}
 resource "docker_container" "{{container.tf_name}}" {
     provider = docker.{{client.alias}}
     name = "{{container.name}}"
-    image = docker_image.{{container.tf_name}}.image_id
+    image = "{{container.image}}"
     hostname = "{{container.hostname}}"
    {% if container.options is defined -%}
    {%- for key, val in container.options.items() %}
