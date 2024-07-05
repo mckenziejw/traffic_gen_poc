@@ -27,24 +27,28 @@ client_id = f'python-mqtt-{random.randint(0, 1000)}'
 processes = []
 
 def watch_youtube(path, watch_time=300):
-    chrome_options = Options()
-    service = Service(executable_path='/usr/bin/chromedriver')
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.binary_location="/usr/bin/google-chrome-stable"
-    browser = webdriver.Chrome(options=chrome_options, service=service)
-    browser.get(path)
-    for i in range(10):
-        time.sleep(1)
-    video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
-    video.click() #hits space
-    time.sleep(10)
-    #browser.get_screenshot_as_file('/root/test-ss.png')
-    #time.sleep(120)
-    #browser.get_screenshot_as_file('/root/test-ss1.png')
-    time.sleep(watch_time)
-    browser.quit()
+    try:
+        chrome_options = Options()
+        service = Service(executable_path='/usr/bin/chromedriver')
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        browser = webdriver.Chrome(options=chrome_options, service=service)
+        browser.get(path)
+        for i in range(10):
+            time.sleep(1)
+        video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
+        video.click() #hits space
+        time.sleep(10)
+        #browser.get_screenshot_as_file('/root/test-ss.png')
+        #time.sleep(120)
+        #browser.get_screenshot_as_file('/root/test-ss1.png')
+        time.sleep(watch_time)
+        browser.quit()
+    except Exception as e:
+        print(e)
+        pass
 
 def kill_all_loops(processes):
     for p in processes:
@@ -63,23 +67,35 @@ def do_action(action):
         if action['loop_for'] == 0:
             while True:
                 for t in action['targets']:
-                    resp = requests.get("{}/{}".format(t, action['uri']))
-                    print(f"GET response from {t} with status: {resp.status_code}")
+                    try:
+                        resp = requests.get("{}/{}".format(t, action['uri']))
+                        print(f"GET response from {t} with status: {resp.status_code}")
+                    except Exception as e:
+                        print(e)
+                        pass
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
         elif action['loop_for'] == 1:
             for t in action['targets']:
-                resp = requests.get("{}/{}".format(t, action['uri']))
-                print(f"GET response from {t} with status: {resp.status_code}")
+                try:
+                    resp = requests.get("{}/{}".format(t, action['uri']))
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                except Exception as e:
+                    print(e)
+                    pass
             if action.get('loop_delay'):
                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                 time.sleep(delay)
         elif action['loop_for'] >1:
             for _ in range(action['loop_for']):
                 for t in action['targets']:
-                    resp = requests.get("{}/{}".format(t, action['uri']))
-                    print(f"GET response from {t} with status: {resp.status_code}")
+                    try:
+                        resp = requests.get("{}/{}".format(t, action['uri']))
+                        print(f"GET response from {t} with status: {resp.status_code}")
+                    except Exception as e:
+                        print(e)
+                        pass
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
@@ -88,30 +104,46 @@ def do_action(action):
         if action['loop_for'] == 0:
             while True:
                 for t in action['targets']:
-                    resp = requests.post("http://{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
-                    print(f"GET response from {t} with status: {resp.status_code}")
+                    try:
+                        resp = requests.post("http://{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
+                        print(f"GET response from {t} with status: {resp.status_code}")
+                    except Exception as e:
+                        print(e)
+                        pass
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
         elif action['loop_for'] == 1:
             for t in action['targets']:
-                resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
-                print(f"GET response from {t} with status: {resp.status_code}")
+                try:
+                    resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
+                    print(f"GET response from {t} with status: {resp.status_code}")
+                except Exception as e:
+                    print(e)
+                    pass
             if action.get('loop_delay'):
                 delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                 time.sleep(delay)
         elif action['loop_for'] >1:
             for _ in range(action['loop_for']):
                 for t in action['targets']:
-                    resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
-                    print(f"GET response from {t} with status: {resp.status_code}")
+                    try:
+                        resp = requests.post("{}/{}".format(t, action['uri']), data = json.dumps(action['payload']))
+                        print(f"GET response from {t} with status: {resp.status_code}")
+                    except Exception as e:
+                        print(e)
+                        pass
                 if action.get('loop_delay'):
                     delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
                     time.sleep(delay)
     elif action['type'] == 'watch_youtube':
         for t in action['targets']:
-            delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
-            watch_youtube(f"https://youtube.com/watch?v={t}", delay)
+            try:
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                watch_youtube(f"https://youtube.com/watch?v={t}", delay)
+            except Exception as e:
+                print(e)
+                pass
     # elif action['type'] == 'put':
     #     ## do a put
     #     if action['loop_for'] == 0:
@@ -186,7 +218,7 @@ def handle_mqtt_msg(client, userdata, msg):
 def on_message(client, userdata, msg):
         handle_mqtt_msg(client, userdata, msg)
         
-        
+   
 client = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
