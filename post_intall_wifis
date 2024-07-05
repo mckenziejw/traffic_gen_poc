@@ -1,0 +1,5 @@
+1. Delete default route
+2. Set default route -> 10.99/88/77/66, etc (eth1)
+3. Set 192.168.0.0/16 -> 192.168.10.1 (eth0)
+4. Set wifi supplicant configuration
+5. run dhclient

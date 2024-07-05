@@ -11,15 +11,16 @@ warnings.filterwarnings('ignore')
 # openssl req -x509 -newkey rsa:2048 -keyout lxd.key -nodes -out lxd.crt -subj "/CN=lxd.local"
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-wifi_host')
-parser.add_argument('-ssid')
-parser.add_argument('-psk')
-parser.add_argument('wifi_host_password')
+parser.add_argument('-wifi_host', default='lxdhost')
+parser.add_argument('-ssid', default='WLAN_TEST')
+parser.add_argument('-psk', default='juniper123')
+parser.add_argument('-wifi_host_password', default='juniper123')
 args = parser.parse_args()
 client = Client(
     endpoint=f"https://{args.wifi_host}:8443",
     verify=False
 )
+gateway = '10.99.99.1'
 
 client.authenticate(args.wifi_host_password)
 
@@ -58,6 +59,16 @@ for i in range(1,5):
         else:
             print('wifi-client-{} WPA DHCP manual configuration failed'.format(i))
     time.sleep(10)
+    print("Updating route table")
+    exit_code,s_out,s_err = c.execute(
+        commands = ['ip', 'route','delete','default']
+    )
+    exit_code,s_out,s_err = c.execute(
+        commands = ['ip', 'route','add','default', 'via', gateway]
+    )
+    exit_code,s_out,s_err = c.execute(
+        commands = ['ip', 'route','add','192.168.0.0/16', 'via', '192.168.10.1']
+    )
     print("Running ping test for wifi-client-{}".format(i))
     exit_code,s_out,s_err = c.execute(
         commands = ['ping','-c', '4','8.8.8.8']

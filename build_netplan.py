@@ -14,11 +14,11 @@ def main():
         description="This script crates the terraform module to deploy LXD WiFi Clients"
     )
 
-    parser.add_argument('-lxd_host')
+    parser.add_argument('-lxd_host', default='lxdhost')
     parser.add_argument('-user', default='lab')
-    parser.add_argument('-host_password', default='juniper123')
+    parser.add_argument('-host_password', default='lab123')
     parser.add_argument('-lxd_password', default='juniper123')
-    parser.add_argument('-mqtt_broker')
+    parser.add_argument('-mqtt_broker', default='192.168.10.117')
     parser.add_argument('-tg_type', default="web")
     args = parser.parse_args()
     client = paramiko.SSHClient()
