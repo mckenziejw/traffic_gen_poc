@@ -27,6 +27,9 @@ client.authenticate(args.wifi_host_password)
 psk = args.psk
 ssid = args.ssid
 
+def create_wpa_conf(data, client):
+    data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0"
+
 for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)
