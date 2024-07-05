@@ -28,7 +28,7 @@ psk = args.psk
 ssid = args.ssid
 
 def create_wpa_conf(data):
-    data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0"
+    data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0\n"
     return data
 for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
@@ -70,7 +70,7 @@ for i in range(1,5):
         commands = ['ip', 'route','add','default', 'via', gateway]
     )
     exit_code,s_out,s_err = c.execute(
-        commands = ['ip', 'route','add','192.168.0.0/16', 'via', '192.168.10.1']
+        commands = ['ip', 'route','add','192.168.0.0/16', 'via', '10.120.0.1']
     )
     print("Running ping test for wifi-client-{}".format(i))
     exit_code,s_out,s_err = c.execute(
