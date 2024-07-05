@@ -37,8 +37,12 @@ def watch_youtube(path, watch_time=300):
     browser.get(path)
     for i in range(10):
         time.sleep(1)
-    video = browser.find_element(By.ID,'movie_player')
-    video.send_keys(Keys.SPACE) #hits space
+    video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
+    video.click() #hits space
+    time.sleep(10)
+    #browser.get_screenshot_as_file('/root/test-ss.png')
+    #time.sleep(120)
+    #browser.get_screenshot_as_file('/root/test-ss1.png')
     time.sleep(watch_time)
     browser.quit()
 
