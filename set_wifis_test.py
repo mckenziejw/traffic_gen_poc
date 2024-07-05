@@ -70,10 +70,17 @@ for i in range(1,5):
         commands = ['ip', 'route','add','default', 'via', gateway]
     )
     exit_code,s_out,s_err = c.execute(
+        commands = ['ip', 'link','set','eth0', 'up']
+    )
+    exit_code,s_out,s_err = c.execute(
         commands = ['ip', 'route','add','192.168.0.0/16', 'via', '10.120.0.1']
     )
     print("Running ping test for wifi-client-{}".format(i))
     exit_code,s_out,s_err = c.execute(
         commands = ['ping','-c', '4','8.8.8.8']
+        )
+    print(exit_code,s_out,s_err)
+    exit_code,s_out,s_err = c.execute(
+        commands = ['ping','-c', '4','10.120.0.1']
         )
     print(exit_code,s_out,s_err)
