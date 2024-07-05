@@ -27,13 +27,13 @@ client.authenticate(args.wifi_host_password)
 psk = args.psk
 ssid = args.ssid
 
-def create_wpa_conf(data, client):
+def create_wpa_conf(data):
     data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0"
-
+    return data
 for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)
-    put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",data)
+    put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",create_wpa_conf(data))
     exit_code,s_out,s_err = c.execute(
         commands = ['wpa_passphrase', ssid, psk], stdout_handler=put_file
     )
