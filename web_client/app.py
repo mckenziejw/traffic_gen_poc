@@ -18,12 +18,22 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-mqtt_broker = os.environ['MQTT_SERVER']
-hostname = os.environ['HOSTNAME']
-traffic_gen_type = os.environ['TGTYPE']
-port = 1883
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-mqtt_server', default='')
+parser.add_argument('-hostname', default='')
+parser.add_argument('-tgtype',default='')
+parser.add_argument('-port', default='')
+args = parser.parse_args()
+
+mqtt_broker = os.environ['MQTT_SERVER'] if args.mqtt_server == '' else args.mqtt_server
+hostname = os.environ['HOSTNAME'] if args.hostname == '' else args.hostname
+traffic_gen_type = os.environ['TGTYPE'] if args.tgtype == '' else args.tgtype
+port = 1883 if args.port == '' else args.port
+
 topic = "{}/{}".format(traffic_gen_type, hostname)
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
+client_id = f'python-mqtt-{hostname}'
 processes = []
 
 def watch_youtube(path, watch_time=300):
