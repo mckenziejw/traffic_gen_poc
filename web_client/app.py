@@ -17,7 +17,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-
+from selenium.webdriver.chrome.service import Service
 mqtt_broker = os.environ['MQTT_SERVER']
 hostname = os.environ['HOSTNAME']
 traffic_gen_type = os.environ['TGTYPE']
@@ -28,10 +28,12 @@ processes = []
 
 def watch_youtube(path, watch_time=300):
     chrome_options = Options()
+    service = Service(executable_path='/usr/bin/chromedriver')
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-sandbox")
-    browser = webdriver.Chrome(options=chrome_options)
+    chrome_options.binary_location="/usr/bin/google-chrome-stable"
+    browser = webdriver.Chrome(options=chrome_options, service=service)
     browser.get(path)
     for i in range(10):
         time.sleep(1)
