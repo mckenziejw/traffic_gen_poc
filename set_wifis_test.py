@@ -81,6 +81,6 @@ for i in range(1,5):
         )
     print(exit_code,s_out,s_err)
     exit_code,s_out,s_err = c.execute(
-        commands = ['ping','-c', '4','10.120.0.1']
+        commands = ['ping','-c', '4','192.168.10.1']
         )
     print(exit_code,s_out,s_err)

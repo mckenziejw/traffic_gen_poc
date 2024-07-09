@@ -126,22 +126,22 @@ clients:
     depends_on:
       - docker_network.lan_2
       - docker_network.mgmt_2
-  # - image: "eclipse-mosquitto"
-  #   tf_name: mqtt_server_2
-  #   hostname: mqtt-server-2
-  #   name: mqtt-server
-  #   networks:
-  #   - name: lan
-  #     ip_address: 10.88.88.131
-  #   - name: mgmt
-  #     ip_address: 192.168.10.127
-  #   mounts:
-  #     - target: /mosquitto/config/mosquitto.conf
-  #       source: /home/lab/mosquitto/mosquitto.conf
-  #       type: bind
-  #   depends_on:
-  #     - docker_network.lan_2
-  #     - docker_network.mgmt_2
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_2
+    hostname: mqtt-server-2
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.88.88.131
+    - name: mgmt
+      ip_address: 192.168.10.127
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_2
+      - docker_network.mgmt_2
 - alias: client3
   hostname: desktop4-mgmt
   user: lab
@@ -200,22 +200,22 @@ clients:
     depends_on:
       - docker_network.lan_3
       - docker_network.mgmt_3
-  # - image: "eclipse-mosquitto"
-  #   tf_name: mqtt_server_3
-  #   hostname: mqtt-server-3
-  #   name: mqtt-server
-  #   networks:
-  #   - name: lan
-  #     ip_address: 10.66.66.131
-  #   - name: mgmt
-  #     ip_address: 192.168.10.147
-  #   mounts:
-  #     - target: /mosquitto/config/mosquitto.conf
-  #       source: /home/lab/mosquitto/mosquitto.conf
-  #       type: bind
-  #   depends_on:
-  #     - docker_network.lan_3
-  #     - docker_network.mgmt_3
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_3
+    hostname: mqtt-server-3
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.66.66.131
+    - name: mgmt
+      ip_address: 192.168.10.147
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_3
+      - docker_network.mgmt_3
 - alias: client4
   hostname: desktop5-mgmt
   user: lab
@@ -274,3 +274,19 @@ clients:
     depends_on:
       - docker_network.lan_4
       - docker_network.mgmt_4
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_4
+    hostname: mqtt-server-4
+    name: mqtt-server
+    networks:
+    - name: lan
+      ip_address: 10.55.55.131
+    - name: mgmt
+      ip_address: 192.168.10.157
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_3
+      - docker_network.mgmt_3
