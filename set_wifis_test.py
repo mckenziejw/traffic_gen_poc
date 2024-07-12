@@ -34,6 +34,10 @@ for i in range(1,5):
     c = client.instances.get('wifi-client-{}'.format(i))
     f = c.FilesManager(c)
     put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",create_wpa_conf(data))
+    print("Decreasing transmit power to minimum")
+    exit_code,s_out,s_err = c.execute(
+        commands = ['iw','dev', 'eth1','set','txpower','fixed','0']
+    )
     exit_code,s_out,s_err = c.execute(
         commands = ['wpa_passphrase', ssid, psk], stdout_handler=put_file
     )

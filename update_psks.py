@@ -71,12 +71,11 @@ def get_latest_psk(client):
     for p in psks:
         if p['role'] == client['role']:
             if last_expiry is None:
-                if last_expiry is None:
-                    last_expiry = p['expire_time']
-                    psk_id = p['id']
-                elif last_expiry < p['expire_time']:
-                    last_expiry = p['expire_time']
-                    psk_id = p['id']
+                last_expiry = p['expire_time']
+                psk_id = p['id']
+            elif last_expiry < p['expire_time']:
+                last_expiry = p['expire_time']
+                psk_id = p['id']
     if psk_id is None:
         return None
     else:
@@ -88,6 +87,10 @@ for wifi in wifis:
     f = c.FilesManager(c)
     psk = get_latest_psk(wifi)
     put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",data)
+    print("Decreasing transmit power to minimum")
+    exit_code,s_out,s_err = c.execute(
+        commands = ['iw','dev', 'eth1','set','txpower','fixed','0']
+    )
     if wifi['role'] == 'Guest':
         exit_code,s_out,s_err = c.execute(
             commands = ['wpa_passphrase', guest_ssid, psk], stdout_handler=put_file
