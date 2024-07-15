@@ -42,7 +42,7 @@ clients:
       - docker_network.lan_1
       - docker_container.mqtt_server_1
       - docker_network.mgmt_1
-  - image: "autofunbot/tg_web_server:test"
+  - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_1
     hostname: web-server-1
     name: web-server
@@ -131,7 +131,7 @@ clients:
       - docker_network.lan_2
       - docker_container.mqtt_server_1
       - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_server:test"
+  - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_2
     hostname: web-server-2
     name: web-server
@@ -220,7 +220,7 @@ clients:
       - docker_network.lan_3
       - docker_container.mqtt_server_1
       - docker_network.mgmt_3
-  - image: "autofunbot/tg_web_server:test"
+  - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_3
     hostname: web-server-3
     name: web-server
@@ -312,7 +312,7 @@ clients:
       - docker_network.lan_4
       - docker_container.mqtt_server_1
       - docker_network.mgmt_4
-  - image: "autofunbot/tg_web_server:test"
+  - image: "autofunbot/tg_web_server:latest"
     tf_name: web_server_4
     hostname: web-server-4
     name: web-server
