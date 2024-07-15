@@ -14,6 +14,7 @@ The wireless clients are deployed as LXD containers. LXD was chosen for the flex
 4. Run `build_netplan.py`. This script queries the LXD hosts, grabbing WiFi interface names and using them to generate the `main.tf` Terraform configuration file
 5. Run `terraform apply` to build the WiFi clients.
 6. Run `set_wifi_test.py` to configure the WiFi containers and authenticate
+7. Run `start_wifis_tgen.py` to start traffic generator processes on WiFi containers
 
 ## Deployment (Wired)
 
@@ -25,10 +26,8 @@ The wireless clients are deployed as LXD containers. LXD was chosen for the flex
 
 ## Launch traffic generation
 
-1. Configure `tg_config.yml`
+1. Define traffic generation parameters (defaults to file `tg_config.yml`)
 2. Run `mqtt_test.py`
-
-
 
 
 # data "docker_registry_image" "{{container.tf_name}}"{

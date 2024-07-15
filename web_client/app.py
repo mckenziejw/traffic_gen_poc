@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # This script is a simple PoC test for generating REST requests on an interval
 # This will later be fleshed out with
 # 1. Taking a config file as input which specifies
@@ -25,12 +27,14 @@ parser.add_argument('-mqtt_server', default='')
 parser.add_argument('-hostname', default='')
 parser.add_argument('-tgtype',default='')
 parser.add_argument('-port', default='')
+parser.add_argument('-ss_count', default=10)
 args = parser.parse_args()
 
 mqtt_broker = os.environ['MQTT_SERVER'] if args.mqtt_server == '' else args.mqtt_server
 hostname = os.environ['HOSTNAME'] if args.hostname == '' else args.hostname
 traffic_gen_type = os.environ['TGTYPE'] if args.tgtype == '' else args.tgtype
-port = 1883 if args.port == '' else args.port
+ss_count = os.environ['SSCOUNT'] if os.environ.get('SSCOUNT') is not None else int(args.ss_count)
+port = 1883 if args.port == '' else int(args.port)
 
 topic = "{}/{}".format(traffic_gen_type, hostname)
 client_id = f'python-mqtt-{hostname}'
@@ -50,10 +54,58 @@ def watch_youtube(path, watch_time=300):
             time.sleep(1)
         video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
         video.click() #hits space
-        time.sleep(10)
-        #browser.get_screenshot_as_file('/root/test-ss.png')
-        #time.sleep(120)
-        #browser.get_screenshot_as_file('/root/test-ss1.png')
+        #time.sleep(10)
+        current_time = time.time()
+        end_time = time.time() + watch_time
+        i = 1
+        while current_time <= end_time:
+            if i <= ss_count:
+                browser.get_screenshot_as_file(f"/root/test-ss-{i}.png")
+            time.sleep(60)
+            i = i + 1
+        browser.quit()
+    except Exception as e:
+        print(e)
+        pass
+
+def watch_twitch(path, watch_time=300):
+    try:
+        chrome_options = Options()
+        service = Service(executable_path='/usr/bin/chromedriver')
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        browser = webdriver.Chrome(options=chrome_options, service=service)
+        browser.get(path)
+        for i in range(10):
+            time.sleep(1)
+        #video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
+        #video.click() #hits space
+        #time.sleep(10)
+        current_time = time.time()
+        end_time = time.time() + watch_time
+        i = 1
+        while current_time <= end_time:
+            if i <= ss_count:
+                browser.get_screenshot_as_file(f"/root/twitch-ss-{i}.png")
+            time.sleep(60)
+            i = i + 1
+        browser.quit()
+    except Exception as e:
+        print(e)
+        pass
+    
+def gdrive_download(path, watch_time=300):
+    try:
+        chrome_options = Options()
+        service = Service(executable_path='/usr/bin/chromedriver')
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        browser = webdriver.Chrome(options=chrome_options, service=service)
+        browser.get(path)
         time.sleep(watch_time)
         browser.quit()
     except Exception as e:
@@ -154,6 +206,41 @@ def do_action(action):
             except Exception as e:
                 print(e)
                 pass
+    elif action['type'] == 'watch_twitch':
+        for t in action['targets']:
+            try:
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                watch_twitch(f"https://twitch.tv/{t}", delay)
+            except Exception as e:
+                print(e)
+                pass
+    elif action['type'] == 'gdrive_download':
+        if action['loop_for'] == 0:
+            while True:
+                for t in action['targets']:
+                    try:
+                        delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                        gdrive_download(f"https://drive.google.com/{t}", delay)
+                    except Exception as e:
+                        print(e)
+                        pass
+        elif action['loop_for'] == 1:
+            for t in action['targets']:
+                try:
+                    delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                    gdrive_download(f"https://drive.google.com/{t}", delay)
+                except Exception as e:
+                    print(e)
+                    pass
+        elif action['loop_for'] > 1:
+            for _ in range(action['loop_for']):
+                for t in action['targets']:
+                    try:
+                        delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                        gdrive_download(f"https://drive.google.com/{t}", delay)
+                    except Exception as e:
+                        print(e)
+                        pass
     # elif action['type'] == 'put':
     #     ## do a put
     #     if action['loop_for'] == 0:

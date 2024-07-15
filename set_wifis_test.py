@@ -1,5 +1,3 @@
-## For testing the reboot, run `nmcli connection modify <connection> connection.autoconnect yes` on client-1
-
 from pylxd import Client
 from pylxd.models.instance import Instance
 from pprint import pprint

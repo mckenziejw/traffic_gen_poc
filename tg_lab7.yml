@@ -7,9 +7,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.88.88.130 # 2
-        - http://10.66.66.130 # 3
-        - http://10.55.55.130 # 4
+        - http://web-server-2-lan # 2
+        - http://web-server-3-lan # 3
+        - http://web-server-4-lan # 4
       uri: /employees
       # The loop_for setting determines how many times and how often the action is performed
       # 0 = Loop until interrupted
@@ -32,9 +32,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.99.99.130 # 1
-        - http://10.66.66.130 # 3
-        - http://10.55.55.130 # 4
+        - http://web-server-1-lan # 1
+        - http://web-server-3-lan # 3
+        - http://web-server-4-lan # 4
       uri: /employees
       loop_for: 0
       loop_delay:
@@ -48,9 +48,9 @@ scenario:
     action:
       type: get
       targets:
-        - http://10.99.99.130 # 1
-        - http://10.88.88.130 # 2
-        - http://10.55.55.130 # 4
+        - http://web-server-1-lan # 1
+        - http://web-server-2-lan # 2
+        - http://web-server-4-lan # 4
       uri: /employees
       loop_for: 0
       loop_delay:
@@ -64,9 +64,9 @@ scenario:
     action:
       type: post
       targets:
-        - http://10.88.88.130 # 2
-        - http://10.66.66.130 # 3
-        - http://10.55.55.130 # 4
+        - http://web-server-2-lan # 2
+        - http://web-server-3-lan # 3
+        - http://web-server-4-lan # 4
       uri: /employees
       payload:
         name: Tim
@@ -84,12 +84,12 @@ scenario:
       targets:
         - http://neverssl.com
       uri: /
-      loop_for: 1
+      loop_for: 10
       loop_delay:
-        min: 2
-        max: 5
+        min: 5
+        max: 10
         randomize_method: random
-      create_thread: False
+      create_thread: True
   - decription: Describe the thing
     service_type: web
     service_host: web-client-1
@@ -114,5 +114,52 @@ scenario:
       loop_delay:
         min: 250000
         max: 250000
+        randomize_method: random
+      create_thread: True
+  - decription: Browse Wikipedia
+    service_type: web
+    service_host: web-client-2
+    action:
+      type: get
+      targets:
+        - https://en.wikipedia.org/wiki/Bastille_Day
+        - https://en.wikipedia.org/wiki/French_Revolution
+        - https://en.wikipedia.org/wiki/Kingdom_of_France
+        - https://en.wikipedia.org/wiki/Hundred_Years%27_War
+        - https://en.wikipedia.org/wiki/Low_Countries
+        - https://en.wikipedia.org/wiki/Rome
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 20
+        max: 40
+        randomize_method: random
+      create_thread: True
+  - decription: Watch Twitch
+    service_type: web
+    service_host: web-client-3
+    action:
+      type: watch_twitch
+      targets:
+        - ''
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 250000
+        max: 250000
+        randomize_method: random
+      create_thread: True
+  - description: Download file from GDrive
+    service_type: web
+    service_host: web-client-4
+    action:
+      type: gdrive_download
+      targets:
+        - file/d/17qHXmUWoNKzAvNpyBaoObFwRt-Ev-MRB/view?usp=sharing
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 60
+        max: 180
         randomize_method: random
       create_thread: True

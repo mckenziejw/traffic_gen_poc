@@ -16,6 +16,15 @@ wan_edge_templates:
         usage: wan
         ip_config:
           type: dhcp
+        vpn_paths:
+          SunnyvaleHub-INET.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 1
+          CupertinoHub-INET.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 2
       ge-0/0/1:
         name: MPLS
         usage: wan
@@ -24,6 +33,15 @@ wan_edge_templates:
           ip: "{{'{{WAN_PFX}}'}}.2"
           netmask: /24
           gateway: "{{'{{WAN_PFX}}'}}.1"
+        vpn_paths:
+          SunnyvaleHub-MPLS.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 1
+          CupertinoHub-MPLS.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 2
       ge-0/0/2:
         networks:
           - LAN1
@@ -64,48 +82,44 @@ wan_edge_templates:
         type: dhcp
       }
     service_policies:
-      - name: Policy-1
-        tenants:
-          - LAN1
-        services:
-          - Internet
-        action: allow
-        path_preference: LBO
-      # - name: Policy-2
-      #   tenants:
-      #     - WEB_SERVER_1.LAN1
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
-      # - name: Policy-3
-      #   tenants:
-      #     - WEB_SERVER_1.LAN1
-      #   services:
-      #     - SoftwareUpdates
-      #   action: allow
-      #   path_preference: LBO
-      # - name: Policy-4
-      #   tenants:
-      #     - MQTT_SERVER_1.LAN1
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
-      # - name: Policy-5
-      #   tenants:
-      #     - Internet
-      #   services:
-      #     - Desktop1_SSH
-      #   action: allow
-      #   path_preference: LBO
-      - name: Policy-6
+      - name: Desktop-SSH
         tenants:
           - Internet
         services:
           - Desktop1_SSH
         action: allow
         path_preference: LAN
+      - name: Spoke-to-Hub
+        tenants:
+          - LAN1
+        services:
+          - LAN3
+          - LAN4
+        action: allow
+        local_routing: True
+      - name: Hub-to-Spoke
+        tenants:
+          - LAN3
+          - LAN4
+        services:
+          - LAN1
+        action: allow
+        local_routing: True
+      - name: Spoke-to-Spoke
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - LAN1
+          - LAN2
+        action: allow
+        local_routing: True
+      - name: Spoke-to-Internet
+        tenants:
+          - LAN1
+        services:
+          - any
+        action: allow
   - name: Westford WAN Edge Template
     type: spoke
     sites:
@@ -122,6 +136,15 @@ wan_edge_templates:
         usage: wan
         ip_config:
           type: dhcp
+        vpn_paths:
+          SunnyvaleHub-INET.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 1
+          CupertinoHub-INET.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 2
       ge-0/0/1:
         name: MPLS
         usage: wan
@@ -130,6 +153,15 @@ wan_edge_templates:
           ip: "{{'{{WAN_PFX}}'}}.2"
           netmask: /24
           gateway: "{{'{{WAN_PFX}}'}}.1"
+        vpn_paths:
+          SunnyvaleHub-MPLS.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 1
+          CupertinoHub-MPLS.OrgOverlay:
+            role: spoke
+            bdf_profile: broadband
+            key: 2
       ge-0/0/2:
         networks:
           - LAN2
@@ -156,39 +188,44 @@ wan_edge_templates:
             networks:
               - LAN2
     service_policies:
-      - name: Policy-1
+      - name: Spoke-to-Hub
+        tenants:
+          - LAN2
+        services:
+          - LAN3
+          - LAN4
+        action: allow
+        local_routing: True
+      - name: Hub-to-Spoke
+        tenants:
+          - LAN3
+          - LAN4
+        services:
+          - LAN2
+        action: allow
+        local_routing: True
+      - name: Spoke-to-Spoke
         tenants:
           - LAN1
+          - LAN2
         services:
-          - Internet
+          - LAN1
+          - LAN2
         action: allow
-        path_preference: LBO
-      # - name: Policy-2
-      #   tenants:
-      #     - WEB_SERVER_2.LAN2
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
-      # - name: Policy-3
-      #   tenants:
-      #     - WEB_SERVER_2.LAN2
-      #   services:
-      #     - SoftwareUpdates
-      #   action: allow
-      #   path_preference: LBO
-      # - name: Policy-4
-      #   tenants:
-      #     - MQTT_SERVER_2.LAN2
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
+        local_routing: True
+      - name: Spoke-to-Internet
+        tenants:
+          - LAN2
+        services:
+          - any
+        action: allow
 hub_profiles:
   - name: SunnyvaleHub
     type: gateway
     site: Sunnyvale
-    device: SSR-3
+    device: 
+      name: SSR-3
+      mac: "{{ssr3_mac}}"
     ip_configs:
       LAN3:
         type: static
@@ -203,7 +240,10 @@ hub_profiles:
           type: static
           ip: "{{'{{WAN1_PFX}}'}}.254"
           netmask: /24
-          gateway:
+          gateway: "{{'{{WAN1_PFX}}'}}.1"
+        vpn_paths:
+          SunnyvaleHub-INET.OrgOverlay:
+            role: hub
       ge-0/0/1:
         name: MPLS
         usage: wan
@@ -212,64 +252,77 @@ hub_profiles:
           ip: "{{'{{WAN2_PFX}}'}}.254"
           netmask: /24
           gateway: "{{'{{WAN2_PFX}}'}}.1"
+        vpn_paths:
+          SunnyvaleHub-MPLS.OrgOverlay:
+            role: hub
       ge-0/0/2:
         networks:
           - LAN3
         usage: lan
     path_preferences:
-      LBO:
+      CBO:
         strategy: ordered
         paths:
           - name: INET
             type: wan
           - name: MPLS
             type: wan
-      LBO_MPLS:
-        strategy: ordered
-        paths:
-          - name: MPLS
-            type: wan
-          - name: INET
-            type: wan
-      LAN:
-        strategy: ordered
-        paths:
-          - type: local
-            networks:
-              - LAN3
     service_policies:
-      - name: Policy-1
+      - name: Spoke-to-Hub
         tenants:
           - LAN1
+          - LAN2
         services:
-          - Internet
+          - LAN3
         action: allow
-        path_preference: LBO
-      # - name: Policy-2
-      #   tenants:
-      #     - WEB_SERVER_3.LAN3
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
-      # - name: Policy-3
-      #   tenants:
-      #     - WEB_SERVER_3.LAN3
-      #   services:
-      #     - SoftwareUpdates
-      #   action: allow
-      #   path_preference: LBO
-      # - name: Policy-4
-      #   tenants:
-      #     - MQTT_SERVER_3.LAN3
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
+        local_routing: True
+      - name: Hub-to-Spoke
+        tenants:
+          - LAN3
+        services:
+          - LAN1
+          - LAN2
+        action: allow
+        local_routing: True
+      - name: Spoke-to-Spoke
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - LAN1
+          - LAN2
+        action: allow
+        local_routing: True
+      - name: Hub-to-Hub
+        tenants:
+          - LAN3
+          - LAN4
+        services:
+          - LAN3
+          - LAN4
+        action: allow
+        local_routing: True
+      - name: Spokes-to-Internet
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - any
+        action: allow
+        path_preference: CBO
+      - name: Hub-to-Internet
+        tenants:
+          - LAN3
+        services:
+          - any
+        action: allow
+        path_preference: CBO
   - name: CupertinoHub
     type: gateway
     site: Cupertino
-    device: SSR-4
+    device: 
+      name: SSR-4
+      mac: "{{ssr4_mac}}"
     ip_configs:
       LAN4:
         type: static
@@ -286,6 +339,9 @@ hub_profiles:
           netmask: /24
           gateway: "{{'{{WAN1_PFX}}'}}.1"
         wan_ext_ip: {{'"{{WAN1_PUBIP}}"'}}
+        vpn_paths:
+          CupertinoHub-INET.OrgOverlay:
+            role: hub
       ge-0/0/1:
         name: MPLS
         usage: wan
@@ -294,60 +350,71 @@ hub_profiles:
           ip: "{{'{{WAN2_PFX}}'}}.254"
           netmask: /24
           gateway: "{{'{{WAN2_PFX}}'}}.1"
+        vpn_paths:
+          CupertinoHub-MPLS.OrgOverlay:
+            role: hub
       ge-0/0/2:
         networks:
           - LAN4
         usage: lan
     path_preferences:
-      LBO:
+      CBO:
         strategy: ordered
         paths:
           - name: INET
             type: wan
           - name: MPLS
             type: wan
-      LBO_MPLS:
-        strategy: ordered
-        paths:
-          - name: MPLS
-            type: wan
-          - name: INET
-            type: wan
-      LAN:
-        strategy: ordered
-        paths:
-          - type: local
-            networks:
-              - LAN4
     service_policies:
-      - name: Policy-1
+      - name: Spoke-to-Hub
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - LAN4
+        action: allow
+        local_routing: True
+      - name: Hub-to-Spoke
         tenants:
           - LAN4
         services:
-          - Internet
+          - LAN1
+          - LAN2
         action: allow
-        path_preference: LBO
-      # - name: Policy-2
-      #   tenants:
-      #     - WEB_SERVER_4.LAN4
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
-      # - name: Policy-3
-      #   tenants:
-      #     - WEB_SERVER_4.LAN4
-      #   services:
-      #     - SoftwareUpdates
-      #   action: allow
-      #   path_preference: LBO
-      # - name: Policy-4
-      #   tenants:
-      #     - MQTT_SERVER_4.LAN4
-      #   services:
-      #     - Internet
-      #   action: deny
-      #   local_routing: true
+        local_routing: True
+      - name: Spoke-to-Spoke
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - LAN1
+          - LAN2
+        action: allow
+        local_routing: True
+      - name: Hub-to-Hub
+        tenants:
+          - LAN3
+          - LAN4
+        services:
+          - LAN3
+          - LAN4
+        action: allow
+        local_routing: True
+      - name: Spokes-to-Internet
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - any
+        action: allow
+        path_preference: CBO
+      - name: Hub-to-Internet
+        tenants:
+          - LAN4
+        services:
+          - any
+        action: allow
+        path_preference: CBO
 switch_templates:
   - name: Durham Switches
     networks:
@@ -479,6 +546,34 @@ applications:
     type: custom
     addresses:
       - 0.0.0.0/0
+    specs:
+      protocol: any
+    traffic_type: default
+  - name: LAN1
+    type: custom
+    addresses:
+      - 10.99.99.0/24
+    specs:
+      protocol: any
+    traffic_type: default
+  - name: LAN2
+    type: custom
+    addresses:
+      - 10.88.88.0/24
+    specs:
+      protocol: any
+    traffic_type: default
+  - name: LAN3
+    type: custom
+    addresses:
+      - 10.66.66.0/24
+    specs:
+      protocol: any
+    traffic_type: default
+  - name: LAN4
+    type: custom
+    addresses:
+      - 10.55.55.0/24
     specs:
       protocol: any
     traffic_type: default
@@ -677,11 +772,14 @@ sites:
         WAN_PFX: 192.168.170
     assignments:
       edges:
-        - SSR-1
+        - name: SSR-1
+          mac: "{{ssr1_mac}}"
       aps:
-        - AP-1
+        - name: AP-1
+          mac: "{{ap1_mac}}"
       switches:
-        - EX-1
+        - name: EX-1
+          mac: "{{ex1_mac}}"
   - info:
       name: Westford
       address: 51 Main St, Westford, MA 01886
@@ -696,11 +794,11 @@ sites:
         UPLINK_VLAN_1: 802
         UPLINK_VLAN_2: 803
         LAN_PFX: 10.88.88
-        GW: 10.210.14.14
         WAN_PFX: 192.168.130
     assignments:
       edges:
-        - SSR-2
+        - name: SSR-2
+          mac: "{{ssr2_mac}}"
   - info:
       name: Sunnyvale
       address: 1133 Innovation Way, Sunnyvale, CA 94089
@@ -715,13 +813,13 @@ sites:
         UPLINK_VLAN_1: 802
         UPLINK_VLAN_2: 803
         LAN_PFX: 10.66.66
-        GW: 10.210.14.14
         WAN1_PFX: 192.168.191
         WAN2_PFX: 192.168.190
         WAN1_PUBIP: 192.168.129.191
     assignments:
       edges:
-        - SSR-3
+        - name: SSR-3
+          mac: "{{ssr3_mac}}"
   - info:
       name: Cupertino
       address: 1610 S De Anza Blvd, San Jose, CA 95129
@@ -736,13 +834,13 @@ sites:
         UPLINK_VLAN_1: 802
         UPLINK_VLAN_2: 803
         LAN_PFX: 10.55.55
-        GW: 10.210.14.14
         WAN1_PFX: 192.168.201
         WAN2_PFX: 192.168.200
         WAN1_PUBIP: 192.168.129.201
     assignments:
       edges:
-        - SSR-4
+        - name: SSR-4
+          mac: "{{ssr4_mac}}"
 psks:
   - name: iot-key-1
     ssid: JMA_WLAN_{{org_id[-4:]}}
