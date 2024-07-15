@@ -9,7 +9,7 @@ parser.add_argument('-out_file', default='tg_wired.tf')
 args = parser.parse_args()
 
 
-f = open(args['env_file'])
+f = open(args.env_file)
 settings = yaml.safe_load(f)
 f.close()
 

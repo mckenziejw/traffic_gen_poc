@@ -86,25 +86,19 @@ for wifi in wifis:
     c = client.instances.get(wifi['name'])
     f = c.FilesManager(c)
     psk = get_latest_psk(wifi)
-    put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",create_wpa_conf(data))
+    #put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",create_wpa_conf(data))
     print("Decreasing transmit power to minimum")
     exit_code,s_out,s_err = c.execute(
         commands = ['iw','dev', 'eth1','set','txpower','fixed','0']
     )
     if wifi['role'] == 'Guest':
         exit_code,s_out,s_err = c.execute(
-            commands = ['wpa_passphrase', guest_ssid, psk], stdout_handler=put_file
+            commands = ['nmcli', 'dev', 'wifi','connect',guest_ssid, 'password', '"psk"']
         )
     else:
         exit_code,s_out,s_err = c.execute(
-            commands = ['wpa_passphrase', ssid, psk], stdout_handler=put_file
+            commands = ['nmcli', 'dev', 'wifi','connect', ssid, 'password', '"psk"']
         )
-    exit_code,s_out,s_err = c.execute(
-        commands = ['killall','wpa_supplicant']
-    )
-    exit_code,s_out,s_err = c.execute(
-        commands = ['wpa_supplicant','-B','-i','eth1','-c','/etc/wpa_supplicant/wpa_supplicant.conf']
-    )
     if(exit_code == 0):
         print(f"{wifi['name']} WPA supplicant successfully configured")
     else:
