@@ -93,11 +93,11 @@ for wifi in wifis:
     )
     if wifi['role'] == 'Guest':
         exit_code,s_out,s_err = c.execute(
-            commands = ['nmcli', 'dev', 'wifi','connect',guest_ssid, 'password', '"psk"']
+            commands = ['nmcli', 'dev', 'eth1','connect',guest_ssid, 'password', f'"{psk}"']
         )
     else:
         exit_code,s_out,s_err = c.execute(
-            commands = ['nmcli', 'dev', 'wifi','connect', ssid, 'password', '"psk"']
+            commands = ['nmcli', 'dev', 'eth1','connect', ssid, 'password', f'"{psk}"']
         )
     if(exit_code == 0):
         print(f"{wifi['name']} WPA supplicant successfully configured")

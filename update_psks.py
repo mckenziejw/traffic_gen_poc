@@ -87,6 +87,13 @@ for wifi in wifis:
     f = c.FilesManager(c)
     psk = get_latest_psk(wifi)
     put_file = lambda data: f.put("/etc/wpa_supplicant/wpa_supplicant.conf",create_wpa_conf(data))
+    print('disabling network manager')
+    exit_code,s_out,s_err = c.execute(
+        commands = ['systemctl','stop', 'NetworkManager']
+    )
+    exit_code,s_out,s_err = c.execute(
+        commands = ['systemctl','disable', 'NetworkManager']
+    )
     print("Decreasing transmit power to minimum")
     exit_code,s_out,s_err = c.execute(
         commands = ['iw','dev', 'eth1','set','txpower','fixed','0']
