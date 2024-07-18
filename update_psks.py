@@ -40,7 +40,7 @@ wifis = [
 ]
 
 def create_wpa_conf(data):
-    data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0\np2p_disabled=1"
+    data = f"{data}\nmac_addr=0\npreassoc_mac_addr=0\ngas_rand_mac_addr=0\np2p_disabled=1\n"
     return data
 
 def get_latest_psk(client):

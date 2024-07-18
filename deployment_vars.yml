@@ -314,7 +314,7 @@ hub_profiles:
         tenants:
           - LAN3
         services:
-          - any
+          - Internet
         action: allow
         path_preference: CBO
   - name: CupertinoHub
@@ -412,7 +412,7 @@ hub_profiles:
         tenants:
           - LAN4
         services:
-          - any
+          - Internet
         action: allow
         path_preference: CBO
 switch_templates:
@@ -540,7 +540,7 @@ wxrules:
     action: allow
     template: Durham WLAN Template
     blocked_apps:
-      - all-video-music
+      - bit-torrent
 applications:
   - name: Internet
     type: custom

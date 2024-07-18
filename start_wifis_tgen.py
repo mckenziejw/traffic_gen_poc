@@ -15,7 +15,7 @@ parser.add_argument('-wifi_host', default='lxdhost')
 parser.add_argument('-wifi_host_password', default='juniper123')
 parser.add_argument('-mqtt_server', default='192.168.10.117')
 parser.add_argument('-tgtype',default='web')
-parser.add_argument('-port', default=1883)
+parser.add_argument('-port', default='1883')
 parser.add_argument('-ss_count', default=10)
 parser.add_argument('-refresh_repo', default=0, type=int)
 args = parser.parse_args()
@@ -42,6 +42,6 @@ for i in wifis:
         commands = ['chmod','+x','traffic_gen_poc/web_client/app.py']
     )
     exit_code, s_out, s_err = c.execute(
-        commands = ['nohup', '/root/traffic_gen_poc/app.py', '-mqtt_server', args.mqtt_server, '-hostname',
-                    i['name'], '-tgtype', args.tgtype, '-ss_count', args.ss_count, '-port', int(args.port), '&']
+        commands = ['nohup', '/root/traffic_gen_poc/web_client/app.py', '-mqtt_server', args.mqtt_server, '-hostname',
+                    i['name'], '-tgtype', args.tgtype],
     )

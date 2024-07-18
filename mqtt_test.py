@@ -29,7 +29,7 @@ def connect_mqtt():
     # For paho-mqtt 2.0.0, you need to set callback_api_version.
     client = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)
 
-    # client.username_pw_set(username, password)
+    # client .username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
