@@ -6,7 +6,7 @@ all_hosts:
     desktop4-mgmt:
     desktop5-mgmt:
     student-desktop:
-desktop:
+desktops:
   hosts:
     student-desktop:
 lxd_hosts:
