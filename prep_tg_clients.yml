@@ -36,7 +36,6 @@
       pip:
         name: docker
       become: true
-
 - name: Install config files
   hosts: tg_hosts
   tasks:
