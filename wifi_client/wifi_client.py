@@ -13,13 +13,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+import signal
+from pathlib import Path
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-hostname', default='')
+args = parser.parse_args()
 
 config={}
 with open('/etc/wifi_client/config.yml', 'r') as f:
     config = yaml.safe_load(f)
 
 mqtt_broker = config['mqtt_broker']
-hostname = os.environ['HOSTNAME']
+hostname = args.hostname
 traffic_gen_type = config['tgtype']
 ss_count = config['ss_count']
 port = config['port']

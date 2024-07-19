@@ -35,6 +35,7 @@ resource "docker_container" "{{container.tf_name}}" {
     provider = docker.{{client.alias}}
     name = "{{container.name}}"
     image = "{{container.image}}"
+    restart = "unless-stopped"
     hostname = "{{container.hostname}}"
    {% if container.options is defined -%}
    {%- for key, val in container.options.items() %}
