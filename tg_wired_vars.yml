@@ -256,7 +256,7 @@ clients:
     name: sql-server
     networks:
     - name: lan
-      ip_address: 10.66.66.133
+      ip_address: 10.66.66.132
     - name: mgmt
       ip_address: 192.168.10.143
     env:

@@ -170,6 +170,7 @@ def do_sql(action):
                             host=t,
                             database="lab_db"
                             )
+                        cnx.ping(attempts=50, delay=1)
                         cnx.close()
                     except Exception as e:
                         print(e)
