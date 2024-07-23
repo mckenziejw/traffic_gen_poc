@@ -1,8 +1,6 @@
 requests
 paho-mqtt
 selenium
-default-libmysqlclient-dev
-build-essential
-pkg-config
+libmysqlclient-dev
 mysqlclient
 pymongo
