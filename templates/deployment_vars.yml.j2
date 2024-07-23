@@ -158,6 +158,15 @@ wan_edge_templates:
         - LAN1
         action: allow
         local_routing: true
+      - name: Spoke-to-SaaS
+        tenants:
+          - LAN1
+        services:
+          - SaaS_Storage
+        action: allow
+        path_preference: LBO
+        idp:
+          enabled: True
   - name: Westford WAN Edge Template
     type: spoke
     sites:
@@ -295,6 +304,15 @@ wan_edge_templates:
         local_routing: true
         idp:
           enabled: false
+      - name: Spoke-to-SaaS
+        tenants:
+          - LAN2
+        services:
+          - SaaS_Storage
+        action: allow
+        path_preference: LBO
+        idp:
+          enabled: True
 hub_profiles:
   - name: SunnyvaleHub
     type: gateway

@@ -75,8 +75,8 @@ TABLES['titles'] = (
     "     REFERENCES `employees` (`emp_no`) ON DELETE CASCADE"
     ") ENGINE=InnoDB")
 
-cnx = mysql.connector.connect(user='lab', password='lab123',
-                              host='172.20.0.2')
+cnx = mysql.connector.connect(user='lab', password='lab@LAB123!',
+                              host='localhost')
 cursor = cnx.cursor()
 
 def create_database(cursor):

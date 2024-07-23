@@ -7,7 +7,8 @@
 #   b. Request parameters (GET/POST/DELETE/UPDATE, payloads, etc)
 #   c. The interval on which to send request (or a range in which to randomize)
 # 2. Similar functionality for hitting other services
-
+from MySQLdb import _mysql
+from pymongo import MongoClient
 import requests
 import time
 import os
@@ -25,7 +26,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-mqtt_server', default='')
 parser.add_argument('-hostname', default='')
-parser.add_argument('-tgtype',default='')
+parser.add_argument('-tgtype', default='')
 parser.add_argument('-port', default='')
 parser.add_argument('-ss_count', default=10)
 args = parser.parse_args()
@@ -33,12 +34,14 @@ args = parser.parse_args()
 mqtt_broker = os.environ['MQTT_SERVER'] if args.mqtt_server == '' else args.mqtt_server
 hostname = os.environ['HOSTNAME'] if args.hostname == '' else args.hostname
 traffic_gen_type = os.environ['TGTYPE'] if args.tgtype == '' else args.tgtype
-ss_count = os.environ['SSCOUNT'] if os.environ.get('SSCOUNT') is not None else int(args.ss_count)
+ss_count = os.environ['SSCOUNT'] if os.environ.get(
+    'SSCOUNT') is not None else int(args.ss_count)
 port = 1883 if args.port == '' else int(args.port)
 
 topic = "{}/{}".format(traffic_gen_type, hostname)
 client_id = f'python-mqtt-{hostname}'
 processes = []
+
 
 def watch_youtube(path, watch_time=300):
     try:
@@ -47,14 +50,14 @@ def watch_youtube(path, watch_time=300):
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        chrome_options.binary_location = "/usr/bin/google-chrome-stable"
         browser = webdriver.Chrome(options=chrome_options, service=service)
         browser.get(path)
         for i in range(10):
             time.sleep(1)
-        video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
-        video.click() #hits space
-        #time.sleep(10)
+        video = browser.find_element(By.CSS_SELECTOR, '.ytp-large-play-button')
+        video.click()  # hits space
+        # time.sleep(10)
         current_time = time.time()
         end_time = time.time() + watch_time
         i = 1
@@ -68,6 +71,7 @@ def watch_youtube(path, watch_time=300):
         print(e)
         pass
 
+
 def watch_twitch(path, watch_time=300):
     try:
         chrome_options = Options()
@@ -75,14 +79,14 @@ def watch_twitch(path, watch_time=300):
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        chrome_options.binary_location = "/usr/bin/google-chrome-stable"
         browser = webdriver.Chrome(options=chrome_options, service=service)
         browser.get(path)
         for i in range(10):
             time.sleep(1)
-        #video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
-        #video.click() #hits space
-        #time.sleep(10)
+        # video = browser.find_element(By.CSS_SELECTOR,'.ytp-large-play-button')
+        # video.click() #hits space
+        # time.sleep(10)
         current_time = time.time()
         end_time = time.time() + watch_time
         i = 1
@@ -95,7 +99,8 @@ def watch_twitch(path, watch_time=300):
     except Exception as e:
         print(e)
         pass
-    
+
+
 def gdrive_download(path, watch_time=300):
     try:
         chrome_options = Options()
@@ -103,7 +108,7 @@ def gdrive_download(path, watch_time=300):
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.binary_location="/usr/bin/google-chrome-stable"
+        chrome_options.binary_location = "/usr/bin/google-chrome-stable"
         browser = webdriver.Chrome(options=chrome_options, service=service)
         browser.get(path)
         time.sleep(watch_time)
@@ -111,6 +116,101 @@ def gdrive_download(path, watch_time=300):
     except Exception as e:
         print(e)
         pass
+
+
+def do_mongo(action):
+    if action['loop_for'] == 0:
+            while True:
+                for t in action['targets']:
+                    try:
+                        client = MongoClient(t)
+                        client.admin.command('ping')
+                        client.close()
+                    except Exception as e:
+                        print(e)
+                        pass
+                if action.get('loop_delay'):
+                    delay = random.randint(
+                        action['loop_delay']['min'], action['loop_delay']['max'])
+                    time.sleep(delay)
+    elif action['loop_for'] == 1:
+        for t in action['targets']:
+            try:
+                client = MongoClient(t)
+                client.admin.command('ping')
+                client.close()
+            except Exception as e:
+                print(e)
+                pass
+        if action.get('loop_delay'):
+            delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+            time.sleep(delay)
+    elif action['loop_for'] >1:
+        for _ in range(action['loop_for']):
+            for t in action['targets']:
+                try:
+                    client = MongoClient(t)
+                    client.admin.command('ping')
+                    client.close()
+                except Exception as e:
+                    print(e)
+                    pass
+            if action.get('loop_delay'):
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                time.sleep(delay)
+
+def do_sql(action):
+    if action['loop_for'] == 0:
+            while True:
+                for t in action['targets']:
+                    try:
+                        cnx = _mysql.connect(
+                            user='lab',
+                            password='lab@LAB123!',
+                            host=t,
+                            database="lab_db"
+                            )
+                        cnx.close()
+                    except Exception as e:
+                        print(e)
+                        pass
+                if action.get('loop_delay'):
+                    delay = random.randint(
+                        action['loop_delay']['min'], action['loop_delay']['max'])
+                    time.sleep(delay)
+    elif action['loop_for'] == 1:
+        for t in action['targets']:
+            try:
+                cnx = _mysql.connect(
+                            user='lab',
+                            password='lab@LAB123!',
+                            host=t,
+                            database="lab_db"
+                            )
+                cnx.close()
+            except Exception as e:
+                print(e)
+                pass
+        if action.get('loop_delay'):
+            delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+            time.sleep(delay)
+    elif action['loop_for'] >1:
+        for _ in range(action['loop_for']):
+            for t in action['targets']:
+                try:
+                    cnx = _mysql.connect(
+                            user='lab',
+                            password='lab@LAB123!',
+                            host=t,
+                            database="lab_db"
+                            )
+                    cnx.close()
+                except Exception as e:
+                    print(e)
+                    pass
+            if action.get('loop_delay'):
+                delay = random.randint(action['loop_delay']['min'],action['loop_delay']['max'])
+                time.sleep(delay)
 
 def kill_all_loops(processes):
     for p in processes:
@@ -241,6 +341,10 @@ def do_action(action):
                     except Exception as e:
                         print(e)
                         pass
+    elif action['type'] == 'sql_connect':
+        do_sql(action)
+    elif action['type'] == 'mongo_ping':
+        do_mongo(action)
     # elif action['type'] == 'put':
     #     ## do a put
     #     if action['loop_for'] == 0:

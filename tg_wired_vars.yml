@@ -71,7 +71,7 @@ clients:
     depends_on:
       - docker_network.lan_1
       - docker_network.mgmt_1
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: mongo_client_1
     hostname: mongo-client-1
     name: mongo-client
@@ -114,7 +114,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: web_client_2
     hostname: web-client-2
     name: web-client
@@ -160,7 +160,7 @@ clients:
     depends_on:
       - docker_network.lan_2
       - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: mongo_client_2
     hostname: mongo-client-2
     name: mongo-client
@@ -203,7 +203,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: web_client_3
     hostname: web-client-3
     name: web-client
@@ -252,12 +252,10 @@ clients:
     depends_on:
       - docker_network.lan_3
       - docker_network.mgmt_3
-  - image: "autofunbot/tg_web_client:latest"
-    tf_name: mongo_client_3
-    hostname: mongo-client-3
-    name: mongo-client
-    options:
-      shm_size: 2048
+  - image: "mysql:latest"
+    tf_name: sql_server_3
+    hostname: sql-server-3
+    name: sql-server
     networks:
     - name: lan
       ip_address: 10.66.66.133
@@ -265,7 +263,11 @@ clients:
       ip_address: 192.168.10.143
     env:
       MQTT_SERVER: 192.168.10.117
-      TGTYPE: mongo
+      TGTYPE: sql
+      MYSQL_ROOT_PASSWORD: lab@LAB123!
+      MYSQL_USER: lab
+      MYSQL_PASSWORD: lab@LAB123!
+      MYSQL_DATABASE: lab_db
     depends_on:
       - docker_network.lan_3
       - docker_container.mqtt_server_3
@@ -295,7 +297,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: web_client_4
     hostname: web-client-4
     name: web-client
@@ -344,12 +346,10 @@ clients:
     depends_on:
       - docker_network.lan_4
       - docker_network.mgmt_4
-  - image: "autofunbot/tg_web_client:latest"
-    tf_name: mongo_client_4
-    hostname: mongo-client-4
-    name: mongo-client
-    options:
-      shm_size: 2048
+  - image: "mongo"
+    tf_name: mongo_server_4
+    hostname: mongo-server-4
+    name: mongo-server
     networks:
     - name: lan
       ip_address: 10.55.55.133
@@ -360,5 +360,4 @@ clients:
       TGTYPE: mongo
     depends_on:
       - docker_network.lan_4
-      - docker_container.mqtt_server_4
       - docker_network.mgmt_4

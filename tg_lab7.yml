@@ -76,20 +76,6 @@ scenario:
         max: 10
         randomize_method: random
       create_thread: False
-  - decription: GET HTTP from 1
-    service_type: web
-    service_host: web-client-1
-    action:
-      type: get
-      targets:
-        - http://neverssl.com
-      uri: /
-      loop_for: 10
-      loop_delay:
-        min: 5
-        max: 10
-        randomize_method: random
-      create_thread: True
   - decription: Watch Youtube Web-client-1
     service_type: web
     service_host: web-client-1
@@ -159,7 +145,35 @@ scenario:
       uri: /
       loop_for: 0
       loop_delay:
-        min: 60
-        max: 180
+        min: 10
+        max: 30
+        randomize_method: random
+      create_thread: True
+  - description: SQL connect client 2 server 3
+    service_type: sql
+    service_host: sql-client-2
+    action:
+      type: sql_connect
+      targets:
+        - sql-server-3-lan
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 10
+        max: 30
+        randomize_method: random
+      create_thread: True
+  - description: Mongo Ping client 1 server 4
+    service_type: mongo
+    service_host: mongo-client-1
+    action:
+      type: mongo_ping
+      targets:
+        - mongo-server-4-lan
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 10
+        max: 30
         randomize_method: random
       create_thread: True
