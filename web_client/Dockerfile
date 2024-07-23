@@ -3,7 +3,7 @@ COPY requirements.txt requirements.txt
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3 python3-pip wget firefox
 RUN apt-get install -y libcurl3-gnutls libcurl3-nss libcurl4 libcurl4 libdrm2 libgbm1 libnspr4 libnss3 libu2f-udev libvulkan1 xdg-utils fonts-liberation
-RUN apt-get install -y libmysqlclient-dev
+RUN apt-get install -y default-libmysqlclient-dev python3-dev build-essential pkg-config
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
 RUN pip3 install -r requirements.txt
