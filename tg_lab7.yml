@@ -149,17 +149,17 @@ scenario:
   #       max: 250000
   #       randomize_method: random
   #     create_thread: True
-  # - description: Download file from GDrive client 4
-  #   service_type: web
-  #   service_host: web-client-4
-  #   action:
-  #     type: gdrive_download
-  #     targets:
-  #       - file/d/17qHXmUWoNKzAvNpyBaoObFwRt-Ev-MRB/view?usp=sharing
-  #     uri: /
-  #     loop_for: 0
-  #     loop_delay:
-  #       min: 60
-  #       max: 180
-  #       randomize_method: random
-  #     create_thread: True
+  - description: Download file from GDrive client 4
+    service_type: web
+    service_host: web-client-4
+    action:
+      type: gdrive_download
+      targets:
+        - file/d/17qHXmUWoNKzAvNpyBaoObFwRt-Ev-MRB/view?usp=sharing
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 60
+        max: 180
+        randomize_method: random
+      create_thread: True

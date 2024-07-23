@@ -67,6 +67,28 @@ wan_edge_templates:
           - type: local
             networks:
               - LAN1
+      Overlay_MPLS:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-MPLS.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+      Overlay_INET:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+        - name: SunnyvaleHub-MPLS.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
     dhcpd_config:
       enabled: True
       LAN1:
@@ -84,43 +106,58 @@ wan_edge_templates:
     service_policies:
       - name: Desktop-SSH
         tenants:
-          - Internet
+        - Internet
         services:
-          - Desktop1_SSH
+        - Desktop1_SSH
         action: allow
         path_preference: LAN
+        idp:
+          enabled: false
       - name: Spoke-to-Hub
         tenants:
-          - LAN1
+        - LAN1
         services:
-          - LAN3
-          - LAN4
+        - LAN3
+        - LAN4
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Hub-to-Spoke
         tenants:
-          - LAN3
-          - LAN4
+        - LAN3
+        - LAN4
         services:
-          - LAN1
+        - LAN1
         action: allow
-        local_routing: True
-      - name: Spoke-to-Spoke
+        idp:
+          enabled: false
+        local_routing: true
+      - name: Spoke-to-Spoke-outbound
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
         services:
-          - LAN1
-          - LAN2
+        - LAN2
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Spoke-to-Internet
         tenants:
-          - LAN1
+        - LAN1
         services:
-          - any
+        - any
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_INET
+      - name: Spoke-to-Spoke-inbound
+        tenants:
+        - LAN2
+        services:
+        - LAN1
+        action: allow
+        local_routing: true
   - name: Westford WAN Edge Template
     type: spoke
     sites:
@@ -188,39 +225,76 @@ wan_edge_templates:
           - type: local
             networks:
               - LAN2
+      Overlay_MPLS:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-MPLS.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+      Overlay_INET:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+        - name: SunnyvaleHub-MPLS.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
     service_policies:
       - name: Spoke-to-Hub
         tenants:
-          - LAN2
+        - LAN2
         services:
-          - LAN3
-          - LAN4
+        - LAN3
+        - LAN4
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Hub-to-Spoke
         tenants:
-          - LAN3
-          - LAN4
+        - LAN3
+        - LAN4
         services:
-          - LAN2
+        - LAN2
         action: allow
-        local_routing: True
-      - name: Spoke-to-Spoke
+        idp:
+          enabled: false
+        local_routing: true
+      - name: Spoke-to-Spoke-outbound
         tenants:
-          - LAN1
-          - LAN2
+        - LAN2
         services:
-          - LAN1
-          - LAN2
+        - LAN1
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Spoke-to-Internet
         tenants:
-          - LAN2
+        - LAN2
         services:
-          - any
+        - any
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_INET
+      - name: Spoke-to-Spoke-inbound
+        tenants:
+        - LAN1
+        services:
+        - LAN2
+        action: allow
+        local_routing: true
+        idp:
+          enabled: false
 hub_profiles:
   - name: SunnyvaleHub
     type: gateway
@@ -246,6 +320,8 @@ hub_profiles:
         vpn_paths:
           SunnyvaleHub-INET.OrgOverlay:
             role: hub
+          CupertinoHub-INET.OrgOverlay:
+            role: spoke
       ge-0/0/1:
         name: MPLS
         usage: wan
@@ -257,6 +333,8 @@ hub_profiles:
         vpn_paths:
           SunnyvaleHub-MPLS.OrgOverlay:
             role: hub
+          CupertinoHub-MPLS.OrgOverlay:
+            role: spoke
       ge-0/0/2:
         networks:
           - LAN3
@@ -269,56 +347,102 @@ hub_profiles:
             type: wan
           - name: MPLS
             type: wan
+      Overlay_MPLS:
+        strategy: ordered
+        paths:
+          - name: SunnyvaleHub-MPLS.OrgOverlay
+            type: vpn
+          - name: SunnyvaleHub-INET.OrgOverlay
+            type: vpn
+      Overlay_INET:
+        strategy: ordered
+        paths:
+          - name: SunnyvaleHub-INET.OrgOverlay
+            type: vpn
+          - name: SunnyvaleHub-MPLS.OrgOverlay
+            type: vpn
+      Overlay_Hub_INET:
+        strategy: ordered
+        paths:
+          - name: CupertinoHub-INET.OrgOverlay
+            type: vpn
+      Overlay_Hub_MPLS:
+        strategy: ordered
+        paths:
+          - name: CupertinoHub-MPLS.OrgOverlay
     service_policies:
       - name: Spoke-to-Hub
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - LAN3
+        - LAN3
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        local_routing: true
       - name: Hub-to-Spoke
         tenants:
-          - LAN3
+        - LAN3
         services:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Spoke-to-Spoke
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         action: allow
-        local_routing: True
-      - name: Hub-to-Hub
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
+      - name: Hub-to-Hub-outbound
         tenants:
-          - LAN3
-          - LAN4
+        - LAN3
         services:
-          - LAN3
-          - LAN4
+        - LAN4
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_Hub_MPLS
       - name: Spokes-to-Internet
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - any
+        - any
         action: allow
         path_preference: CBO
+        idp:
+          enabled: true
+          profile: standard
+          alert_only: false
       - name: Hub-to-Internet
         tenants:
-          - LAN3
+        - LAN3
         services:
-          - Internet
+        - Internet
         action: allow
         path_preference: CBO
+        idp:
+          enabled: true
+          profile: standard
+          alert_only: false
+      - name: Hub-to-Hub-inbound
+        tenants:
+        - LAN4
+        services:
+        - LAN3
+        action: allow
+        local_routing: true
+        idp:
+          enabled: false
   - name: CupertinoHub
     type: gateway
     site: Cupertino
@@ -342,6 +466,8 @@ hub_profiles:
           gateway: "{{'{{WAN1_PFX}}'}}.1"
         wan_ext_ip: {{'"{{WAN1_PUBIP}}"'}}
         vpn_paths:
+          SunnyvaleHub-INET.OrgOverlay:
+            role: spoke
           CupertinoHub-INET.OrgOverlay:
             role: hub
       ge-0/0/1:
@@ -353,6 +479,8 @@ hub_profiles:
           netmask: /24
           gateway: "{{'{{WAN2_PFX}}'}}.1"
         vpn_paths:
+          SunnyvaleHub-MPLS.OrgOverlay:
+            role: spoke
           CupertinoHub-MPLS.OrgOverlay:
             role: hub
       ge-0/0/2:
@@ -367,56 +495,103 @@ hub_profiles:
             type: wan
           - name: MPLS
             type: wan
+      Overlay_MPLS:
+        strategy: ordered
+        paths:
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+      Overlay_INET:
+        strategy: ordered
+        paths:
+        - name: CupertinoHub-INET.OrgOverlay
+          type: vpn
+        - name: CupertinoHub-MPLS.OrgOverlay
+          type: vpn
+      Overlay_Hub_MPLS:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-MPLS.OrgOverlay
+          type: vpn
+      Overlay_Hub_INET:
+        strategy: ordered
+        paths:
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
     service_policies:
       - name: Spoke-to-Hub
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - LAN4
+        - LAN4
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        local_routing: true
       - name: Hub-to-Spoke
         tenants:
-          - LAN4
+        - LAN4
         services:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
       - name: Spoke-to-Spoke
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         action: allow
-        local_routing: True
-      - name: Hub-to-Hub
+        idp:
+          enabled: false
+        path_preference: Overlay_MPLS
+      - name: Hub-to-Hub-inbound
         tenants:
-          - LAN3
-          - LAN4
+        - LAN3
         services:
-          - LAN3
-          - LAN4
+        - LAN4
         action: allow
-        local_routing: True
+        idp:
+          enabled: false
+        local_routing: true
       - name: Spokes-to-Internet
         tenants:
-          - LAN1
-          - LAN2
+        - LAN1
+        - LAN2
         services:
-          - any
+        - any
         action: allow
         path_preference: CBO
+        idp:
+          enabled: true
+          profile: standard
+          alert_only: false
       - name: Hub-to-Internet
         tenants:
-          - LAN4
+        - LAN4
         services:
-          - Internet
+        - Internet
         action: allow
         path_preference: CBO
+        idp:
+          enabled: true
+          profile: standard
+          alert_only: false
+      - name: Hub-to-Hub-outbound
+        tenants:
+        - LAN4
+        services:
+        - LAN3
+        action: allow
+        path_preference: Overlay_Hub_MPLS
+        idp:
+          enabled: false 
 switch_templates:
   - name: Durham Switches
     networks:
@@ -607,7 +782,7 @@ applications:
     specs:
       - protocol: tcp
         port_range: 2222-2222
-  - name: LOCAL_MQTT
+  - name: MQTT_SERVERS
     type: custom
     addresses:
       - 10.99.99.131/24

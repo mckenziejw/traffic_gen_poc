@@ -25,7 +25,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:latest"
+  - image: "autofunbot/tg_web_client:test"
     tf_name: web_client_1
     hostname: web-client-1
     name: web-client
