@@ -25,7 +25,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: web_client_1
     hostname: web-client-1
     name: web-client
@@ -71,7 +71,7 @@ clients:
     depends_on:
       - docker_network.lan_1
       - docker_network.mgmt_1
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: mongo_client_1
     hostname: mongo-client-1
     name: mongo-client
@@ -114,7 +114,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: web_client_2
     hostname: web-client-2
     name: web-client
@@ -160,7 +160,7 @@ clients:
     depends_on:
       - docker_network.lan_2
       - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: sql_client_2
     hostname: sql-client-2
     name: sql-client
@@ -201,7 +201,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: web_client_3
     hostname: web-client-3
     name: web-client
@@ -295,7 +295,7 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_client:0.1"
+  - image: "autofunbot/tg_web_client:0.2"
     tf_name: web_client_4
     hostname: web-client-4
     name: web-client
