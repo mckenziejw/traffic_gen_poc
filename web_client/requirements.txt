@@ -1,6 +1,5 @@
 requests
 paho-mqtt
 selenium
-libmysqlclient-dev
 mysqlclient
 pymongo
