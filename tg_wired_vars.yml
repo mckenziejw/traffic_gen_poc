@@ -161,11 +161,9 @@ clients:
       - docker_network.lan_2
       - docker_network.mgmt_2
   - image: "autofunbot/tg_web_client:test"
-    tf_name: mongo_client_2
-    hostname: mongo-client-2
-    name: mongo-client
-    options:
-      shm_size: 2048
+    tf_name: sql_client_2
+    hostname: sql-client-2
+    name: sql-client
     networks:
     - name: lan
       ip_address: 10.88.88.133
@@ -173,7 +171,7 @@ clients:
       ip_address: 192.168.10.123
     env:
       MQTT_SERVER: 192.168.10.117
-      TGTYPE: mongo
+      TGTYPE: sql
     depends_on:
       - docker_network.lan_2
       - docker_container.mqtt_server_2
