@@ -5,9 +5,9 @@ services:
     ports:
       - "8888:8888"
     environment:
-      JUPYTER_ENABLE_LAB=yes
-      JUPYTER_TOKEN=lab123
-      GRANT_SUDO=yes
+      JUPYTER_ENABLE_LAB: yes
+      JUPYTER_TOKEN: lab123
+      GRANT_SUDO: yes
     container_name: jupyter
     expose:
       - "8888"
