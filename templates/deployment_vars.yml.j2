@@ -166,7 +166,21 @@ wan_edge_templates:
         action: allow
         path_preference: LBO
         idp:
-          enabled: True
+          enabled: true
+          profile: standard
+          alert_only: false
+      - name: Spoke-to-Hub-Services
+        tenants:
+          - LAN1
+        services:
+          - MQTT
+          - MongoDB
+          - Internal_Web
+          - SQL
+        action: allow
+        path_preference: Overlay_MPLS
+        idp:
+          enabled: False
   - name: Westford WAN Edge Template
     type: spoke
     sites:
@@ -312,7 +326,21 @@ wan_edge_templates:
         action: allow
         path_preference: LBO
         idp:
-          enabled: True
+          enabled: true
+          profile: standard
+          alert_only: false
+      - name: Spoke-to-Hub-Services
+        tenants:
+          - LAN2
+        services:
+          - MQTT
+          - MongoDB
+          - Internal_Web
+          - SQL
+        action: allow
+        path_preference: Overlay_MPLS
+        idp:
+          enabled: False
 hub_profiles:
   - name: SunnyvaleHub
     type: gateway
@@ -461,6 +489,28 @@ hub_profiles:
         local_routing: true
         idp:
           enabled: false
+      - name: All-to-Hub1-Services
+        tenants:
+        - LAN1
+        - LAN2
+        - LAN4
+        services:
+        - MongoDB
+        - MQTT
+        - SQL
+        action: allow
+        local_routing: true
+        idp:
+          enabled: false
+      - name: Hub1-to-Hub2-Services
+        tenants:
+        - LAN3
+        services:
+        - Internal_Web
+        action: allow
+        idp:
+          enabled: false
+        path_preference: Overlay_Hub_MPLS
   - name: CupertinoHub
     type: gateway
     site: Cupertino
@@ -610,6 +660,28 @@ hub_profiles:
         path_preference: Overlay_Hub_MPLS
         idp:
           enabled: false 
+      - name: All-to-InternalWeb
+        tenants:
+        - LAN1
+        - LAN2
+        - LAN3
+        services:
+        - InternalWeb
+        action: allow
+        local_routing: true
+        idp:
+          enabled: false
+      - name: Hub2-to-Hub1-Services
+        tenants:
+        - LAN4
+        services:
+        - MongoDB
+        - MQTT
+        - SQL
+        action: allow
+        path_preference: Overlay_Hub_MPLS
+        idp:
+          enabled: false
 switch_templates:
   - name: Durham Switches
     networks:
@@ -800,29 +872,27 @@ applications:
     specs:
       - protocol: tcp
         port_range: 2222-2222
-  - name: MQTT_SERVERS
+  - name: MQTT
     type: custom
     addresses:
-      - 10.99.99.131/24
-      - 10.88.88.131/24
+      - 10.66.66.130/24
       - 10.66.66.131/24
-      - 10.55.55.131/24
     specs:
       - protocol: tcp
         port_range: 1883-1883
     traffic_type: default
-  - name: WEB_SERVERS
+  - name: Internal_Web
     type: custom
     addresses:
-      - 10.99.99.130/24
-      - 10.88.88.130/24
-      - 10.66.66.130/24
+      - 10.55.55.129/24
       - 10.55.55.130/24
+      - 10.55.55.131/24
+      - 10.55.55.132/24
     specs:
       - protocol: tcp
         port_range: 80-80
     traffic_type: default
-  - name: SQL_SERVERS
+  - name: SQL
     type: custom
     addresses:
       - 10.66.66.132/24
@@ -830,10 +900,10 @@ applications:
       - protocol: tcp
         port_range: 3306-3306
     traffic_type: default
-  - name: MONGO_SERVERS
+  - name: MongoDB
     type: custom
     addresses:
-      - 10.55.55.133/24
+      - 10.66.66.129/24
     specs:
       - protocol: tcp
         port_range: 27017-27019

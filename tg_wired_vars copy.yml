@@ -28,7 +28,7 @@ clients:
   - image: "autofunbot/tg_web_client:0.2"
     tf_name: web_client_1
     hostname: web-client-1
-    name: web-client-1
+    name: web-client
     options:
       shm_size: 2048
     networks:
@@ -37,47 +37,75 @@ clients:
     - name: mgmt
       ip_address: 192.168.10.111
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
+      MQTT_SERVER: 192.168.10.117
       TGTYPE: web
     depends_on:
       - docker_network.lan_1
       - docker_container.mqtt_server_1
       - docker_network.mgmt_1
   - image: "autofunbot/tg_web_client:0.2"
-    tf_name: web_client_2
-    hostname: web-client-2
-    name: web-client-2
+    tf_name: web_client_1
+    hostname: web-client-1
+    name: web-client
     options:
       shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.99.99.129
+    - name: mgmt
+      ip_address: 192.168.10.111
+    env:
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
+    depends_on:
+      - docker_network.lan_1
+      - docker_container.mqtt_server_1
+      - docker_network.mgmt_1
+  - image: "autofunbot/tg_web_client:0.2"
+    tf_name: web_client_1
+    hostname: web-client-1
+    name: web-client
+    options:
+      shm_size: 2048
+    networks:
+    - name: lan
+      ip_address: 10.99.99.129
+    - name: mgmt
+      ip_address: 192.168.10.111
+    env:
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
+    depends_on:
+      - docker_network.lan_1
+      - docker_container.mqtt_server_1
+      - docker_network.mgmt_1
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_1
+    hostname: web-server-1
+    name: web-server
     networks:
     - name: lan
       ip_address: 10.99.99.130
     - name: mgmt
       ip_address: 192.168.10.112
-    env:
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TGTYPE: web
     depends_on:
       - docker_network.lan_1
-      - docker_container.mqtt_server_1
       - docker_network.mgmt_1
-  - image: "autofunbot/tg_web_client:0.2"
-    tf_name: sql_client_1
-    hostname: sql-client-1
-    name: sql-client
-    options:
-      shm_size: 2048
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_1
+    hostname: mqtt-server-1
+    name: mqtt-server
     networks:
     - name: lan
       ip_address: 10.99.99.131
     - name: mgmt
-      ip_address: 192.168.10.113
-    env:
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TGTYPE: sql
+      ip_address: 192.168.10.117
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
     depends_on:
       - docker_network.lan_1
-      - docker_container.mqtt_server_1
       - docker_network.mgmt_1
   - image: "autofunbot/tg_web_client:0.2"
     tf_name: mongo_client_1
@@ -87,11 +115,11 @@ clients:
       shm_size: 2048
     networks:
     - name: lan
-      ip_address: 10.99.99.132
+      ip_address: 10.99.99.133
     - name: mgmt
-      ip_address: 192.168.10.114
+      ip_address: 192.168.10.113
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
+      MQTT_SERVER: 192.168.10.117
       TGTYPE: mongo
     depends_on:
       - docker_network.lan_1
@@ -123,9 +151,9 @@ clients:
       ipvlan_mode: l2
   containers:
   - image: "autofunbot/tg_web_client:0.2"
-    tf_name: web_client_3
-    hostname: web-client-3
-    name: web-client-3
+    tf_name: web_client_2
+    hostname: web-client-2
+    name: web-client
     options:
       shm_size: 2048
     networks:
@@ -134,65 +162,55 @@ clients:
     - name: mgmt
       ip_address: 192.168.10.121
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
+      MQTT_SERVER: 192.168.10.117
       TGTYPE: web
     depends_on:
       - docker_network.lan_2
       - docker_container.mqtt_server_1
       - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_client:0.2"
-    tf_name: web_client_4
-    hostname: web-client-4
-    name: web-client-4
-    options:
-      shm_size: 2048
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_2
+    hostname: web-server-2
+    name: web-server
     networks:
     - name: lan
       ip_address: 10.88.88.130
     - name: mgmt
       ip_address: 192.168.10.122
-    env:
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TGTYPE: web
     depends_on:
       - docker_network.lan_2
-      - docker_container.mqtt_server_1
       - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_client:0.2"
-    tf_name: sql_client_2
-    hostname: sql-client-2
-    name: sql-client-2
-    options:
-      shm_size: 2048
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_2
+    hostname: mqtt-server-2
+    name: mqtt-server
     networks:
     - name: lan
       ip_address: 10.88.88.131
     - name: mgmt
+      ip_address: 192.168.10.127
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
+    depends_on:
+      - docker_network.lan_2
+      - docker_network.mgmt_2
+  - image: "autofunbot/tg_web_client:0.2"
+    tf_name: sql_client_2
+    hostname: sql-client-2
+    name: sql-client
+    networks:
+    - name: lan
+      ip_address: 10.88.88.133
+    - name: mgmt
       ip_address: 192.168.10.123
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
+      MQTT_SERVER: 192.168.10.117
       TGTYPE: sql
     depends_on:
       - docker_network.lan_2
-      - docker_container.mqtt_server_1
-      - docker_network.mgmt_2
-  - image: "autofunbot/tg_web_client:0.2"
-    tf_name: mongo_client_2
-    hostname: mongo-client-2
-    name: mongo-client-2
-    options:
-      shm_size: 2048
-    networks:
-    - name: lan
-      ip_address: 10.88.88.132
-    - name: mgmt
-      ip_address: 192.168.10.124
-    env:
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TGTYPE: mongo
-    depends_on:
-      - docker_network.lan_2
-      - docker_container.mqtt_server_1
+      - docker_container.mqtt_server_2
       - docker_network.mgmt_2
 - alias: client3
   hostname: desktop4-mgmt
@@ -219,46 +237,48 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "mongo"
-    tf_name: mongo_server_1
-    hostname: mongo-server-1
-    name: mongo-server-1
+  - image: "autofunbot/tg_web_client:0.2"
+    tf_name: web_client_3
+    hostname: web-client-3
+    name: web-client
+    options:
+      shm_size: 2048
     networks:
     - name: lan
       ip_address: 10.66.66.129
     - name: mgmt
       ip_address: 192.168.10.141
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
-      TGTYPE: mongo
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
     depends_on:
       - docker_network.lan_3
+      - docker_container.mqtt_server_1
       - docker_network.mgmt_3
-  - image: "eclipse-mosquitto"
-    tf_name: mqtt_server_1
-    hostname: mqtt-server-1
-    name: mqtt-server-1
+  - image: "autofunbot/tg_web_server:latest"
+    tf_name: web_server_3
+    hostname: web-server-3
+    name: web-server
     networks:
     - name: lan
       ip_address: 10.66.66.130
     - name: mgmt
-      ip_address: mqtt-server-1-mgmt
-    mounts:
-      - target: /mosquitto/config/mosquitto.conf
-        source: /home/lab/mosquitto/mosquitto.conf
-        type: bind
+      ip_address: 192.168.10.142
+    env:
+      TARGETS: web-server-2
+      PORT: 80
     depends_on:
       - docker_network.lan_3
       - docker_network.mgmt_3
   - image: "eclipse-mosquitto"
-    tf_name: mqtt_server_2
-    hostname: mqtt-server-2
-    name: mqtt-server-2
+    tf_name: mqtt_server_3
+    hostname: mqtt-server-3
+    name: mqtt-server
     networks:
     - name: lan
       ip_address: 10.66.66.131
     - name: mgmt
-      ip_address: 192.168.10.143
+      ip_address: 192.168.10.147
     mounts:
       - target: /mosquitto/config/mosquitto.conf
         source: /home/lab/mosquitto/mosquitto.conf
@@ -267,16 +287,16 @@ clients:
       - docker_network.lan_3
       - docker_network.mgmt_3
   - image: "mysql:latest"
-    tf_name: sql_server_1
-    hostname: sql-server-1
-    name: sql-server-1
+    tf_name: sql_server_3
+    hostname: sql-server-3
+    name: sql-server
     networks:
     - name: lan
       ip_address: 10.66.66.132
     - name: mgmt
-      ip_address: 192.168.10.144
+      ip_address: 192.168.10.143
     env:
-      MQTT_SERVER: mqtt-server-1-mgmt
+      MQTT_SERVER: 192.168.10.117
       TGTYPE: sql
       MYSQL_ROOT_PASSWORD: lab@LAB123!
       MYSQL_USER: lab
@@ -311,25 +331,28 @@ clients:
       parent: ens160
       ipvlan_mode: l2
   containers:
-  - image: "autofunbot/tg_web_server:latest"
-    tf_name: web_server_1
-    hostname: web-server-1
-    name: web-server-1
+  - image: "autofunbot/tg_web_client:0.2"
+    tf_name: web_client_4
+    hostname: web-client-4
+    name: web-client
+    options:
+      shm_size: 2048
     networks:
     - name: lan
       ip_address: 10.55.55.129
     - name: mgmt
       ip_address: 192.168.10.151
     env:
-      TARGETS: web-server-2
-      PORT: 80
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: web
     depends_on:
       - docker_network.lan_4
+      - docker_container.mqtt_server_1
       - docker_network.mgmt_4
   - image: "autofunbot/tg_web_server:latest"
-    tf_name: web_server_2
-    hostname: web-server-2
-    name: web-server-2
+    tf_name: web_server_4
+    hostname: web-server-4
+    name: web-server
     networks:
     - name: lan
       ip_address: 10.55.55.130
@@ -341,33 +364,34 @@ clients:
     depends_on:
       - docker_network.lan_4
       - docker_network.mgmt_4
-  - image: "autofunbot/tg_web_server:latest"
-    tf_name: web_server_3
-    hostname: web-server-3
-    name: web-server-3
+  - image: "eclipse-mosquitto"
+    tf_name: mqtt_server_4
+    hostname: mqtt-server-4
+    name: mqtt-server
     networks:
     - name: lan
       ip_address: 10.55.55.131
     - name: mgmt
-      ip_address: 192.168.10.153
-    env:
-      TARGETS: web-server-3
-      PORT: 80
+      ip_address: 192.168.10.157
+    mounts:
+      - target: /mosquitto/config/mosquitto.conf
+        source: /home/lab/mosquitto/mosquitto.conf
+        type: bind
     depends_on:
       - docker_network.lan_4
       - docker_network.mgmt_4
-  - image: "autofunbot/tg_web_server:latest"
-    tf_name: web_server_4
-    hostname: web-server-4
-    name: web-server-4
+  - image: "mongo"
+    tf_name: mongo_server_4
+    hostname: mongo-server-4
+    name: mongo-server
     networks:
     - name: lan
-      ip_address: 10.55.55.132
+      ip_address: 10.55.55.133
     - name: mgmt
-      ip_address: 192.168.10.154
+      ip_address: 192.168.10.153
     env:
-      TARGETS: web-server-4
-      PORT: 80
+      MQTT_SERVER: 192.168.10.117
+      TGTYPE: mongo
     depends_on:
       - docker_network.lan_4
       - docker_network.mgmt_4

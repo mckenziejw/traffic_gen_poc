@@ -93,10 +93,8 @@ wan_edge_templates:
         tenants:
           - LAN1
         services:
-          - HUB_MQTT
-          - HUB_SQL_SERVERS
-          - HUB_MONGO_SERVERS
-          - HUB_WEB_SERVERS
+          - LAN3
+          - LAN4
         action: allow
         local_routing: True
       - name: Hub-to-Spoke
@@ -325,6 +323,30 @@ hub_profiles:
           - Internet
         action: allow
         path_preference: CBO
+      - name: Spoke-to-MQTT
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - MQTT
+        action: allow
+        local_routing: True
+      - name: Spoke-to-SQL
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - SQL
+        action: allow
+        local_routing: True
+      - name: Spoke-to-MongoDB
+        tenants:
+          - LAN1
+          - LAN2
+        services:
+          - MongoDB
+        action: allow
+        local_routing: True
   - name: CupertinoHub
     type: gateway
     site: Cupertino
@@ -423,6 +445,15 @@ hub_profiles:
           - Internet
         action: allow
         path_preference: CBO
+      - name: All-to-InternalWeb
+        tenants:
+          - LAN1
+          - LAN2
+          - LAN3
+        services:
+          - Internal_Web
+        action: allow
+        local_routing: True
 switch_templates:
   - name: Durham Switches
     networks:
@@ -613,43 +644,27 @@ applications:
     specs:
       - protocol: tcp
         port_range: 2222-2222
-  - name: SPOKE_MQTT
-    type: custom
-    addresses:
-      - 10.99.99.131/24
-      - 10.88.88.131/24
-    specs:
-      - protocol: tcp
-        port_range: 1883-1883
-    traffic_type: default
-  - name: HUB_MQTT
-    type: custom
-    addresses:
-      - 10.66.66.131/24
-      - 10.55.55.131/24
-    specs:
-      - protocol: tcp
-        port_range: 1883-1883
-    traffic_type: default
-  - name: SPOKE_WEB_SERVERS
-    type: custom
-    addresses:
-      - 10.99.99.130/24
-      - 10.88.88.130/24
-    specs:
-      - protocol: tcp
-        port_range: 80-80
-    traffic_type: default
-  - name: HUB_WEB_SERVERS
+  - name: MQTT
     type: custom
     addresses:
       - 10.66.66.130/24
+      - 10.66.66.131/24
+    specs:
+      - protocol: tcp
+        port_range: 1883-1883
+    traffic_type: default
+  - name: Internal_Web
+    type: custom
+    addresses:
+      - 10.55.55.129/24
       - 10.55.55.130/24
+      - 10.55.55.131/24
+      - 10.55.55.132/24
     specs:
       - protocol: tcp
         port_range: 80-80
     traffic_type: default
-  - name: HUB_SQL_SERVERS
+  - name: SQL
     type: custom
     addresses:
       - 10.66.66.132/24
@@ -657,10 +672,10 @@ applications:
       - protocol: tcp
         port_range: 3306-3306
     traffic_type: default
-  - name: HUB_MONGO_SERVERS
+  - name: MongoDB
     type: custom
     addresses:
-      - 10.55.55.133/24
+      - 10.66.66.129/24
     specs:
       - protocol: tcp
         port_range: 27017-27019

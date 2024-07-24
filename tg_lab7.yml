@@ -7,6 +7,7 @@ scenario:
     action:
       type: get
       targets:
+        - http://web-server-1-lan # 2
         - http://web-server-2-lan # 2
         - http://web-server-3-lan # 3
         - http://web-server-4-lan # 4
@@ -32,7 +33,8 @@ scenario:
     action:
       type: get
       targets:
-        - http://web-server-1-lan # 1
+        - http://web-server-1-lan # 2
+        - http://web-server-2-lan # 2
         - http://web-server-3-lan # 3
         - http://web-server-4-lan # 4
       uri: /employees
@@ -48,9 +50,27 @@ scenario:
     action:
       type: get
       targets:
-        - http://web-server-1-lan # 1
+        - http://web-server-1-lan # 2
         - http://web-server-2-lan # 2
-        - http://web-server-4-lan # 4
+        - http://web-server-3-lan # 3
+        - http://web-server-4-lan
+      uri: /employees
+      loop_for: 0
+      loop_delay:
+        min: 2
+        max: 10
+        randomize_method: random
+      create_thread: True
+  - decription: GET all servers from 4
+    service_type: web
+    service_host: web-client-4
+    action:
+      type: get
+      targets:
+        - http://web-server-1-lan # 2
+        - http://web-server-2-lan # 2
+        - http://web-server-3-lan # 3
+        - http://web-server-4-lan
       uri: /employees
       loop_for: 0
       loop_delay:
@@ -60,10 +80,11 @@ scenario:
       create_thread: True
   - decription: POST all servers from 1
     service_type: web
-    service_host: web-client-1
+    service_host: web-client-3
     action:
       type: post
       targets:
+        - http://web-server-1-lan # 1
         - http://web-server-2-lan # 2
         - http://web-server-3-lan # 3
         - http://web-server-4-lan # 4
@@ -91,7 +112,7 @@ scenario:
       create_thread: True
   - decription: Watch Youtube wifi-client-1
     service_type: web
-    service_host: wifi-client-1
+    service_host: wifi-client-4
     action:
       type: watch_youtube
       targets:
@@ -151,11 +172,11 @@ scenario:
       create_thread: True
   - description: SQL connect client 2 server 3
     service_type: sql
-    service_host: sql-client-2
+    service_host: sql-client-1
     action:
       type: sql_connect
       targets:
-        - sql-server-3-lan
+        - sql-server-1-lan
       uri: /
       loop_for: 0
       loop_delay:
@@ -169,7 +190,49 @@ scenario:
     action:
       type: mongo_ping
       targets:
-        - mongo-server-4-lan
+        - mongo-server-2-lan
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 10
+        max: 30
+        randomize_method: random
+      create_thread: True
+  - description: IoT client 1 server 2
+    service_type: iot
+    service_host: wifi-client-1
+    action:
+      type: iot_telemetry
+      targets:
+        - mongo-server-2-lan
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 10
+        max: 30
+        randomize_method: random
+      create_thread: True
+  - description: IoT client 2 server 2
+    service_type: iot
+    service_host: wifi-client-2
+    action:
+      type: iot_telemetry
+      targets:
+        - mongo-server-2-lan
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 10
+        max: 30
+        randomize_method: random
+      create_thread: True
+  - description: IoT client 3 server 2
+    service_type: iot
+    service_host: wifi-client-3
+    action:
+      type: iot_telemetry
+      targets:
+        - mongo-server-2-lan
       uri: /
       loop_for: 0
       loop_delay:
