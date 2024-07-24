@@ -243,32 +243,36 @@ def do_action(action):
         # Process parameters
         delta = 0.25
         dt = 0.1
-        def on_pub(client, userdata, mid, reason_code, properties):
-    # reason_code and properties will only be present in MQTTv5. It's always unset in MQTTv3
-            try:
-                userdata.remove(mid)
-            except KeyError:
-                print("on_publish() is called with a mid not present in unacked_publish")
-                print("This is due to an unavoidable race-condition:")
-                print("* publish() return the mid of the message sent.")
-                print("* mid from publish() is added to unacked_publish by the main thread")
-                print("* on_publish() is called by the loop_start thread")
-                print("While unlikely (because on_publish() will be called after a network round-trip),")
-                print(" this is a race-condition that COULD happen")
-                print("")
-                print("The best solution to avoid race-condition is using the msg_info from publish()")
-                print("We could also try using a list of acknowledged mid rather than removing from pending list,")
-                print("but remember that mid could be re-used !")
+    #     def on_pub(client, userdata, mid, reason_code, properties):
+    # # reason_code and properties will only be present in MQTTv5. It's always unset in MQTTv3
+    #         try:
+    #             userdata.remove(mid)
+    #         except KeyError:
+    #             print("on_publish() is called with a mid not present in unacked_publish")
+    #             print("This is due to an unavoidable race-condition:")
+    #             print("* publish() return the mid of the message sent.")
+    #             print("* mid from publish() is added to unacked_publish by the main thread")
+    #             print("* on_publish() is called by the loop_start thread")
+    #             print("While unlikely (because on_publish() will be called after a network round-trip),")
+    #             print(" this is a race-condition that COULD happen")
+    #             print("")
+    #             print("The best solution to avoid race-condition is using the msg_info from publish()")
+    #             print("We could also try using a list of acknowledged mid rather than removing from pending list,")
+    #             print("but remember that mid could be re-used !")
         mqttc = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)
-        mqttc.on_publish = on_pub
-        mqttc.connect("192.168.10.143", port=1883, keepalive=120, bind_address="")
+        #mqttc.on_publish = on_pub
+        mqttc.connect("10.66.66.131", port=1883, keepalive=60, bind_address="")
         # Initial condition.
         x = 0.0
         
         while True:
             try:
                 x = x + norm.rvs(scale=delta**2*dt)
-                mqttc.publish("{'time':{}, 'frequency':{}}".format(time.now(), x))
+                out = {
+                    'time': time.time(),
+                    'frequency': x
+                }
+                mqttc.publish(json.dumps(out))
                 time.sleep(2)
             except Exception as e:
                 print(e)
