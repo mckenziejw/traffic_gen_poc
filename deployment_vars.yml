@@ -93,8 +93,10 @@ wan_edge_templates:
         tenants:
           - LAN1
         services:
-          - LAN3
-          - LAN4
+          - HUB_MQTT
+          - HUB_SQL_SERVERS
+          - HUB_MONGO_SERVERS
+          - HUB_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Hub-to-Spoke
@@ -102,7 +104,8 @@ wan_edge_templates:
           - LAN3
           - LAN4
         services:
-          - LAN1
+          - SPOKE_MQTT
+          - SPOKE_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Spoke-to-Spoke
@@ -110,8 +113,8 @@ wan_edge_templates:
           - LAN1
           - LAN2
         services:
-          - LAN1
-          - LAN2
+          - SPOKE_MQTT
+          - SPOKE_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Spoke-to-Internet
@@ -193,8 +196,10 @@ wan_edge_templates:
         tenants:
           - LAN2
         services:
-          - LAN3
-          - LAN4
+          - HUB_MQTT
+          - HUB_SQL_SERVERS
+          - HUB_MONGO_SERVERS
+          - HUB_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Hub-to-Spoke
@@ -202,7 +207,8 @@ wan_edge_templates:
           - LAN3
           - LAN4
         services:
-          - LAN2
+          - SPOKE_MQTT
+          - SPOKE_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Spoke-to-Spoke
@@ -210,8 +216,8 @@ wan_edge_templates:
           - LAN1
           - LAN2
         services:
-          - LAN1
-          - LAN2
+          - SPOKE_MQTT
+          - SPOKE_WEB_SERVERS
         action: allow
         local_routing: True
       - name: Spoke-to-Internet
@@ -607,29 +613,43 @@ applications:
     specs:
       - protocol: tcp
         port_range: 2222-2222
-  - name: LOCAL_MQTT
+  - name: SPOKE_MQTT
     type: custom
     addresses:
       - 10.99.99.131/24
       - 10.88.88.131/24
+    specs:
+      - protocol: tcp
+        port_range: 1883-1883
+    traffic_type: default
+  - name: HUB_MQTT
+    type: custom
+    addresses:
       - 10.66.66.131/24
       - 10.55.55.131/24
     specs:
       - protocol: tcp
         port_range: 1883-1883
     traffic_type: default
-  - name: WEB_SERVERS
+  - name: SPOKE_WEB_SERVERS
     type: custom
     addresses:
       - 10.99.99.130/24
       - 10.88.88.130/24
+    specs:
+      - protocol: tcp
+        port_range: 80-80
+    traffic_type: default
+  - name: HUB_WEB_SERVERS
+    type: custom
+    addresses:
       - 10.66.66.130/24
       - 10.55.55.130/24
     specs:
       - protocol: tcp
         port_range: 80-80
     traffic_type: default
-  - name: SQL_SERVERS
+  - name: HUB_SQL_SERVERS
     type: custom
     addresses:
       - 10.66.66.132/24
@@ -637,7 +657,7 @@ applications:
       - protocol: tcp
         port_range: 3306-3306
     traffic_type: default
-  - name: MONGO_SERVERS
+  - name: HUB_MONGO_SERVERS
     type: custom
     addresses:
       - 10.55.55.133/24

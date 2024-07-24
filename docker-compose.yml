@@ -1,0 +1,47 @@
+---
+services:
+  jupyter:
+    image: autofunbot/sos_jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      JUPYTER_ENABLE_LAB=yes
+      JUPYTER_TOKEN=lab123
+      GRANT_SUDO=yes
+    container_name: jupyter
+    expose:
+      - "8888"
+    extra_hosts:
+      desktop1-mgmt: "192.168.10.61"
+      desktop2-mgmt: "192.168.10.62"
+      desktop3-mgmt: "192.168.10.63"
+      desktop4-mgmt: "192.168.10.64"
+      desktop5-mgmt: "192.168.10.65"
+      desktop1-lan: "10.99.99.99"
+      desktop2-lan: "10.88.88.88"
+      desktop3-lan: "10.77.77.77"
+      desktop4-lan: "10.66.66.66"
+      desktop5-lan: "10.55.55.55"
+      lxdhost: "192.168.10.63"
+      student-desktop: "192.168.10.254"
+      web-client-1: "10.99.99.129"
+      web-client-2: "10.88.88.129"
+      web-client-3: "10.66.66.129"
+      web-client-4: "10.55.55.129"
+      web-server-1: "10.99.99.130"
+      web-server-2: "10.88.88.130"
+      web-server-3: "10.66.66.130"
+      web-server-4: "10.55.55.130"
+      mqtt-server-1: "10.99.99.131"
+      mqtt-server-2: "10.88.88.131"
+      mqtt-server-3: "10.66.66.131"
+      mqtt-server-4: "10.55.55.131"
+      mongo-client-1: "10.99.99.133"
+      sql-client-2: "10.88.88.132"
+      sql-server-3: "10.66.66.132"
+      mongo-server-4: "10.55.55.133"
+    restart: always
+    user: root
+    volumes:
+      - type: bind
+        source: /home/lab/ajmae:/home/jovyan/work

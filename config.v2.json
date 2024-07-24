@@ -1,0 +1,196 @@
+{
+    "StreamConfig": {},
+    "State": {
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "RemovalInProgress": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2024-07-24T09:37:57.425616144Z",
+        "FinishedAt": "2024-07-24T09:40:03.928290308Z",
+        "Health": {
+            "Status": "unhealthy",
+            "FailingStreak": 0,
+            "Log": [
+                {
+                    "Start": "2024-07-24T02:39:39.58372345-07:00",
+                    "End": "2024-07-24T02:39:39.692164568-07:00",
+                    "ExitCode": 0,
+                    "Output": "failed: Connection refused.\n{\"version\": \"2.3.0\"}2024-07-24 09:39:39 URL:http://localhost:8888/api [20/20] -\u003e \"-\" [1]\n"
+                },
+                {
+                    "Start": "2024-07-24T02:39:44.692788189-07:00",
+                    "End": "2024-07-24T02:39:44.787184749-07:00",
+                    "ExitCode": 0,
+                    "Output": "failed: Connection refused.\n{\"version\": \"2.3.0\"}2024-07-24 09:39:44 URL:http://localhost:8888/api [20/20] -\u003e \"-\" [1]\n"
+                },
+                {
+                    "Start": "2024-07-24T02:39:49.787761483-07:00",
+                    "End": "2024-07-24T02:39:49.876870585-07:00",
+                    "ExitCode": 0,
+                    "Output": "failed: Connection refused.\n{\"version\": \"2.3.0\"}2024-07-24 09:39:49 URL:http://localhost:8888/api [20/20] -\u003e \"-\" [1]\n"
+                },
+                {
+                    "Start": "2024-07-24T02:39:54.878109325-07:00",
+                    "End": "2024-07-24T02:39:54.970865929-07:00",
+                    "ExitCode": 0,
+                    "Output": "failed: Connection refused.\n{\"version\": \"2.3.0\"}2024-07-24 09:39:54 URL:http://localhost:8888/api [20/20] -\u003e \"-\" [1]\n"
+                },
+                {
+                    "Start": "2024-07-24T02:39:59.972485737-07:00",
+                    "End": "2024-07-24T02:40:00.075132735-07:00",
+                    "ExitCode": 0,
+                    "Output": "failed: Connection refused.\n{\"version\": \"2.3.0\"}2024-07-24 09:40:00 URL:http://localhost:8888/api [20/20] -\u003e \"-\" [1]\n"
+                }
+            ]
+        }
+    },
+    "ID": "fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8",
+    "Created": "2024-07-19T10:56:29.938413653Z",
+    "Managed": false,
+    "Path": "tini",
+    "Args": [
+        "-g",
+        "--",
+        "start-notebook.sh"
+    ],
+    "Config": {
+        "Hostname": "jupyter-host",
+        "Domainname": "",
+        "User": "root",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "ExposedPorts": {
+            "8888/tcp": {}
+        },
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "JUPYTER_ENABLE_LAB=yes",
+            "JUPYTER_TOKEN=lab123",
+            "GRANT_SUDO=yes",
+            "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "DEBIAN_FRONTEND=noninteractive",
+            "CONDA_DIR=/opt/conda",
+            "SHELL=/bin/bash",
+            "NB_USER=jovyan",
+            "NB_UID=1000",
+            "NB_GID=100",
+            "LC_ALL=en_US.UTF-8",
+            "LANG=en_US.UTF-8",
+            "LANGUAGE=en_US.UTF-8",
+            "HOME=/home/jovyan",
+            "JUPYTER_PORT=8888",
+            "XDG_CACHE_HOME=/home/jovyan/.cache/",
+            "JULIA_DEPOT_PATH=/opt/julia",
+            "JULIA_PKGDIR=/opt/julia",
+            "JULIA_VERSION=1.8.5"
+        ],
+        "Cmd": [
+            "start-notebook.sh"
+        ],
+        "Healthcheck": {
+            "Test": [
+                "CMD-SHELL",
+                "wget -O- --no-verbose --tries=1 --no-check-certificate     http${GEN_CERT:+s}://localhost:${JUPYTER_PORT}${JUPYTERHUB_SERVICE_PREFIX:-/}api || exit 1"
+            ],
+            "Interval": 5000000000,
+            "Timeout": 3000000000,
+            "StartPeriod": 5000000000,
+            "Retries": 3
+        },
+        "Image": "vatlab/sos-notebook",
+        "Volumes": null,
+        "WorkingDir": "/home/jovyan",
+        "Entrypoint": [
+            "tini",
+            "-g",
+            "--"
+        ],
+        "OnBuild": null,
+        "Labels": {
+            "maintainer": "Bo Peng \u003cBo.Peng@bcm.edu\u003e",
+            "org.opencontainers.image.ref.name": "ubuntu",
+            "org.opencontainers.image.version": "22.04"
+        }
+    },
+    "Image": "sha256:8bb4662781d6fcc85c27a4cc86ebe6e633a02b1d591b895f1a5f6a0f599302a7",
+    "ImageManifest": null,
+    "NetworkSettings": {
+        "Bridge": "",
+        "SandboxID": "",
+        "SandboxKey": "",
+        "HairpinMode": false,
+        "LinkLocalIPv6Address": "",
+        "LinkLocalIPv6PrefixLen": 0,
+        "Networks": {
+            "bridge": {
+                "IPAMConfig": null,
+                "Links": null,
+                "Aliases": null,
+                "MacAddress": "",
+                "DriverOpts": null,
+                "NetworkID": "51cb2d5746b02287173461946c7d8cdeb112d560c6e835192d0276bbf9310501",
+                "EndpointID": "",
+                "Gateway": "",
+                "IPAddress": "",
+                "IPPrefixLen": 0,
+                "IPv6Gateway": "",
+                "GlobalIPv6Address": "",
+                "GlobalIPv6PrefixLen": 0,
+                "DNSNames": null,
+                "IPAMOperational": false,
+                "DesiredMacAddress": ""
+            }
+        },
+        "Service": null,
+        "Ports": null,
+        "SecondaryIPAddresses": null,
+        "SecondaryIPv6Addresses": null,
+        "HasSwarmEndpoint": false
+    },
+    "LogPath": "/var/lib/docker/containers/fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8/fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8-json.log",
+    "Name": "/jupyter",
+    "Driver": "overlay2",
+    "OS": "linux",
+    "RestartCount": 0,
+    "HasBeenStartedBefore": true,
+    "HasBeenManuallyStopped": true,
+    "MountPoints": {
+        "/home/jovyan/work": {
+            "Source": "/home/lab/ajmae",
+            "Destination": "/home/jovyan/work",
+            "RW": true,
+            "Name": "",
+            "Driver": "",
+            "Type": "bind",
+            "Propagation": "rprivate",
+            "Spec": {
+                "Type": "bind",
+                "Source": "/home/lab/ajmae",
+                "Target": "/home/jovyan/work"
+            },
+            "SkipMountpointCreation": false
+        }
+    },
+    "SecretReferences": null,
+    "ConfigReferences": null,
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "AppArmorProfile": "docker-default",
+    "SeccompProfile": "",
+    "NoNewPrivileges": false,
+    "HostnamePath": "/var/lib/docker/containers/fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8/hostname",
+    "HostsPath": "/var/lib/docker/containers/fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8/hosts",
+    "ShmPath": "",
+    "ResolvConfPath": "/var/lib/docker/containers/fa1aba33b94d9f01141979cf8b65f6131a4dfc6640967d0126b11f378a7318e8/resolv.conf",
+    "LocalLogCacheMeta": {
+        "HaveNotifyEnabled": false
+    }
+}
