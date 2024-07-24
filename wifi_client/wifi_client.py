@@ -259,7 +259,7 @@ def do_action(action):
                 print("The best solution to avoid race-condition is using the msg_info from publish()")
                 print("We could also try using a list of acknowledged mid rather than removing from pending list,")
                 print("but remember that mid could be re-used !")
-        mqttc = mqtt_client.Client(client_id=client_id, mqtt_client.CallbackAPIVersion.VERSION2)
+        mqttc = mqtt_client.Client(client_id=client_id, callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2)
         mqttc.on_publish = on_pub
         mqttc.connect("192.168.10.143", port=1883, keepalive=120, bind_address="")
         # Initial condition.
