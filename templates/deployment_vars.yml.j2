@@ -861,7 +861,7 @@ applications:
   - name: Cloud_MQTT
     type: custom
     addresses:
-      - 192.168.10.254/24
+      - 192.168.10.254/32
     specs:
       - protocol: any
     traffic_type: default
@@ -875,8 +875,8 @@ applications:
   - name: MQTT
     type: custom
     addresses:
-      - 10.66.66.130/24
-      - 10.66.66.131/24
+      - 10.66.66.130/32
+      - 10.66.66.131/32
     specs:
       - protocol: tcp
         port_range: 1883-1883
@@ -884,10 +884,10 @@ applications:
   - name: Internal_Web
     type: custom
     addresses:
-      - 10.55.55.129/24
-      - 10.55.55.130/24
-      - 10.55.55.131/24
-      - 10.55.55.132/24
+      - 10.55.55.129/32
+      - 10.55.55.130/32
+      - 10.55.55.131/32
+      - 10.55.55.132/32
     specs:
       - protocol: tcp
         port_range: 80-80
@@ -895,7 +895,7 @@ applications:
   - name: SQL
     type: custom
     addresses:
-      - 10.66.66.132/24
+      - 10.66.66.132/32
     specs:
       - protocol: tcp
         port_range: 3306-3306
@@ -903,7 +903,7 @@ applications:
   - name: MongoDB
     type: custom
     addresses:
-      - 10.66.66.129/24
+      - 10.66.66.129/32
     specs:
       - protocol: tcp
         port_range: 27017-27019
