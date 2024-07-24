@@ -284,7 +284,7 @@ clients:
       MYSQL_DATABASE: lab_db
     depends_on:
       - docker_network.lan_3
-      - docker_container.mqtt_server_3
+      - docker_container.mqtt_server_1
       - docker_network.mgmt_3
 - alias: client4
   hostname: desktop5-mgmt
