@@ -242,7 +242,7 @@ clients:
     - name: lan
       ip_address: 10.66.66.130
     - name: mgmt
-      ip_address: mqtt-server-1-mgmt
+      ip_address: 192.168.10.142
     mounts:
       - target: /mosquitto/config/mosquitto.conf
         source: /home/lab/mosquitto/mosquitto.conf
