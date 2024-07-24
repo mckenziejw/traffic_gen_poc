@@ -44,4 +44,5 @@ services:
     user: root
     volumes:
       - type: bind
-        source: /home/lab/ajmae:/home/jovyan/work
+        source: /home/lab/ajmae
+        target: /home/jovyan/work
