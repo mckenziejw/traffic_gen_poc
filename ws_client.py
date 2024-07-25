@@ -13,10 +13,12 @@ def on_close(ws, close_status_code, close_msg):
 
 def on_open(ws):
     print("Connection opened")
-    ws.send(json.dumps({'subscribe': args.topic}))
+    ws.send(json.dumps({'subscribe': f"/sites/{args.site_id}/devices/{args.device_id}/cmd"}))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-topic')
+parser.add_argument('-site_id')
+parser.add_argument('-device_id')
 args = parser.parse_args()
 
 token="ASostdRKz4TsmKfoiwEEN4deFSLCehuwFWhfDuJlQp0JOD7f8CMeLurUWIfzYCazIZdKESb2i5Dgsg526xrLmWdSTTEva0O5"
