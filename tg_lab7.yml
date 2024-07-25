@@ -104,10 +104,10 @@ scenario:
       type: watch_youtube
       targets:
         - 215DsGlQ2LM&list=PLfUgcozInUuvn4p0qF11LTRPMRoLmhorU
-      loop_for: 1
+      loop_for: 0
       loop_delay:
-        min: 250000
-        max: 250000
+        min: 300
+        max: 300
         randomize_method: random
       create_thread: True
   - decription: Watch Youtube wifi-client-1
@@ -117,10 +117,10 @@ scenario:
       type: watch_youtube
       targets:
         - 215DsGlQ2LM&list=PLfUgcozInUuvn4p0qF11LTRPMRoLmhorU
-      loop_for: 1
+      loop_for: 0
       loop_delay:
-        min: 250000
-        max: 250000
+        min: 300
+        max: 300
         randomize_method: random
       create_thread: True
   - decription: Browse Wikipedia client 2
@@ -142,20 +142,20 @@ scenario:
         max: 40
         randomize_method: random
       create_thread: True
-  # - decription: Watch Twitch client 3
-  #   service_type: web
-  #   service_host: web-client-3
-  #   action:
-  #     type: watch_twitch
-  #     targets:
-  #       - ''
-  #     uri: /
-  #     loop_for: 0
-  #     loop_delay:
-  #       min: 250000
-  #       max: 250000
-  #       randomize_method: random
-  #     create_thread: True
+  - decription: Watch Twitch client 3
+    service_type: web
+    service_host: web-client-3
+    action:
+      type: watch_twitch
+      targets:
+        - ''
+      uri: /
+      loop_for: 0
+      loop_delay:
+        min: 300
+        max: 300
+        randomize_method: random
+      create_thread: True
   - description: Download file from GDrive client 4
     service_type: web
     service_host: web-client-4

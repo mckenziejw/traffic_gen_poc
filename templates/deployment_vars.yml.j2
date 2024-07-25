@@ -390,10 +390,15 @@ hub_profiles:
         paths:
           - name: CupertinoHub-INET.OrgOverlay
             type: vpn
+          - name: CupertinoHub-MPLS.OrgOverlay
+            type: vpn
       Overlay_Hub_MPLS:
         strategy: ordered
         paths:
           - name: CupertinoHub-MPLS.OrgOverlay
+            type: vpn
+          - name: CupertinoHub-INET.OrgOverlay
+            type: vpn
     service_policies:
       - name: Spoke-to-Hub
         tenants:
@@ -560,10 +565,14 @@ hub_profiles:
         paths:
         - name: SunnyvaleHub-MPLS.OrgOverlay
           type: vpn
+        - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
       Overlay_Hub_INET:
         strategy: ordered
         paths:
         - name: SunnyvaleHub-INET.OrgOverlay
+          type: vpn
+        - name: SunnyvaleHub-MPLS.OrgOverlay
           type: vpn
     service_policies:
       - name: Spoke-to-Hub
@@ -644,7 +653,7 @@ hub_profiles:
         - LAN2
         - LAN3
         services:
-        - InternalWeb
+        - Internal_Web
         action: allow
         local_routing: true
         idp:
