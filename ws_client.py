@@ -22,8 +22,8 @@ parser.add_argument('-device_id')
 args = parser.parse_args()
 
 token="ASostdRKz4TsmKfoiwEEN4deFSLCehuwFWhfDuJlQp0JOD7f8CMeLurUWIfzYCazIZdKESb2i5Dgsg526xrLmWdSTTEva0O5"
-header = [f"Authorization: Bearer {token}"]
-ws = websocket.WebSocketApp("ws://api-ws.mist.com/v1/stream",
+header = [f"Authorization: Token {token}"]
+ws = websocket.WebSocketApp("wss://api-ws.mist.com/v1/stream",
                             header=header,
                             on_message=on_message,
                             on_error=on_error,

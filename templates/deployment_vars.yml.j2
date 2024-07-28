@@ -170,6 +170,15 @@ wan_edge_templates:
         path_preference: Overlay_MPLS
         idp:
           enabled: False
+      - name: Streaming-Local-INET
+        tenants:
+          - LAN1
+        services:
+          - StreamingMedia
+        action: allow
+        path_preference: LBO
+        idp:
+          enabled: False
   - name: Westford WAN Edge Template
     type: spoke
     sites:
@@ -317,6 +326,15 @@ wan_edge_templates:
           - SQL
         action: allow
         path_preference: Overlay_MPLS
+        idp:
+          enabled: False
+      - name: Streaming-Local-INET
+        tenants:
+          - LAN1
+        services:
+          - StreamingMedia
+        action: allow
+        path_preference: LBO
         idp:
           enabled: False
 hub_profiles:
@@ -741,6 +759,7 @@ rf_templates:
       disabled: True
     band_24:
       disabled: True
+    band_24_usage: "5"
 wlans:
   - ssid: JMA_WLAN_{{org_id[-4:]}}
     enabled: True
@@ -749,7 +768,6 @@ wlans:
     band_steer: False
     auth:
       type: psk
-      psk: juniper123
     dynamic_psk:
       enabled: True
       source: cloud_psks
@@ -758,6 +776,7 @@ wlans:
     rateset:
       5:
         template: high-density
+        min_rssi: 0
     template: Durham WLAN Template
   - ssid: JMA_Guest_{{org_id[-4:]}}
     enabled: True
@@ -769,7 +788,6 @@ wlans:
     client_limit_down: 1000
     auth:
       type: psk
-      psk: juniper123
     dynamic_psk:
       enabled: True
       source: cloud_psks
@@ -778,6 +796,7 @@ wlans:
     rateset:
       5:
         template: high-density
+        min_rssi: 0
     template: Durham WLAN Template
 labels:
   - name: Guest
@@ -894,6 +913,14 @@ applications:
     specs:
       - protocol: tcp
         port_range: 27017-27019
+    traffic_type: default
+  - name: StreamingMedia
+    type: apps
+    apps:
+      - youtube
+      - netflix
+      - hulu
+      - amazon-video
     traffic_type: default
 networks:
   - name: LAN1
@@ -1022,6 +1049,11 @@ sites:
         LAN_PFX: 10.99.99
         GW: 10.210.14.14
         WAN_PFX: 192.168.170
+      rogue:
+        min_rssi: -85
+        min_duration: 1
+        enabled: True
+        honeypot_enabled: True
     assignments:
       edges:
         - name: SSR-1
