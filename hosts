@@ -18,7 +18,7 @@
 10.88.88.130    web-server-2
 10.66.66.130    web-server-3
 10.55.55.130    web-server-4
-10.99.99.131    mqtt-server-1
+10.99.99.130    mqtt-server-1
 10.88.88.131    mqtt-server-2
 10.66.66.131    mqtt-server-3
 10.55.55.131    mqtt-server-4

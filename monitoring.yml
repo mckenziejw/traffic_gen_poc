@@ -1,0 +1,98 @@
+sles:
+  sle_metrics: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metrics
+  wan:
+    gateway_health: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/gateway-health-new/summary-trend?start=1722376800&end=1722448783
+    wan_link_health: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/wan-link-health/summary-trend?start=1722376800&end=1722448783
+    application_health: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/application-health/summary-trend?start=1722376800&end=1722448783&unit=app_minute
+  wired:
+    throughput: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/switch-throughput/summary-trend?start=1722376800&end=1722449065
+    successful_connect: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/switch-stc-new/summary-trend?start=1722376800&end=1722449065
+    switch_health: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/switch-health-v2/summary-trend?start=1722376800&end=1722449065
+    switch_bandwidth: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/switch-bandwidth/summary-trend?start=1722376800&end=1722449065
+  wireless:
+    time_to_connect: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/time-to-connect/summary-trend?start=1722376800&end=1722449176
+    successful_connects: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/failed-to-connect/summary-trend?start=1722376800&end=1722449176
+    coverage: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/coverage/summary-trend?start=1722376800&end=1722449176
+    roaming: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/roaming/summary-trend?start=1722376800&end=1722449176
+    throughput: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/throughput/summary-trend?start=1722376800&end=1722449176
+    capacity: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/capacity/summary-trend?start=1722376800&end=1722449176
+    ap_health: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/sle/site/32774a10-f694-49b8-b6f7-1b00da1c0bf9/metric/ap-health/summary-trend?start=1722376800&end=1722449176
+  marvis_actions:
+    symptoms: https://api.mist.com/api/v1/labs/orgs/400336e0-1a2a-4ae3-aabf-1c60a6a25d29/suggestions?query=group_by_category_symptom&display_priority=high&active=true&resolve_wcid=true
+    symptom_action_suggested: https://api.mist.com/api/v1/labs/orgs/400336e0-1a2a-4ae3-aabf-1c60a6a25d29/suggestions?query=get_suggestion&active=true&category=gateway&symptom=bad_wan_link&export=true&resolve_wcid=true
+insights:
+  wan:
+    main_url: api/v1/sites/{site}/insights/device/{device}/metric
+    metrics:
+      top-services-by-bytes:
+      memory:
+      spi:
+      top-app-by-bytes:
+      power_draw:
+      vpn_peer:
+      top_categories-by-bytes:
+      tx_bytes:
+      rx_bytes:
+      port_rx_errors:
+      port_tx_errors:
+      cpu:
+      vpn_peer-metrics:
+      app-bytes:
+      tx_bps:
+      rx_bps:
+      lte_rssi:
+    stats:
+      bgp_peers: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/stats/bgp_peers/search?limit=1000&mac=020001bc18c0&start=1722376800.783&end=1722449592.783
+      vpn_peers: https://api.mist.com/api/v1/orgs/400336e0-1a2a-4ae3-aabf-1c60a6a25d29/stats/vpn_peers/search?start=1722376800&end=1722449592&limit=1000&mac=020001bc18c0
+  wired:
+    main_url: api/v1/sites/{site}/insights/device/{device}/metric
+    metrics:
+      top-services-by-bytes:
+      memory:
+      spi:
+      top-app-by-bytes:
+      power_draw:
+      vpn_peer:
+      top_categories-by-bytes:
+      tx_bytes:
+      rx_bytes:
+      port_rx_errors:
+      port_tx_errors:
+      cpu:
+      vpn_peer-metrics:
+      app-bytes:
+      tx_bps:
+      rx_bps:
+      lte_rssi:
+    stats:
+      switch_ports: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/stats/switch_ports/search?mac=bc0ffe135a80
+      vpn_peers: https://api.mist.com/api/v1/orgs/400336e0-1a2a-4ae3-aabf-1c60a6a25d29/stats/vpn_peers/search?start=1722376800&end=1722449592&limit=1000&mac=020001bc18c0
+      ports: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/stats/ports/search?mac=bc0ffe135a80
+    site:
+      wired_clients: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/wired_clients/search?start=1722446452&device_mac=bc0ffe135a80
+  wireless:
+    main_url: api/v1/sites/{site}/insights/device/{device}/metric
+    metrics: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/insights/ap/00000000-0000-0000-1000-a8f7d933c55c/stats?end=1722450381&interval=600&start=1722376800&metrics=num_clients,bytes,bps,qoe,rx_bytes,tx_bytes,tx_rates,rx_rates,band24-util,band5-util,band6-util,rssi,num_stressed_clients,rx_retries,tx_retries
+      num_clients:
+      bytes:
+      bps:
+      qoe:
+      rx_bytes:
+      tx_bytes:
+      tx_rates:
+      rx_rates:
+      band24-util:
+      band5-util:
+      band6-util:
+      rssi:
+      num_stressed_clients:
+      rx_retries:
+      tx_retries:
+    stats:
+      switch_ports: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/stats/switch_ports/search?mac=bc0ffe135a80
+      vpn_peers: https://api.mist.com/api/v1/orgs/400336e0-1a2a-4ae3-aabf-1c60a6a25d29/stats/vpn_peers/search?start=1722376800&end=1722449592&limit=1000&mac=020001bc18c0
+      ports: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/stats/ports/search?mac=bc0ffe135a80
+    site:
+
+events:
+  switch: https://api.mist.com/api/v1/sites/32774a10-f694-49b8-b6f7-1b00da1c0bf9/devices/events/search?device_type=switch&limit=1000&start=1722376800&end=1722450052&mac=bc0ffe135a80
