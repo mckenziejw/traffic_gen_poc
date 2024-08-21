@@ -801,9 +801,9 @@ sites:
       country_code: US
     settings:
       vars:
-        CLIENT_VLAN: 1661
-        UPLINK_VLAN_1: 802
-        UPLINK_VLAN_2: 803
+        CLIENT_VLAN: {{mgmt_vlan}}
+        UPLINK_VLAN_1: {{vlan_1}}
+        UPLINK_VLAN_2: {{vlan_2}}
         LAN_PFX: 10.99.99
         GW: 10.210.14.14
         WAN_PFX: 192.168.170
@@ -827,9 +827,9 @@ sites:
       country_code: US
     settings:
       vars:
-        CLIENT_VLAN: 1661
-        UPLINK_VLAN_1: 802
-        UPLINK_VLAN_2: 803
+        CLIENT_VLAN: {{mgmt_vlan}}
+        UPLINK_VLAN_1: {{vlan_1}}
+        UPLINK_VLAN_2: {{vlan_2}}
         LAN_PFX: 10.88.88
         WAN_PFX: 192.168.130
     assignments:
@@ -846,9 +846,9 @@ sites:
       country_code: US
     settings:
       vars:
-        CLIENT_VLAN: 1661
-        UPLINK_VLAN_1: 802
-        UPLINK_VLAN_2: 803
+        CLIENT_VLAN: {{mgmt_vlan}}
+        UPLINK_VLAN_1: {{vlan_1}}
+        UPLINK_VLAN_2: {{vlan_2}}
         LAN_PFX: 10.66.66
         WAN1_PFX: 192.168.191
         WAN2_PFX: 192.168.190
@@ -867,9 +867,9 @@ sites:
       country_code: US
     settings:
       vars:
-        CLIENT_VLAN: 1661
-        UPLINK_VLAN_1: 802
-        UPLINK_VLAN_2: 803
+        CLIENT_VLAN: {{mgmt_vlan}}
+        UPLINK_VLAN_1: {{vlan_1}}
+        UPLINK_VLAN_2: {{vlan_2}}
         LAN_PFX: 10.55.55
         WAN1_PFX: 192.168.201
         WAN2_PFX: 192.168.200
